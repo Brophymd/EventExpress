@@ -4,3 +4,4 @@
 *.iws
 project.properties
 gen/edu/usf/EventExpress/BuildConfig.java
+out/
