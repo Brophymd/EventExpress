@@ -8,11 +8,21 @@
             android:label="@string/app_name">
         <activity
                 android:name=".Login"
-                android:label="EventExpress">
+                android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".newUser"/>
+        <activity android:name=".mainScreen"/>
+        <activity android:name=".Friendslist"/>
+        <activity android:name=".Friendslist_ViewRequests"/>
+        <activity android:name=".EventMenu"/>
+        <activity android:name=".Event_myevents"/>
+        <activity android:name=".createEvent"/>
+        <activity android:name=".Event_Invitations"/>
+        <activity android:name=".Event_Attending"/>
+        <activity android:name=".Events_Area"/>
     </application>
 </manifest>

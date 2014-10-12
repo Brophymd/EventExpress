@@ -1,7 +1,9 @@
 package edu.usf.EventExpress;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 /**
  * Created by Varik on 10/11/2014.
@@ -11,6 +13,18 @@ public class Login extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-    // a change
+
+    }
+
+    public void login(View v){
+
+        Intent myIntent= new Intent(this, mainScreen.class);
+        startActivity(myIntent);
+    }
+
+    public void newUser(View v){
+
+        Intent myIntent = new Intent(this, newUser.class);
+        startActivity(myIntent);
     }
 }

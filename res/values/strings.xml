@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EventExpress</string>
+    <string name="app_name">Event Express</string>
+    <string name="lbl_Password">Password</string>
+    <string name="lbl_Login">LOGIN</string>
+    <string name="lbl_UserID">UserID</string>
+    <string name="lbl_NewUser">New User</string>
+    <string name="lbl_Friends_List">Friends List</string>
+    <string name="lbl_Events">Events</string>
+    <string name="lbl_Event_Invitations">Event Invitations</string>
+    <string name="lbl_My_Created_Events">My Created Events</string>
+    <string name="lbl_Events_in_my_area">Events in my Area</string>
+    <string name="lbl_Events_I_am_Attending">Events I am Attending</string>
+    <string name="lbl_Create_Event">Create Event</string>
 </resources>
