@@ -12,4 +12,9 @@ public class newUser extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newuser);
     }
+
+    public void register(){
+
+
+    }
 }

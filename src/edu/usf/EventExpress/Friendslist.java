@@ -8,15 +8,17 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.*;
+
 import java.util.ArrayList;
+import android.widget.AdapterView.OnItemClickListener;
+import android.view.View;
+import android.app.ListActivity;
 
 /**
  * Created by Varik on 10/12/2014.
  */
-public class Friendslist extends Activity {
+public class Friendslist extends Activity{
     private String userid = "";
     ArrayList<String> myStringArray = new ArrayList<String>();
     ArrayAdapter listAdapter;
@@ -31,10 +33,17 @@ public class Friendslist extends Activity {
         myStringArray.add("Brent");
         listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
         mainListView.setAdapter(listAdapter);
+        mainListView.setOnItemClickListener(new OnItemClickListener(){
+            public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3){
+                String temp = (String)((TextView) v).getText();
+                Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu m){

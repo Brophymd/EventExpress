@@ -12,4 +12,8 @@
     <string name="lbl_Events_in_my_area">Events in my Area</string>
     <string name="lbl_Events_I_am_Attending">Events I am Attending</string>
     <string name="lbl_Create_Event">Create Event</string>
+    <string name="lbl_Enter_a_Name">Enter a Name</string>
+    <string name="lbl_Explain_Name">This will be a name others see you by.</string>
+    <string name="lbl_Enter_Email_Addr">Enter your Email Address</string>
+    <string name="lbl_Register">Register</string>
 </resources>
