@@ -3,11 +3,14 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
+        <option name="APK_PATH" value="/out/production/EventExpress" />
         <option name="UPDATE_PROPERTY_FILES" value="true" />
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file:///production/EventExpress" />
+    <output-test url="file:///test/EventExpress" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
