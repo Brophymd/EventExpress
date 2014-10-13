@@ -9,11 +9,9 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
-
 import java.util.ArrayList;
 import android.widget.AdapterView.OnItemClickListener;
 import android.view.View;
-import android.app.ListActivity;
 
 /**
  * Created by Varik on 10/12/2014.
@@ -33,10 +31,19 @@ public class Friendslist extends Activity{
         myStringArray.add("Brent");
         listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
         mainListView.setAdapter(listAdapter);
-        mainListView.setOnItemClickListener(new OnItemClickListener(){
-            public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3){
-                String temp = (String)((TextView) v).getText();
+        mainListView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long arg3) {
+                String temp = (String) ((TextView) view).getText();
                 Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
+            }
+        });
+        mainListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String temp = (String) ((TextView) view).getText();
+                temp = "Long press on "+ temp;
+                Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
 
