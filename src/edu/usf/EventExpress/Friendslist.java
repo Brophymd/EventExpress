@@ -8,17 +8,32 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import java.util.ArrayList;
 
 /**
  * Created by Varik on 10/12/2014.
  */
 public class Friendslist extends Activity {
     private String userid = "";
+    ArrayList<String> myStringArray = new ArrayList<String>();
+    ArrayAdapter listAdapter;
+    ListView mainListView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friendslist);
+        mainListView = (ListView) findViewById( R.id.mainList );
+        myStringArray.add("Mark");
+        myStringArray.add("James");
+        myStringArray.add("Brent");
+        listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
+        mainListView.setAdapter(listAdapter);
+
+
+
     }
 
     @Override
@@ -61,6 +76,7 @@ public class Friendslist extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 userid = input.getText().toString();
+
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
