@@ -2,6 +2,82 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" android:id="@+id/">
 
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Create Event"
+            android:id="@+id/textView"
+            android:layout_marginLeft="23dp"
+            android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:layout_marginTop="23dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_title"
+            android:layout_below="@+id/textView_eventTitle" android:layout_alignLeft="@+id/textView"
+            android:layout_alignParentRight="true"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editText_eventDescription"
+            android:layout_below="@+id/textView_description" android:layout_alignLeft="@+id/editText_title"
+            android:layout_alignParentRight="true" android:layout_above="@+id/textView_location"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:id="@+id/textView_eventTitle"
+            android:layout_below="@+id/textView" android:layout_alignLeft="@+id/editText_title"
+            android:layout_marginTop="27dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:id="@+id/textView_description"
+            android:layout_marginTop="25dp" android:layout_below="@+id/editText_title"
+            android:layout_alignLeft="@+id/editText_eventDescription"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:id="@+id/textView_date"
+            android:layout_below="@+id/editText_location" android:layout_alignRight="@+id/textView_time"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/editText_date"
+            android:layout_below="@+id/textView_date" android:layout_alignLeft="@+id/editText_eventDescription"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time"
+            android:id="@+id/textView_time"
+            android:layout_below="@+id/editText_date" android:layout_alignLeft="@+id/editText_eventDescription"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="time"
+            android:ems="10"
+            android:id="@+id/editText_time"
+            android:layout_below="@+id/textView_time" android:layout_alignLeft="@+id/editText_eventDescription"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:id="@+id/textView_location" android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/editText_eventDescription"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:ems="10"
+            android:id="@+id/editText_location" android:layout_below="@+id/textView_location"
+            android:layout_alignLeft="@+id/textView_location"/>
 </RelativeLayout>
