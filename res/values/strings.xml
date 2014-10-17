@@ -16,4 +16,14 @@
     <string name="lbl_Explain_Name">This will be a name others see you by.</string>
     <string name="lbl_Enter_Email_Addr">Enter your Email Address</string>
     <string name="lbl_Register">Register</string>
+
+    <!-- strings for create_event -->
+    <string name="lbl_Title">Title</string>
+    <string name="lbl_Description">Description</string>
+    <string name="lbl_Date">Date</string>
+    <string name="lbl_Time">Time</string>
+    <string name="lbl_Location">Location</string>
+
+    <!-- strings for event_detail -->
+    <string name="lbl_Event_Title">Event Title</string>
 </resources>

@@ -9,7 +9,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Create Event"
+            android:text="@string/lbl_Create_Event"
             android:id="@+id/textView"
             android:layout_marginLeft="23dp"
             android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:layout_marginTop="23dp"/>
@@ -30,21 +30,21 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="@string/lbl_Title"
             android:id="@+id/textView_eventTitle"
             android:layout_below="@+id/textView" android:layout_alignLeft="@+id/editText_title"
             android:layout_marginTop="27dp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="@string/lbl_Description"
             android:id="@+id/textView_description"
             android:layout_marginTop="25dp" android:layout_below="@+id/editText_title"
             android:layout_alignLeft="@+id/editText_eventDescription"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
+            android:text="@string/lbl_Date"
             android:id="@+id/textView_date"
             android:layout_below="@+id/editText_location" android:layout_alignRight="@+id/textView_time"/>
     <EditText
@@ -57,7 +57,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time"
+            android:text="@string/lbl_Time"
             android:id="@+id/textView_time"
             android:layout_below="@+id/editText_date" android:layout_alignLeft="@+id/editText_eventDescription"/>
     <EditText
@@ -70,7 +70,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location"
+            android:text="@string/lbl_Location"
             android:id="@+id/textView_location" android:layout_centerVertical="true"
             android:layout_alignLeft="@+id/editText_eventDescription"/>
     <EditText
