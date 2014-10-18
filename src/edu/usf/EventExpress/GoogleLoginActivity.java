@@ -75,11 +75,28 @@ public class GoogleLoginActivity extends Activity implements
         txtEmail = (TextView)findViewById(R.id.txtEmail);
         llProfileLayout = (LinearLayout)findViewById(R.id.llProfile);
 
-        /*Button click listeners
-        btnSignIn.setOnClickListener(this);
-        btnSignOut.setOnClickListener(this);
-        btnRevokeAccess.setOnClickListener(this);
-        */
+        //Button click listeners
+        btnSignIn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Signin button clicked
+                signInWithGplus();
+            }
+        });
+        btnSignOut.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Signout button clicked
+                signOutFromGplus();
+            }
+        });
+        btnRevokeAccess.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //nothing atm
+            }
+        });
+
 
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -242,7 +259,7 @@ public class GoogleLoginActivity extends Activity implements
      * Button on click listener
      * */
 
-    public void onClick(View v) {
+    /*public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
                 // Signin button clicked
@@ -257,7 +274,7 @@ public class GoogleLoginActivity extends Activity implements
                 revokeGplusAccess();
                 break;
         }
-    }
+    }*/
 
 
     /**
