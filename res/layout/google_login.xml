@@ -67,4 +67,13 @@
             android:text="@string/btn_revoke_access"
             android:visibility="gone"/>
 
+    <Button
+            android:id="@+id/btn_home"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Go Home"
+            android:visibility="gone"
+            android:onClick="testclick"/>
+
+
 </LinearLayout>

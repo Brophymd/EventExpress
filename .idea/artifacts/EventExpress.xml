@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="apk" name="EventExpress">
+    <output-path>$PROJECT_DIR$/out/artifacts/EventExpress</output-path>
+    <properties id="android-properties">
+      <options>
+        <option name="keyAlias" value="markvimicah" />
+        <option name="keyPassword" value="dGhpbmtwYWQ=" />
+        <option name="keyStorePassword" value="dGhpbmtwYWQ=" />
+        <option name="keyStoreUrl" value="file://$USER_HOME$/EventExpressKey.jks" />
+        <option name="proGuardCfgFiles">
+          <list>
+            <option value="file://%MODULE_SDK_HOME%/tools/proguard/proguard-android.txt" />
+          </list>
+        </option>
+        <option name="signingMode" value="DEBUG_WITH_CUSTOM_CERTIFICATE" />
+      </options>
+    </properties>
+    <root id="archive" name="EventExpress.apk">
+      <element id="android-final-package" facet="EventExpress/android/Android" />
+    </root>
+  </artifact>
+</component>

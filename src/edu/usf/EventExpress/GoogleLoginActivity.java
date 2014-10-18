@@ -3,6 +3,7 @@ package edu.usf.EventExpress;
 import java.io.InputStream;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.graphics.Bitmap;
@@ -13,11 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -57,7 +54,7 @@ public class GoogleLoginActivity extends Activity implements
     private ConnectionResult mConnectionResult;
 
     private SignInButton btnSignIn;
-    private Button btnSignOut, btnRevokeAccess;
+    private Button btnSignOut, btnRevokeAccess, btnHome;
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
@@ -66,7 +63,7 @@ public class GoogleLoginActivity extends Activity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.google_login);
-
+        btnHome = (Button)findViewById(R.id.btn_home);
         btnSignIn = (SignInButton)findViewById(R.id.btn_sign_in);
         btnSignOut = (Button)findViewById(R.id.btn_sign_out);
         btnRevokeAccess = (Button)findViewById(R.id.btn_revoke_access);
@@ -97,6 +94,20 @@ public class GoogleLoginActivity extends Activity implements
             }
         });
 
+        /*btnHome.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //finish();
+
+                Intent myIntent= new Intent();
+                myIntent.setComponent(new ComponentName("edu.usf.EventExpress", "edu.usf.mainScreen"));
+                myIntent.setAction("android.intent.action.MAIN");
+                myIntent.addCategory("android.intent.category.LAUNCHER");
+                myIntent.addCategory("android.intent.category.DEFAULT");
+                v.getContext().startActivity(myIntent);
+
+            }
+        });*/
 
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -105,6 +116,11 @@ public class GoogleLoginActivity extends Activity implements
                 .addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
+    }
+
+    public void testclick(View v){
+        Intent myIntent= new Intent(this, mainScreen.class);
+        startActivity(myIntent);
     }
 
     protected void onStart() {
@@ -195,11 +211,13 @@ public class GoogleLoginActivity extends Activity implements
             btnSignOut.setVisibility(View.VISIBLE);
             btnRevokeAccess.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
+            btnHome.setVisibility(View.VISIBLE);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
             btnRevokeAccess.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
+            btnHome.setVisibility(View.GONE);
         }
     }
 
@@ -255,29 +273,7 @@ public class GoogleLoginActivity extends Activity implements
         return true;
     }
 
-    /**
-     * Button on click listener
-     * */
-
-    /*public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_sign_in:
-                // Signin button clicked
-                signInWithGplus();
-                break;
-            case R.id.btn_sign_out:
-                // Signout button clicked
-                signOutFromGplus();
-                break;
-            case R.id.btn_revoke_access:
-                // Revoke access button clicked
-                revokeGplusAccess();
-                break;
-        }
-    }*/
-
-
-    /**
+     /**
      * Sign-in into google
      * */
     private void signInWithGplus() {
