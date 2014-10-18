@@ -71,13 +71,15 @@ public class Friendslist extends Activity{
 
     private boolean MenuChoice(MenuItem item){
 
-        if(item.getItemId() == 0){
-            sendFriendRequest();
-            return true;
-        }
-        if(item.getItemId() == 1){
-            viewReceivedRequests();
-            return true;
+        switch (item.getItemId())
+        {
+            case 0:
+                sendFriendRequest();
+                return true;
+            case 1:
+                viewReceivedRequests();
+                return true;
+
         }
         return false;
     }
