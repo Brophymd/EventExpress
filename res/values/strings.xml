@@ -17,4 +17,22 @@
     <string name="lbl_Enter_Email_Addr">Enter your Email Address</string>
     <string name="lbl_Register">Register</string>
     <string name="lbl_Remember_Me">Remember Me</string>
+
+    <!-- strings for create_event -->
+    <string name="lbl_Title">Title</string>
+    <string name="lbl_Description">Description</string>
+    <string name="lbl_Date">Date</string>
+    <string name="lbl_Time">Time</string>
+    <string name="lbl_Location">Location</string>
+
+    <!-- strings for event_detail -->
+    <string name="lbl_Event_Title">Event Title</string>
+
+    <!-- google+ login -->
+    <string name="activity_name_G_login">G+ Login</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Button text -->
+    <string name="btn_logout_from_google">Logout from Google</string>
+    <string name="btn_revoke_access">Revoke Access</string>
 </resources>
