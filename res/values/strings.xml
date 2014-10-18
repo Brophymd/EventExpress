@@ -26,4 +26,12 @@
 
     <!-- strings for event_detail -->
     <string name="lbl_Event_Title">Event Title</string>
+
+    <!-- google+ login -->
+    <string name="activity_name_G_login">G+ Login</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Button text -->
+    <string name="btn_logout_from_google">Logout from Google</string>
+    <string name="btn_revoke_access">Revoke Access</string>
 </resources>
