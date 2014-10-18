@@ -4,7 +4,7 @@
     <string name="lbl_Password">Password</string>
     <string name="lbl_Login">LOGIN</string>
     <string name="lbl_UserID">UserID</string>
-    <string name="lbl_NewUser">New User</string>
+    <string name="lbl_NewUser">Sign up</string>
     <string name="lbl_Friends_List">Friends List</string>
     <string name="lbl_Events">Events</string>
     <string name="lbl_Event_Invitations">Event Invitations</string>
@@ -16,6 +16,7 @@
     <string name="lbl_Explain_Name">This will be a name others see you by.</string>
     <string name="lbl_Enter_Email_Addr">Enter your Email Address</string>
     <string name="lbl_Register">Register</string>
+    <string name="lbl_Remember_Me">Remember Me</string>
 
     <!-- strings for create_event -->
     <string name="lbl_Title">Title</string>

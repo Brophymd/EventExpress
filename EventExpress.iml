@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
-        <option name="APK_PATH" value="/out/production/EventExpress" />
+        <option name="APK_PATH" value="/out/EventExpress" />
         <option name="UPDATE_PROPERTY_FILES" value="true" />
       </configuration>
     </facet>

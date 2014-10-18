@@ -30,7 +30,7 @@
             android:inputType="textPersonName"
             android:text=""
             android:ems="10"
-            android:id="@+id/editText_time"
+            android:id="@+id/editText4"
             android:layout_below="@+id/textView6"
             android:layout_alignParentLeft="true"/>
 
@@ -41,7 +41,7 @@
             android:text="@string/lbl_Password"
             android:id="@+id/textView7"
             android:layout_marginTop="37dp"
-            android:layout_below="@+id/editText_time"
+            android:layout_below="@+id/editText4"
             android:layout_alignParentLeft="true"/>
 
     <EditText

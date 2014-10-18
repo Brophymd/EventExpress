@@ -2,8 +2,10 @@ package edu.usf.EventExpress;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
@@ -13,16 +15,26 @@ import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailed
  */
 public class Login extends Activity {
 
+    SessionManager session;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        session = new SessionManager(getApplicationContext());
+        if(session.isLoggedIn()){
+            Intent myIntent= new Intent(this, mainScreen.class);
+            startActivity(myIntent);
+        }
 
     }
 
     public void login(View v){
+        String userid = ((EditText)findViewById(R.id.editText4)).toString();
 
+        session.createLoginSession(userid);
         Intent myIntent= new Intent(this, mainScreen.class);
         startActivity(myIntent);
     }
@@ -38,4 +50,6 @@ public class Login extends Activity {
         Intent myIntent = new Intent(this, GoogleLoginActivity.class);
         startActivity(myIntent);
     }
+
+
 }
