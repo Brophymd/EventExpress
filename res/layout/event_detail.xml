@@ -3,12 +3,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent" android:id="@+id/linearLayout">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/lbl_Event_Title"
-            android:id="@+id/textView"/>
+    <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical" android:id="@+id/tableLayout">
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/lbl_Event_Title"
+                android:id="@+id/textView_eventTitle"/>
+            </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/lbl_Description"
+                    android:id="@+id/textView_eventDescription"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/lbl_Time"
+                    android:id="@+id/textView_time"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/lbl_Date"
+                    android:id="@+id/textView_date"/>
+        </TableRow>
+
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButton2" android:layout_gravity="right" android:src="@drawable/map2"
+                    android:layout_column="5"/>
+        </TableRow>
+
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_Decline"
+                android:id="@+id/button_decline" android:layout_gravity="right" android:layout_column="4"
+                    />
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_Accept"
+                    android:id="@+id/button_accept" android:layout_gravity="center_horizontal" android:layout_column="3"/>
+        </TableRow>
+
+    </TableLayout>
+
 </LinearLayout>

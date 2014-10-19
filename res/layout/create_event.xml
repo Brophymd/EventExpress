@@ -4,20 +4,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/lbl_Create_Event"
-            android:id="@+id/textView"
+            android:id="@+id/textView_eventsHosting"
             android:layout_marginLeft="23dp"
             android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:layout_marginTop="23dp"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editText_title"
-            android:layout_below="@+id/textView_eventTitle" android:layout_alignLeft="@+id/textView"
+            android:layout_below="@+id/textView_eventTitle" android:layout_alignLeft="@+id/textView_eventsHosting"
             android:layout_alignParentRight="true"/>
     <EditText
             android:layout_width="wrap_content"
@@ -32,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/lbl_Title"
             android:id="@+id/textView_eventTitle"
-            android:layout_below="@+id/textView" android:layout_alignLeft="@+id/editText_title"
+            android:layout_below="@+id/textView_eventsHosting" android:layout_alignLeft="@+id/editText_title"
             android:layout_marginTop="27dp"/>
     <TextView
             android:layout_width="wrap_content"
@@ -80,4 +79,16 @@
             android:ems="10"
             android:id="@+id/editText_location" android:layout_below="@+id/textView_location"
             android:layout_alignLeft="@+id/textView_location"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_create"
+            android:id="@+id/button_create"
+            android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/editText_time"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_invite"
+            android:id="@+id/button_inviteFriends"
+            android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/textView_time"/>
 </RelativeLayout>

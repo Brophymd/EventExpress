@@ -19,14 +19,26 @@
     <string name="lbl_Remember_Me">Remember Me</string>
 
     <!-- strings for create_event -->
-    <string name="lbl_Title">Title</string>
-    <string name="lbl_Description">Description</string>
-    <string name="lbl_Date">Date</string>
-    <string name="lbl_Time">Time</string>
-    <string name="lbl_Location">Location</string>
+    <string name="lbl_Title">Title:</string>
+    <string name="lbl_Description">Description:</string>
+    <string name="lbl_Date">Date:</string>
+    <string name="lbl_Time">Time:</string>
+    <string name="lbl_Location">Location:</string>
 
     <!-- strings for event_detail -->
     <string name="lbl_Event_Title">Event Title</string>
+    <string name="btn_Accept">Accept</string>
+    <string name="btn_Decline">Decline</string>
+
+    <!-- strings for event_myevents -->
+    <string name="lbl_My_Events">My Events</string>
+
+
+    <!-- strings for FriendsList -->
+    <string name="btn_add">Add</string>
+    <string name="btn_viewRequests">View Requests</string>
+
+
 
     <!-- google+ login -->
     <string name="activity_name_G_login">G+ Login</string>
@@ -35,4 +47,7 @@
     <!-- Button text -->
     <string name="btn_logout_from_google">Logout from Google</string>
     <string name="btn_revoke_access">Revoke Access</string>
+    <string name="btn_create">Create</string>
+    <string name="btn_invite">Invite Friends</string>
+
 </resources>
