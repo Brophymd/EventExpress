@@ -2,7 +2,6 @@ package edu.usf.EventExpress;
 
 import java.io.InputStream;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.graphics.Bitmap;
@@ -33,11 +32,8 @@ import com.google.android.gms.plus.model.people.Person;
 /**
  * Created by Vi Tran on 10/17/2014.
  */
-public class GoogleLoginActivity extends Activity implements
+public class GoogleLoginActivity extends BaseActivity implements
     ConnectionCallbacks, OnConnectionFailedListener {
-
-    /* Request code used to invoke sign in user interactions. */
-    private static final int RC_SIGN_IN = 0;
 
     //Logcat tag
     private static final String TAG = "GoogleLoginActivity";
@@ -45,16 +41,7 @@ public class GoogleLoginActivity extends Activity implements
     //Profile pic image size in pixels
     private static final int PROFILE_PIC_SIZE = 400;
 
-    /* Client used to interact with Google APIs */
-    private GoogleApiClient mGoogleApiClient;
-
-    /* A flag indicating that a PendingIntent is in progress and prevents
-     * us from starting further intents
-     */
-    private boolean mIntentInProgress;
     private boolean mSignInClicked;
-
-    private ConnectionResult mConnectionResult;
 
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
@@ -178,11 +165,16 @@ public class GoogleLoginActivity extends Activity implements
         mSignInClicked = false;
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 
+        // Launch our main activity
+        Intent intent = new Intent(GoogleLoginActivity.this, mainScreen.class);
+        GoogleLoginActivity.this.startActivity(intent);
+        // Clean up
+        finish();
         // Get user's information
-        getProfileInformation();
+//        getProfileInformation();
 
         // Update the UI after signin
-        updateUI(true);
+//        updateUI(true);
 
     }
 

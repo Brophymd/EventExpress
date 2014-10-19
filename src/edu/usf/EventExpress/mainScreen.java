@@ -1,16 +1,16 @@
 package edu.usf.EventExpress;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import edu.usf.EventExpress.sync.SyncAdapterService;
 
 /**
  * Created by Varik on 10/12/2014.
  */
-public class mainScreen extends Activity {
+public class mainScreen extends BaseActivity {
 
     SessionManager session;
 
@@ -19,6 +19,8 @@ public class mainScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainscreen);
         session = new SessionManager(getApplicationContext());
+//        Intent intent = new Intent(mainScreen.this, SyncAdapterService.class);
+//        mainScreen.this.startService(intent);
     }
 
     public void friendsList(View v){
