@@ -34,7 +34,7 @@ public class Login extends Activity {
     public void login(View v){
         String userid = ((EditText)findViewById(R.id.editText4)).toString();
 
-        session.createLoginSession(userid);
+        //session.createLoginSession(userid);
         Intent myIntent= new Intent(this, mainScreen.class);
         startActivity(myIntent);
     }

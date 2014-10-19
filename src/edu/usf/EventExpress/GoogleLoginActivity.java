@@ -54,29 +54,38 @@ public class GoogleLoginActivity extends Activity implements
     private ConnectionResult mConnectionResult;
 
     private SignInButton btnSignIn;
-    private Button btnSignOut, btnRevokeAccess, btnHome;
+    private Button btnSignOut, btnHome, btnEventMenu, btnEventInvited;
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
+    SessionManager session;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.google_login);
-        btnHome = (Button)findViewById(R.id.btn_home);
+        btnHome = (Button)findViewById(R.id.btn_friend_list);
         btnSignIn = (SignInButton)findViewById(R.id.btn_sign_in);
         btnSignOut = (Button)findViewById(R.id.btn_sign_out);
-        btnRevokeAccess = (Button)findViewById(R.id.btn_revoke_access);
+        btnEventMenu = (Button)findViewById(R.id.btn_event_menu);
+        btnEventInvited = (Button)findViewById(R.id.events_invited);
+        //btnRevokeAccess = (Button)findViewById(R.id.btn_revoke_access);
         imgProfilePic = (ImageView)findViewById(R.id.imgProfilePic);
         txtName = (TextView)findViewById(R.id.txtName);
         txtEmail = (TextView)findViewById(R.id.txtEmail);
         llProfileLayout = (LinearLayout)findViewById(R.id.llProfile);
+
+        new SessionManager(getApplicationContext());
+
 
         //Button click listeners
         btnSignIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Signin button clicked
+
                 signInWithGplus();
             }
         });
@@ -87,27 +96,13 @@ public class GoogleLoginActivity extends Activity implements
                 signOutFromGplus();
             }
         });
-        btnRevokeAccess.setOnClickListener(new OnClickListener() {
+        /*btnRevokeAccess.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 //nothing atm
             }
-        });
-
-        /*btnHome.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //finish();
-
-                Intent myIntent= new Intent();
-                myIntent.setComponent(new ComponentName("edu.usf.EventExpress", "edu.usf.mainScreen"));
-                myIntent.setAction("android.intent.action.MAIN");
-                myIntent.addCategory("android.intent.category.LAUNCHER");
-                myIntent.addCategory("android.intent.category.DEFAULT");
-                v.getContext().startActivity(myIntent);
-
-            }
         });*/
+
 
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -118,14 +113,27 @@ public class GoogleLoginActivity extends Activity implements
                 .build();
     }
 
-    public void testclick(View v){
-        Intent myIntent= new Intent(this, mainScreen.class);
+    public void friendlist(View v){
+        Intent myIntent= new Intent(this, Friendslist.class);
         startActivity(myIntent);
     }
+
+    public void eventmenu(View v){
+        Intent myIntent = new Intent(this, EventMenu.class);
+        startActivity(myIntent);
+    }
+
+    public void eventsinvited(View v){
+        Intent myIntent = new Intent(this, Event_Invitations.class);
+        startActivity(myIntent);
+    }
+
+
 
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+
     }
     protected void onStop() {
         super.onStop();
@@ -191,14 +199,16 @@ public class GoogleLoginActivity extends Activity implements
 
     @Override
     public void onConnected(Bundle arg0) {
-        mSignInClicked = false;
-        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 
+        if(mSignInClicked)
+            Toast.makeText(this, "User has connected!", Toast.LENGTH_LONG).show();
+        mSignInClicked = false;
         // Get user's information
         getProfileInformation();
 
         // Update the UI after signin
         updateUI(true);
+
 
     }
 
@@ -209,13 +219,17 @@ public class GoogleLoginActivity extends Activity implements
         if (isSignedIn) {
             btnSignIn.setVisibility(View.GONE);
             btnSignOut.setVisibility(View.VISIBLE);
-            btnRevokeAccess.setVisibility(View.VISIBLE);
+            //btnRevokeAccess.setVisibility(View.VISIBLE);
+            btnEventMenu.setVisibility(View.VISIBLE);
+            btnEventInvited.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
             btnHome.setVisibility(View.VISIBLE);
         } else {
+            btnEventMenu.setVisibility(View.GONE);
+            btnEventInvited.setVisibility(View.GONE);
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
-            btnRevokeAccess.setVisibility(View.GONE);
+            //btnRevokeAccess.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
             btnHome.setVisibility(View.GONE);
         }
@@ -233,6 +247,8 @@ public class GoogleLoginActivity extends Activity implements
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 String personGooglePlusProfile = currentPerson.getUrl();
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+
+                //session.createLoginSession(personName, email);
 
                 Log.e(TAG, "Name: " + personName + ", plusProfile: "
                         + personGooglePlusProfile + ", email: " + email
@@ -266,12 +282,12 @@ public class GoogleLoginActivity extends Activity implements
         updateUI(false);
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         //getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
+    }*/
 
      /**
      * Sign-in into google
@@ -281,6 +297,7 @@ public class GoogleLoginActivity extends Activity implements
             mSignInClicked = true;
             resolveSignInError();
         }
+
     }
 
     /**
@@ -298,7 +315,7 @@ public class GoogleLoginActivity extends Activity implements
     /**
      * Revoking access from google
      * */
-    private void revokeGplusAccess() {
+    /*private void revokeGplusAccess() {
         if (mGoogleApiClient.isConnected()) {
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
             Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient)
@@ -312,7 +329,7 @@ public class GoogleLoginActivity extends Activity implements
 
                     });
         }
-    }
+    }*/
 
     /**
      * Background Async task to load user profile picture from url
