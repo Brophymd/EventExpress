@@ -50,30 +50,36 @@
             android:id="@+id/btn_sign_in"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"/>
-
+            />
     <Button
             android:id="@+id/btn_sign_out"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_logout_from_google"
             android:visibility="gone"
-            android:layout_marginBottom="10dp"/>
-
+            />
     <Button
-            android:id="@+id/btn_revoke_access"
+            android:id="@+id/btn_friend_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_revoke_access"
-            android:visibility="gone"/>
-
-    <Button
-            android:id="@+id/btn_home"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Go Home"
+            android:text="@string/lbl_Friends_List"
             android:visibility="gone"
-            android:onClick="testclick"/>
-
-
+            android:onClick="friendlist"
+            />
+    <Button
+            android:id="@+id/btn_event_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_Events"
+            android:visibility="gone"
+            android:onClick="eventmenu"
+            />
+    <Button
+            android:id="@+id/events_invited"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_Event_Invitations"
+            android:visibility="gone"
+            android:onClick="eventsinvited"
+            />
 </LinearLayout>
