@@ -1,85 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="16dp"
-              tools:context=".MainActivity" >
-
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <LinearLayout
-            android:id="@+id/llProfile"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            android:visibility="gone">
-
-        <ImageView
-                android:id="@+id/imgProfilePic"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:padding="16dp"
+                  tools:context=".MainActivity" >
 
         <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/llProfile"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical"
-                android:layout_weight="2" >
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:visibility="gone">
 
-            <TextView
-                    android:id="@+id/txtName"
+            <ImageView
+                    android:id="@+id/imgProfilePic"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+            <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="20dp" />
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical"
+                    android:layout_weight="2" >
 
-            <TextView
-                    android:id="@+id/txtEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp" />
+                <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textSize="20dp" />
+
+                <TextView
+                        android:id="@+id/txtEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textSize="18dp" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <com.google.android.gms.common.SignInButton
-            android:id="@+id/btn_sign_in"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            />
-    <Button
-            android:id="@+id/btn_sign_out"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_logout_from_google"
-            android:visibility="gone"
-            />
-    <Button
-            android:id="@+id/btn_friend_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_Friends_List"
-            android:visibility="gone"
-            android:onClick="friendlist"
-            />
-    <Button
-            android:id="@+id/btn_event_menu"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_Events"
-            android:visibility="gone"
-            android:onClick="eventmenu"
-            />
-    <Button
-            android:id="@+id/events_invited"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_Event_Invitations"
-            android:visibility="gone"
-            android:onClick="eventsinvited"
-            />
-</LinearLayout>
+        <com.google.android.gms.common.SignInButton
+                android:id="@+id/btn_sign_in"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                />
+        <Button
+                android:id="@+id/btn_sign_out"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_logout_from_google"
+                android:visibility="gone"
+                />
+        <Button
+                android:id="@+id/btn_friend_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_Friends_List"
+                android:visibility="gone"
+                android:onClick="friendlist"
+                />
+        <Button
+                android:id="@+id/btn_event_menu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_Events"
+                android:visibility="gone"
+                android:onClick="eventmenu"
+                />
+        <Button
+                android:id="@+id/events_invited"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_Event_Invitations"
+                android:visibility="gone"
+                android:onClick="eventsinvited"
+                />
+    </LinearLayout>
+</ScrollView>
