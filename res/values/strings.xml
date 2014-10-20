@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Event Express</string>
+    <string name="app_name">EventExpress</string>
     <string name="lbl_Password">Password</string>
     <string name="lbl_Login">LOGIN</string>
     <string name="lbl_UserID">UserID</string>
@@ -17,6 +17,9 @@
     <string name="lbl_Enter_Email_Addr">Enter your Email Address</string>
     <string name="lbl_Register">Register</string>
     <string name="lbl_Remember_Me">Remember Me</string>
+    <string name="lbl_Friend_Requests">Friend Requests</string>
+
+    <string name="welcome_message">Welcome to EventExpress!</string>
 
     <!-- strings for create_event -->
     <string name="lbl_Title">Title:</string>
@@ -29,6 +32,8 @@
     <string name="lbl_Event_Title">Event Title</string>
     <string name="btn_Accept">Accept</string>
     <string name="btn_Decline">Decline</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_edit">Edit</string>
 
     <!-- strings for event_myevents -->
     <string name="lbl_My_Events">My Events</string>
@@ -36,7 +41,7 @@
 
     <!-- strings for FriendsList -->
     <string name="btn_add">Add</string>
-    <string name="btn_viewRequests">View Requests</string>
+    <string name="btn_viewRequests">Requests</string>
 
 
 

@@ -10,15 +10,16 @@
               android:orientation="vertical"
               android:id="@+id/mainList"
               android:clickable="true"
-              android:longClickable="true" android:layout_below="@+id/button_add">
+              android:longClickable="true" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+              android:layout_marginTop="58dp">
     </ListView>
     <TextView
+            style = "@style/TitleFont.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/lbl_Friends_List"
-            android:id="@+id/textView_friendsList" android:layout_above="@+id/mainList"
-            android:layout_alignParentLeft="true"/>
+            android:id="@+id/textView_friendsList"
+            android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:layout_marginTop="27dp"/>
     <!--<Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

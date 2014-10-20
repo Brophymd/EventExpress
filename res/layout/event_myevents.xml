@@ -4,23 +4,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lbl_Create_Event"
-            android:id="@+id/button_decline"
+            android:id="@+id/button_invite"
             android:onClick="CreateEvent" android:layout_alignParentTop="true" android:layout_alignParentRight="true"/>
 
-    <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView"
-            android:layout_below="@+id/button_decline"
-            android:layout_alignParentLeft="true"/>
+        <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView_myEvents"
+                android:layout_below="@+id/button_invite"
+                android:layout_alignParentLeft="true"/>
+
+
     <TextView
+            style="@style/TitleFont.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/lbl_My_Events"
             android:id="@+id/textView_eventsHosting"
             android:layout_above="@+id/listView" android:layout_alignParentLeft="true"/>

@@ -8,7 +8,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lbl_Events_I_am_Attending"
-            android:id="@+id/button_decline"
+            android:id="@+id/button_invite"
             android:onClick="eventsAttending"
             android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
             android:layout_marginBottom="174dp" android:layout_alignParentRight="true"/>
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lbl_Event_Invitations"
-            android:id="@+id/button_accept"
+            android:id="@+id/button_cancel"
             android:onClick="eventsInvites"
             android:layout_above="@+id/button3" android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"/>
@@ -37,7 +37,7 @@
             android:text="@string/lbl_My_Created_Events"
             android:id="@+id/button4"
             android:onClick="createdEvents"
-            android:layout_above="@+id/button_decline" android:layout_alignParentLeft="true"
+            android:layout_above="@+id/button_invite" android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"/>
     <TextView
             android:layout_width="wrap_content"
@@ -47,6 +47,6 @@
             android:id="@+id/textView"
             android:layout_marginBottom="56dp"
             android:textColor="#ff43adff" android:textColorHighlight="#ffffffff"
-            android:textSize="35dp" android:layout_above="@+id/button_accept"
+            android:textSize="45dp" android:layout_above="@+id/button_cancel"
             android:layout_centerHorizontal="true" android:typeface="serif"/>
 </RelativeLayout>

@@ -5,9 +5,9 @@
                 android:layout_height="match_parent">
 
     <TextView
+            style = "@style/TitleFont.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/lbl_Create_Event"
             android:id="@+id/textView_eventsHosting"
             android:layout_marginLeft="23dp"
@@ -22,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:ems="10"
             android:id="@+id/editText_eventDescription"
             android:layout_below="@+id/textView_description" android:layout_alignLeft="@+id/editText_title"
             android:layout_alignParentRight="true" android:layout_above="@+id/textView_location"/>
@@ -38,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="@string/lbl_Description"
             android:id="@+id/textView_description"
-            android:layout_marginTop="25dp" android:layout_below="@+id/editText_title"
+             android:layout_below="@+id/editText_title"
             android:layout_alignLeft="@+id/editText_eventDescription"/>
     <TextView
             android:layout_width="wrap_content"

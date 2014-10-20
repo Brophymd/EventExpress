@@ -26,6 +26,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import org.w3c.dom.Text;
 
 /**
  * Created by Vi Tran on 10/17/2014.
@@ -56,7 +57,7 @@ public class GoogleLoginActivity extends Activity implements
     private SignInButton btnSignIn;
     private Button btnSignOut, btnHome, btnEventMenu, btnEventInvited;
     private ImageView imgProfilePic;
-    private TextView txtName, txtEmail;
+    private TextView txtName, txtEmail, welcomeMsg, txtTitle;
     private LinearLayout llProfileLayout;
     SessionManager session;
 
@@ -75,6 +76,8 @@ public class GoogleLoginActivity extends Activity implements
         imgProfilePic = (ImageView)findViewById(R.id.imgProfilePic);
         txtName = (TextView)findViewById(R.id.txtName);
         txtEmail = (TextView)findViewById(R.id.txtEmail);
+        welcomeMsg = (TextView)findViewById(R.id.textView_welcome);
+        txtTitle = (TextView)findViewById(R.id.textView_appTitle);
         llProfileLayout = (LinearLayout)findViewById(R.id.llProfile);
 
         new SessionManager(getApplicationContext());
@@ -218,20 +221,24 @@ public class GoogleLoginActivity extends Activity implements
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
             btnSignIn.setVisibility(View.GONE);
+            txtTitle.setVisibility(View.GONE);
             btnSignOut.setVisibility(View.VISIBLE);
             //btnRevokeAccess.setVisibility(View.VISIBLE);
             btnEventMenu.setVisibility(View.VISIBLE);
             btnEventInvited.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
             btnHome.setVisibility(View.VISIBLE);
+            welcomeMsg.setVisibility(View.VISIBLE);
         } else {
             btnEventMenu.setVisibility(View.GONE);
             btnEventInvited.setVisibility(View.GONE);
             btnSignIn.setVisibility(View.VISIBLE);
+            txtTitle.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
             //btnRevokeAccess.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
             btnHome.setVisibility(View.GONE);
+            welcomeMsg.setVisibility(View.GONE);
         }
     }
 
