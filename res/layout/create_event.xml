@@ -16,8 +16,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editText_title"
-            android:layout_below="@+id/textView_eventTitle" android:layout_alignLeft="@+id/textView_eventsHosting"
-            android:layout_alignParentRight="true"/>
+            android:layout_below="@+id/textView_eventTitle"
+            android:layout_alignStart="@+id/textView_eventsHosting"
+            android:layout_alignLeft="@+id/textView_eventsHosting"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:hint="@string/eventTitleHint"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

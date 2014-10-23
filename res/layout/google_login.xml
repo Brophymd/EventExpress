@@ -5,7 +5,7 @@
     <LinearLayout
                   xmlns:tools="http://schemas.android.com/tools"
                   android:layout_width="match_parent"
-                  android:layout_height="match_parent"
+                  android:layout_height="wrap_content"
                   android:orientation="vertical"
                   android:padding="16dp"
                   tools:context=".MainActivity" >
@@ -14,8 +14,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:layout_centerHorizontal="true"
-                android:textSize="40dp"
+                android:textSize="40sp"
                 android:id="@+id/textView_appTitle"
                 android:visibility="visible"/>
         <TextView
@@ -23,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/welcome_message"
-                android:textSize="35dp"
+                android:textSize="35sp"
                 android:id="@+id/textView_welcome"
                 android:visibility="gone"/>
 
@@ -46,6 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical"
                     android:layout_weight="2" >
 
@@ -54,14 +54,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                 <TextView
                         android:id="@+id/txtEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:textSize="18dp" />
+                        android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
