@@ -37,5 +37,9 @@
         <activity android:name=".Event_Detail"/>
         <activity android:name=".Event_Detail_Host"/>
 
+        <provider
+                android:name="edu.usf.EventExpress.provider.EventProvider"
+                android:authorities="edu.usf.EventExpress.provider"
+                android:exported="false" />
     </application>
 </manifest>

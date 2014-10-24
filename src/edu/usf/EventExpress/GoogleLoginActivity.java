@@ -1,9 +1,7 @@
 package edu.usf.EventExpress;
 
-import java.io.InputStream;
-
 import android.app.Activity;
-import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.graphics.Bitmap;
@@ -11,22 +9,23 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
-import org.w3c.dom.Text;
+import edu.usf.EventExpress.provider.user.UserColumns;
+import edu.usf.EventExpress.provider.user.UserContentValues;
+import edu.usf.EventExpress.provider.user.UserCursor;
+import edu.usf.EventExpress.provider.user.UserSelection;
+
+import java.io.InputStream;
 
 /**
  * Created by Vi Tran on 10/17/2014.
@@ -255,9 +254,32 @@ public class GoogleLoginActivity extends Activity implements
                 String personGooglePlusProfile = currentPerson.getUrl();
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
+                /* LOCAL STORAGE TEST */
+                String googleId = currentPerson.getId();
+                //insert user
+                UserContentValues values = new UserContentValues();
+                values.putGoogleId(googleId).putUserName(personName);
+                Context context = getApplicationContext();
+                context.getContentResolver().insert(UserColumns.CONTENT_URI, values.values());
+                //query for user and display in log
+                UserSelection where = new UserSelection();
+                where.userNameNot("superbutts");
+                UserCursor user = where.query(context.getContentResolver());
+                if (user != null && user.moveToFirst()) {
+                    do {
+                        String dbGoogleId = user.getGoogleId();
+                        String dbUserName = user.getUserName();
+                        Log.d(TAG, "dbGoogleId: " + dbGoogleId + ", dbUserName: " + dbUserName);
+                    } while (user.moveToNext());
+                }
+                else {
+                    Log.d(TAG, "Failed to query db :(");
+                }
+                /* END LOCAL STORAGE TEST */
+
                 //session.createLoginSession(personName, email);
 
-                Log.e(TAG, "Name: " + personName + ", plusProfile: "
+                Log.d(TAG, "Name: " + personName + ", plusProfile: "
                         + personGooglePlusProfile + ", email: " + email
                         + ", Image: " + personPhotoUrl);
 
