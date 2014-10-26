@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+            style = "@style/TitleFont.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_Edit_Event"
+            android:id="@+id/textView_editEvent"
+            android:layout_marginLeft="23dp"
+            android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:layout_marginTop="23dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_titleEdit"
+            android:layout_below="@+id/textView_eventTitleEdit" android:layout_alignLeft="@+id/textView_editEvent"
+            android:layout_alignParentRight="true"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:id="@+id/editText_eventDescriptionEdit"
+            android:layout_below="@+id/textView_descriptionEdit" android:layout_alignLeft="@+id/editText_titleEdit"
+            android:layout_alignParentRight="true" android:layout_above="@+id/textView_locationEdit"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_Title"
+            android:id="@+id/textView_eventTitleEdit"
+            android:layout_below="@+id/textView_editEvent" android:layout_alignLeft="@+id/editText_titleEdit"
+            android:layout_marginTop="27dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_Description"
+            android:id="@+id/textView_descriptionEdit"
+            android:layout_below="@+id/editText_titleEdit"
+            android:layout_alignLeft="@+id/editText_eventDescriptionEdit"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_Date"
+            android:id="@+id/textView_dateEdit"
+            android:layout_below="@+id/editText_locationEdit" android:layout_alignRight="@+id/textView_timeEdit"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:focusable="false"
+            android:ems="10"
+            android:id="@+id/editText_dateEdit"
+            android:layout_below="@+id/textView_dateEdit" android:layout_alignLeft="@+id/editText_eventDescriptionEdit"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_Time"
+            android:id="@+id/textView_timeEdit"
+            android:layout_below="@+id/editText_dateEdit" android:layout_alignLeft="@+id/editText_eventDescriptionEdit"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="time"
+            android:focusable="false"
+            android:ems="10"
+            android:id="@+id/editText_timeEdit"
+            android:layout_below="@+id/textView_timeEdit" android:layout_alignLeft="@+id/editText_eventDescriptionEdit"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_Location"
+            android:id="@+id/textView_locationEdit" android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/editText_eventDescriptionEdit"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:ems="10"
+            android:id="@+id/editText_locationEdit" android:layout_below="@+id/textView_locationEdit"
+            android:layout_alignLeft="@+id/textView_locationEdit"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_save"
+            android:id="@+id/button_edit"
+            android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/editText_timeEdit"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_invite"
+            android:id="@+id/button_inviteFriendsEdit"
+            android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/textView_timeEdit"/>
+</RelativeLayout>
