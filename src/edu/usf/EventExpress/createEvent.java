@@ -10,7 +10,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+
 import java.util.Calendar;
+
 
 /**
  * Created by Varik on 10/12/2014.
@@ -18,6 +20,7 @@ import java.util.Calendar;
 public class createEvent extends Activity {
 
     EditText time,date;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,7 @@ public class createEvent extends Activity {
                             AMPM = "PM";
                             displayHour -= 12;
                         }
-                        time.setText(displayHour + ":" + minutePick  + " " + AMPM);
+                        time.setText(displayHour + ":" + String.format("%02d",minutePick)  + " " + AMPM);
                     }
                 }, hour,minute, false);
                 myTimePicker.setTitle(R.string.lbl_Pick_Date);
