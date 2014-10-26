@@ -7,11 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import com.google.android.gms.maps.GoogleMap;
 
 /**
  * Created by Varik on 10/12/2014.
  */
 public class mainScreen extends Activity {
+
 
     SessionManager session;
 
@@ -62,14 +64,7 @@ public class mainScreen extends Activity {
         switch (item.getItemId())
         {
             case 0:
-                //session.logOut();
-                //android.os.Process.killProcess(android.os.Process.myPid());
-                //Intent myIntent = new Intent(this, GoogleLoginActivity.class);
-                //myIntent.putExtra("logout",true);
-                //myIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                //startActivity(myIntent);
-                //finish();
-                Toast.makeText(getApplicationContext(), session.getUserID(),Toast.LENGTH_SHORT).show();
+
                 return true;
 
         }
