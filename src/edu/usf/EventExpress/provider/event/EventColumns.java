@@ -22,7 +22,7 @@ public class EventColumns implements BaseColumns {
     public static final String EVENT_DESCRIPTION = "event_description";
     public static final String EVENT_DATE = "event_date";
     public static final String EVENT_ADDRESS = "event_address";
-    public static final String EVENT_LATTITUDE = "event_lattitude";
+    public static final String EVENT_LATITUDE = "event_latitude";
     public static final String EVENT_LONGITUDE = "event_longitude";
 
     public static final String DEFAULT_ORDER = TABLE_NAME + "." +_ID;
@@ -36,7 +36,7 @@ public class EventColumns implements BaseColumns {
             TABLE_NAME + "." + EVENT_DESCRIPTION,
             TABLE_NAME + "." + EVENT_DATE,
             TABLE_NAME + "." + EVENT_ADDRESS,
-            TABLE_NAME + "." + EVENT_LATTITUDE,
+            TABLE_NAME + "." + EVENT_LATITUDE,
             TABLE_NAME + "." + EVENT_LONGITUDE
     };
     // @formatter:on
@@ -50,7 +50,7 @@ public class EventColumns implements BaseColumns {
         ALL_COLUMNS.add(EVENT_DESCRIPTION);
         ALL_COLUMNS.add(EVENT_DATE);
         ALL_COLUMNS.add(EVENT_ADDRESS);
-        ALL_COLUMNS.add(EVENT_LATTITUDE);
+        ALL_COLUMNS.add(EVENT_LATITUDE);
         ALL_COLUMNS.add(EVENT_LONGITUDE);
     }
 

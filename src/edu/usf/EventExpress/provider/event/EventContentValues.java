@@ -91,13 +91,13 @@ public class EventContentValues extends AbstractContentValues {
     }
 
 
-    public EventContentValues putEventLattitude(Float value) {
-        mContentValues.put(EventColumns.EVENT_LATTITUDE, value);
+    public EventContentValues putEventLatitude(Float value) {
+        mContentValues.put(EventColumns.EVENT_LATITUDE, value);
         return this;
     }
 
-    public EventContentValues putEventLattitudeNull() {
-        mContentValues.putNull(EventColumns.EVENT_LATTITUDE);
+    public EventContentValues putEventLatitudeNull() {
+        mContentValues.putNull(EventColumns.EVENT_LATITUDE);
         return this;
     }
 

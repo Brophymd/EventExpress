@@ -34,7 +34,7 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventColumns.EVENT_DESCRIPTION + " TEXT, "
             + EventColumns.EVENT_DATE + " INTEGER, "
             + EventColumns.EVENT_ADDRESS + " TEXT, "
-            + EventColumns.EVENT_LATTITUDE + " REAL, "
+            + EventColumns.EVENT_LATITUDE + " REAL, "
             + EventColumns.EVENT_LONGITUDE + " REAL "
             + " );";
 

@@ -95,11 +95,11 @@ public class EventMembersCursor extends AbstractCursor {
     }
 
     /**
-     * Get the {@code event_lattitude} value.
+     * Get the {@code event_latitude} value.
      * Can be {@code null}.
      */
-    public Float getEventLattitude() {
-        return getFloatOrNull(EventColumns.EVENT_LATTITUDE);
+    public Float getEventLatitude() {
+        return getFloatOrNull(EventColumns.EVENT_LATITUDE);
     }
 
     /**

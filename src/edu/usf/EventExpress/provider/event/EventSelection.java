@@ -159,33 +159,33 @@ public class EventSelection extends AbstractSelection<EventSelection> {
         return this;
     }
 
-    public EventSelection eventLattitude(Float... value) {
-        addEquals(EventColumns.EVENT_LATTITUDE, value);
+    public EventSelection eventLatitude(Float... value) {
+        addEquals(EventColumns.EVENT_LATITUDE, value);
         return this;
     }
 
-    public EventSelection eventLattitudeNot(Float... value) {
-        addNotEquals(EventColumns.EVENT_LATTITUDE, value);
+    public EventSelection eventLatitudeNot(Float... value) {
+        addNotEquals(EventColumns.EVENT_LATITUDE, value);
         return this;
     }
 
-    public EventSelection eventLattitudeGt(float value) {
-        addGreaterThan(EventColumns.EVENT_LATTITUDE, value);
+    public EventSelection eventLatitudeGt(float value) {
+        addGreaterThan(EventColumns.EVENT_LATITUDE, value);
         return this;
     }
 
-    public EventSelection eventLattitudeGtEq(float value) {
-        addGreaterThanOrEquals(EventColumns.EVENT_LATTITUDE, value);
+    public EventSelection eventLatitudeGtEq(float value) {
+        addGreaterThanOrEquals(EventColumns.EVENT_LATITUDE, value);
         return this;
     }
 
-    public EventSelection eventLattitudeLt(float value) {
-        addLessThan(EventColumns.EVENT_LATTITUDE, value);
+    public EventSelection eventLatitudeLt(float value) {
+        addLessThan(EventColumns.EVENT_LATITUDE, value);
         return this;
     }
 
-    public EventSelection eventLattitudeLtEq(float value) {
-        addLessThanOrEquals(EventColumns.EVENT_LATTITUDE, value);
+    public EventSelection eventLatitudeLtEq(float value) {
+        addLessThanOrEquals(EventColumns.EVENT_LATITUDE, value);
         return this;
     }
 
