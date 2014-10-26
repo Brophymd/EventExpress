@@ -27,6 +27,7 @@
     <string name="lbl_Date">Date:</string>
     <string name="lbl_Time">Time:</string>
     <string name="lbl_Location">Location:</string>
+    <string name="lbl_Pick_Date">Pick Date</string>
 
     <!-- strings for event_detail -->
     <string name="lbl_Event_Title">Event Title</string>
