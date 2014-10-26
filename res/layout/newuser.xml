@@ -9,40 +9,32 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/lbl_Enter_a_Name"
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"/>
+            android:id="@+id/textView" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/lbl_Explain_Name"
             android:id="@+id/textView2"
-            android:layout_below="@+id/editText"
-            android:layout_alignParentLeft="true"/>
+            android:layout_below="@+id/editText" android:layout_alignParentLeft="true"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:layout_below="@+id/textView"
-            android:layout_alignParentLeft="true"
+            android:id="@+id/editText" android:layout_below="@+id/textView" android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/lbl_Enter_Email_Addr"
-            android:id="@+id/textView3"
-            android:layout_below="@+id/textView2"
-            android:layout_alignParentLeft="true"
+            android:id="@+id/textView3" android:layout_below="@+id/textView2" android:layout_alignParentLeft="true"
             android:layout_marginTop="35dp"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/editText2" android:layout_below="@+id/textView3"
-            android:layout_alignParentLeft="true"
+            android:id="@+id/editText2" android:layout_below="@+id/textView3" android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"/>
     <Button
             android:layout_width="wrap_content"
@@ -50,8 +42,6 @@
             android:text="@string/lbl_Register"
             android:id="@+id/button"
             android:layout_marginTop="126dp"
-            android:onClick="register"
-            android:layout_below="@+id/editText2"
-            android:layout_alignRight="@+id/textView2"
-            android:layout_alignEnd="@+id/textView2"/>
+            android:onClick="register" android:layout_below="@+id/editText2"
+            android:layout_alignRight="@+id/textView2"/>
 </RelativeLayout>
