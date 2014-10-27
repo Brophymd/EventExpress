@@ -68,6 +68,8 @@ public class createEvent extends Activity {
                             AMPM = "PM";
                             displayHour -= 12;
                         }
+                        if(hourPick == 0)
+                            displayHour = 12;
                         time.setText(displayHour + ":" + String.format("%02d",minutePick)  + " " + AMPM);
                     }
                 }, hour,minute, false);

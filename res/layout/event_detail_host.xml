@@ -1,93 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+<LinearLayout android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:id="@+id/linearLayout">
+    <TextView
+        style = "@style/TitleFont.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SushiHut Dinner"
+        android:id="@+id/textView_eventTitle"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Who wants to judge this new fast food sushi?"
+        android:id="@+id/textView_eventDescription"/>
+
 
     <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:orientation="vertical" android:id="@+id/tableLayout">
+
         <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-            <TextView
-                    style = "@style/TitleFont.Large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SushiHut Dinner"
-                    android:id="@+id/textView_eventTitle"/>
-        </TableRow>
-        <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Who wants to judge this new fast food sushi?"
-                    android:id="@+id/textView_eventDescription"/>
-        </TableRow>
-        <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                    android:text="Time: "
+                    android:id="@+id/textView_lblTime"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Time: 6:00PM"
+                    android:text="6:00 PM"
                     android:id="@+id/textView_time"/>
         </TableRow>
         <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Date: 10/21/2014"
+                    android:text="Date: "
+                    android:id="@+id/textView_lblDate"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="10/21/2014"
                     android:id="@+id/textView_date"/>
         </TableRow>
         <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="15451 N Dale Mabry Hwy, Tampa, FL 33618"
-                    android:id="@+id/textView_HD_location"/>
-        </TableRow>
-
-        <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" android:orientation="vertical">
-            <ImageButton
+                    android:text="Location: "
+                    android:id="@+id/textView_lblLocation"/>
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageButton2" android:layout_gravity="right" android:src="@drawable/map2"
-                    />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="15451 N Dale Mabry Hwy, Tampa,FL"
+                    android:id="@+id/textView_HD_location"/>
         </TableRow>
+    </TableLayout>
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
 
-        <Button
+        <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_invite"
-                android:id="@+id/button_invite" android:layout_gravity="left"
+                android:id="@+id/imageButton2" android:layout_gravity="right" android:src="@drawable/map2"
                 />
 
         <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_invite"
+                android:id="@+id/button_invite"
+                />
+
+        <Button
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_cancel"
-                android:id="@+id/button_cancel" android:layout_gravity="right" />
+                android:id="@+id/button_cancel"  />
         <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_edit"
-                android:id="@+id/button_edit" android:layout_gravity="right" />
+                android:id="@+id/button_edit"  />
 
-    </TableLayout>
+    </LinearLayout>
 
 </LinearLayout>
+</ScrollView>

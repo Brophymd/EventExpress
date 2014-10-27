@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
     <TextView
             style = "@style/TitleFont.Large"
@@ -12,19 +16,6 @@
             android:id="@+id/textView_editEvent"
             android:layout_marginLeft="23dp"
             android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:layout_marginTop="23dp"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText_titleEdit"
-            android:layout_below="@+id/textView_eventTitleEdit" android:layout_alignLeft="@+id/textView_editEvent"
-            android:layout_alignParentRight="true"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:id="@+id/editText_eventDescriptionEdit"
-            android:layout_below="@+id/textView_descriptionEdit" android:layout_alignLeft="@+id/editText_titleEdit"
-            android:layout_alignParentRight="true" android:layout_above="@+id/textView_locationEdit"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,6 +23,12 @@
             android:id="@+id/textView_eventTitleEdit"
             android:layout_below="@+id/textView_editEvent" android:layout_alignLeft="@+id/editText_titleEdit"
             android:layout_marginTop="27dp"/>
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_titleEdit"
+            android:layout_below="@+id/textView_eventTitleEdit" android:layout_alignLeft="@+id/textView_editEvent"
+            android:layout_alignParentRight="true"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,6 +36,15 @@
             android:id="@+id/textView_descriptionEdit"
             android:layout_below="@+id/editText_titleEdit"
             android:layout_alignLeft="@+id/editText_eventDescriptionEdit"/>
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:id="@+id/editText_eventDescriptionEdit"
+            android:layout_below="@+id/textView_descriptionEdit" android:layout_alignLeft="@+id/editText_titleEdit"
+            android:layout_alignParentRight="true" android:layout_above="@+id/textView_locationEdit"/>
+
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,15 +87,16 @@
             android:id="@+id/editText_locationEdit" android:layout_below="@+id/textView_locationEdit"
             android:layout_alignLeft="@+id/textView_locationEdit"/>
     <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_save"
             android:id="@+id/button_edit"
             android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/editText_timeEdit"/>
     <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_invite"
             android:id="@+id/button_inviteFriendsEdit"
             android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/textView_timeEdit"/>
-</RelativeLayout>
+</LinearLayout>
+</ScrollView>
