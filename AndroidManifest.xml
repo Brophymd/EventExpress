@@ -9,6 +9,13 @@
 
     <uses-sdk android:minSdkVersion="16"
               android:targetSdkVersion="21"/>
+    <!-- Google Cloud Messaging requires:
+    c2dm.permission.RECEIVE, INTERNET, GET_ACCOUNTS, WAKE_LOCK, C2D_MESSAGE, c2dm.intent.RECEIVE, c2dm.SEND -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <permission android:name="edu.usf.EventExpress.permission.C2D_MESSAGE"
+                android:protectionLevel="signature" />
+    <uses-permission android:name="edu.usf.EventExpress.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -55,5 +62,14 @@
                 android:name="edu.usf.EventExpress.provider.EventProvider"
                 android:authorities="edu.usf.EventExpress.provider"
                 android:exported="false"/>
+        <receiver
+                android:name="gcm.GcmBroadcastReceiver"
+                android:permission="com.google.android.c2dm.permission.SEND" >
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <category android:name="edu.usf.EventExpress" />
+                </intent-filter>
+        </receiver>
+        <service android:name="gcm.GcmIntentService" />
     </application>
 </manifest>
