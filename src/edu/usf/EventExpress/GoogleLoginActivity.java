@@ -98,6 +98,7 @@ public class GoogleLoginActivity extends Activity implements
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(getApplicationContext());
+            Log.i(TAG, "Registration ID: " + regid);
 
             if (regid.isEmpty()) {
                 registerInBackground();
@@ -300,14 +301,6 @@ public class GoogleLoginActivity extends Activity implements
                 }
                 else {
                     Log.d(TAG, "Failed to query db :(");
-                }
-                String token = null;
-                try {
-                    token = GoogleAuthUtil.getToken(getApplicationContext(), email, "oauth2:profile email");
-                } catch (IOException e) {
-                    Log.e(TAG, e.getMessage());
-                } catch (GoogleAuthException e) {
-                    Log.e(TAG, e.getMessage());
                 }
                 /* END LOCAL STORAGE TEST */
 
