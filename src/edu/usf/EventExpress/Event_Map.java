@@ -12,6 +12,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.maps.GeoPoint;
 
 /**
  * Created by Varik on 10/26/2014.
@@ -21,13 +23,18 @@ public class Event_Map extends Activity {
     private GoogleMap googleMap;
     private LocationManager locationManager;
     private Location myLocation;
+    private Bundle myBundle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_map);
-
+        myBundle = getIntent().getExtras();
         InitilizeMap();
+        if(myBundle != null && myBundle.getBoolean("fromEventDetail",false)){
+            ShowGeoLocation();
+        }
+
 
     }
 
@@ -39,6 +46,7 @@ public class Event_Map extends Activity {
         if (locationManager == null){
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         }
+        // NEED TO SET FOR IF  THESE RETURN NULL
         if (myLocation == null){
             myLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider( new Criteria(), true));
         }
@@ -47,6 +55,22 @@ public class Event_Map extends Activity {
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(mylatlng));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(18));
 
+
+    }
+
+    private void ShowGeoLocation(){
+        LatLng mylatlng;
+        String addr = myBundle.getString("LOCATION");
+
+        GeoLocation x = new GeoLocation(getApplicationContext());
+        mylatlng = x.getLatLngfromAddress(addr);
+        if(mylatlng == null){
+            Toast.makeText(getApplicationContext(),"Error here",Toast.LENGTH_SHORT).show();
+        }
+        MarkerOptions marker = new MarkerOptions().position(mylatlng).title("Here");
+        googleMap.addMarker(marker);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(mylatlng));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(18));
 
     }
 }

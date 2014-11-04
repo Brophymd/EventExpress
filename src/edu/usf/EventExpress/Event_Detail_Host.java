@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import com.google.android.maps.GeoPoint;
 
 
 /**
@@ -14,12 +16,14 @@ import android.widget.TextView;
 public class Event_Detail_Host extends Activity {
 
     Button edit;
+    ImageButton map;
     TextView title, description, location, date, time;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_detail_host);
 
+        map = (ImageButton)findViewById(R.id.imageButton2);
         edit = (Button)findViewById(R.id.button_edit);
         title = (TextView)findViewById(R.id.textView_eventTitle);
         description = (TextView)findViewById(R.id.textView_eventDescription);
@@ -44,6 +48,21 @@ public class Event_Detail_Host extends Activity {
             }
         };
         edit.setOnClickListener(editClickEvent);
+
+        View.OnClickListener showOnMap = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(),Event_Map.class);
+                Bundle myBundle = new Bundle();
+                myBundle.putString("LOCATION", location.getText().toString());
+                //myBundle.putString("LOCATION", "3906 Castle Key Lane Valrico Florida");
+                myBundle.putBoolean("fromEventDetail",true);
+                myIntent.putExtras(myBundle);
+                startActivity(myIntent);
+
+            }
+        };
+        map.setOnClickListener(showOnMap);
 
 
 
