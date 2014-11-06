@@ -33,7 +33,7 @@
             "type": "String",
         },
         {
-            "name": "event_lattitude",
+            "name": "event_latitude",
             "type": "Float",
         },
         {
