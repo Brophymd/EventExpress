@@ -26,5 +26,5 @@
             android:layout_height="wrap_content"
             android:text="@string/lbl_My_Events"
             android:id="@+id/textView_eventsHosting"
-            android:layout_above="@+id/listView" android:layout_alignParentLeft="true"/>
+            android:layout_above="@+id/listView_myEvents" android:layout_alignParentLeft="true"/>
 </RelativeLayout>

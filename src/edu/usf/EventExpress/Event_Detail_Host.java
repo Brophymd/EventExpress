@@ -55,7 +55,6 @@ public class Event_Detail_Host extends Activity {
                 Intent myIntent = new Intent(v.getContext(),Event_Map.class);
                 Bundle myBundle = new Bundle();
                 myBundle.putString("LOCATION", location.getText().toString());
-                //myBundle.putString("LOCATION", "3906 Castle Key Lane Valrico Florida");
                 myBundle.putBoolean("fromEventDetail",true);
                 myIntent.putExtras(myBundle);
                 startActivity(myIntent);

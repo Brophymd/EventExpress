@@ -36,6 +36,5 @@ public class GeoLocation {
         Address location = address.get(0);
         GeoPoint P = new GeoPoint((int) (location.getLatitude() * 1E6),(int) (location.getLongitude() * 1E6));
         return new LatLng(P.getLatitudeE6()/1E6, P.getLongitudeE6()/1E6);
-
     }
 }
