@@ -26,7 +26,7 @@ public class Edit_Event extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_event);
 
-        CreateorEdit = (TextView)findViewById(R.id.textView_eventTitle);
+        CreateorEdit = (TextView)findViewById(R.id.textView_editEvent);
         et_title = (EditText)findViewById(R.id.editText_titleEdit);
         et_description = (EditText)findViewById(R.id.editText_eventDescriptionEdit);
         et_location = (EditText)findViewById(R.id.editText_locationEdit);

@@ -25,11 +25,12 @@ public class Event_myevents extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_myevents);
+        myStringArray = new ArrayList<String>();
         mainListView = (ListView) findViewById( R.id.listView_myEvents);
         myStringArray.add("SushiHut Dinner");
         //myStringArray.add("Halloween Party!");
 
-        myStringArray = new ArrayList<String>();
+
         listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
         mainListView.setAdapter(listAdapter);
 
@@ -61,12 +62,13 @@ public class Event_myevents extends Activity {
         myBundle.putBoolean("CREATE",true);
         Intent myIntent = new Intent(this, Edit_Event.class);
         myIntent.putExtras(myBundle);
-        //startActivityForResult(myIntent, fromCreate);
+        startActivityForResult(myIntent, fromCreate);
     }
 
-    /*protected void onActivityResult(int request_code, int result_code, Intent data){
+    protected void onActivityResult(int request_code, int result_code, Intent data){
         if(result_code == 1){
             if(request_code == fromCreate){
+
 
             }
             if(request_code == fromEdit){
@@ -74,6 +76,6 @@ public class Event_myevents extends Activity {
             }
         }
 
-    }*/
+    }
 
 }
