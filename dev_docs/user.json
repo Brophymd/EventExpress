@@ -1,0 +1,22 @@
+{
+    "fields": [
+        {
+            "name": "google_id",
+            "type": "String",
+            "index": true,
+            "nullable": false,
+        },
+        {
+            "name": "user_name",
+            "type": "String",
+            "nullable": false,
+        },
+    ],
+
+    "constraints": [
+        {
+            "name": "unique_name",
+            "definition": "UNIQUE (google_id) ON CONFLICT REPLACE"
+        },
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "fields": [
+        {
+            "name": "event_id",
+            "type": "Integer",
+            "nullable": false,
+            "foreignKey": {
+                "table": "event",
+                "onDelete": "CASCADE",
+            },
+        },
+        {
+            "name": "user_id",
+            "type": "Integer",
+            "nullable": false,
+            "foreignKey": {
+                "table": "user",
+                "onDelete": "CASCADE",
+            },
+        },
+        {
+            "name": "rsvp_status",
+            "type": "enum",
+            "enumName": "RSVPStatus",
+            "enumValues": [
+                "INVITED",
+                "UNINVITED",
+                "NO",
+                "YES",
+                "MAYBE",
+            ],
+            "defaultValue": "INVITED",
+        },
+        ]
+}

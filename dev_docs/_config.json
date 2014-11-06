@@ -1,0 +1,12 @@
+{
+    "syntaxVersion": "1.7",
+    "projectPackageId": "edu.usf.EventExpress",
+    "authority": "edu.usf.EventExpress.provider",
+    "providerJavaPackage": "edu.usf.EventExpress.provider",
+    "providerClassName": "EventProvider",
+    "sqliteOpenHelperClassName": "EventSQLiteOpenHelper",
+    "sqliteOpenHelperCallbacksClassName": "EventSQLiteOpenHelperCallbacks",
+    "databaseFileName": "events.db",
+    "databaseVersion": 1,
+    "enableForeignKeys": true,
+}

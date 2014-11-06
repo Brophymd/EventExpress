@@ -1,0 +1,44 @@
+{
+    "fields": [
+        {
+            "name": "event_owner",
+            "type": "String",
+            "index": true,
+            "nullable": false,
+        },
+        {
+            "name": "event_type",
+            "type": "enum",
+            "enumName": "EventType",
+            "enumValues": [
+                "OPEN",
+                "CLOSED",
+            ],
+            "nullable": false,
+        },
+        {
+            "name": "event_title",
+            "type": "String",
+        },
+        {
+            "name": "event_description",
+            "type": "String",
+        },
+        {
+            "name": "event_date",
+            "type": "Date",
+        },
+        {
+            "name": "event_address",
+            "type": "String",
+        },
+        {
+            "name": "event_lattitude",
+            "type": "Float",
+        },
+        {
+            "name": "event_longitude",
+            "type": "Float",
+        },
+        ]
+}
