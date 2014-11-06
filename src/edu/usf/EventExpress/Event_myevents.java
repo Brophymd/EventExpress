@@ -6,16 +6,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
+
+
 import java.util.ArrayList;
 
 /**
  * Created by Varik on 10/12/2014.
  */
 public class Event_myevents extends Activity {
-    private String userid = "";
-    ArrayList<String> myStringArray = new ArrayList<String>();
+    //private String userid = "";
+    ArrayList<String> myStringArray;
     ArrayAdapter listAdapter;
     ListView mainListView;
+    static int fromCreate = 1;
+    static int fromEdit = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,12 +27,14 @@ public class Event_myevents extends Activity {
         setContentView(R.layout.event_myevents);
         mainListView = (ListView) findViewById( R.id.listView_myEvents);
         myStringArray.add("SushiHut Dinner");
-        myStringArray.add("Halloween Party!");
+        //myStringArray.add("Halloween Party!");
 
+        myStringArray = new ArrayList<String>();
         listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
         mainListView.setAdapter(listAdapter);
+
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int pos, long arg3) {
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                 //String temp = (String) ((TextView) view).getText();
                 //Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), Event_Detail_Host.class);
@@ -51,8 +57,23 @@ public class Event_myevents extends Activity {
 
     public void CreateEvent(View v){
 
-        Intent myIntent = new Intent(this, createEvent.class);
-        startActivity(myIntent);
+        Bundle myBundle = new Bundle();
+        myBundle.putBoolean("CREATE",true);
+        Intent myIntent = new Intent(this, Edit_Event.class);
+        myIntent.putExtras(myBundle);
+        //startActivityForResult(myIntent, fromCreate);
     }
+
+    /*protected void onActivityResult(int request_code, int result_code, Intent data){
+        if(result_code == 1){
+            if(request_code == fromCreate){
+
+            }
+            if(request_code == fromEdit){
+
+            }
+        }
+
+    }*/
 
 }

@@ -33,6 +33,7 @@ public class Event_Detail_Host extends Activity {
 
 
         View.OnClickListener editClickEvent = new View.OnClickListener(){
+            @Override
             public void onClick(View arg0){
                 Intent myIntent = new Intent(arg0.getContext(), Edit_Event.class);
                 Bundle b = new Bundle();

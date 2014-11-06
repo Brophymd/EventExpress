@@ -6,7 +6,7 @@
         <option name="keyAlias" value="markvimicah" />
         <option name="keyPassword" value="dGhpbmtwYWQ=" />
         <option name="keyStorePassword" value="dGhpbmtwYWQ=" />
-        <option name="keyStoreUrl" value="file://$PROJECT_DIR$/../../keys/EventExpressKey.jks" />
+        <option name="keyStoreUrl" value="file://$USER_HOME$/EventExpressKey.jks" />
         <option name="proGuardCfgFiles">
           <list>
             <option value="file://%MODULE_SDK_HOME%/tools/proguard/proguard-android.txt" />
