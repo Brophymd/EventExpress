@@ -12,6 +12,7 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import edu.usf.EventExpress.GoogleLoginActivity;
+import edu.usf.EventExpress.R;
 
 /**
  * Created by Micah on 10/31/2014.
@@ -77,7 +78,7 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-//                        .setSmallIcon(R.drawable.ic_stat_gcm)
+                        .setSmallIcon(R.drawable.icon)
                         .setContentTitle("GCM Notification")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))

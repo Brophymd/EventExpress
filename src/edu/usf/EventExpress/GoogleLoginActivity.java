@@ -15,8 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
@@ -33,6 +31,7 @@ import edu.usf.EventExpress.provider.user.UserSelection;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Vi Tran on 10/17/2014.
@@ -58,6 +57,7 @@ public class GoogleLoginActivity extends Activity implements
 
     /* Object for interacting with GCM API */
     GoogleCloudMessaging gcm;
+    AtomicInteger msgId = new AtomicInteger();
     String regid;
 
     /* A flag indicating that a PendingIntent is in progress and prevents
@@ -303,6 +303,29 @@ public class GoogleLoginActivity extends Activity implements
                     Log.d(TAG, "Failed to query db :(");
                 }
                 /* END LOCAL STORAGE TEST */
+                /* GOOGLE CLOUD MESSAGING TEST */
+                new AsyncTask<Void, Void, String>() {
+                    @Override
+                    protected String doInBackground(Void... params) {
+                        String msg = "";
+                        try {
+                            Bundle data = new Bundle();
+                            data.putString("my_message", "Hello world!");
+                            String id = Integer.toString(msgId.incrementAndGet());
+                            gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
+                            msg = "Sent message";
+                        } catch (IOException ex) {
+                            msg = "Error :" + ex.getMessage();
+                        }
+                        return msg;
+                    }
+
+                    @Override
+                    protected void onPostExecute(String msg) {
+                        Log.i(TAG, "Test done: " + msg + "\n");
+                    }
+                }.execute(null, null, null);
+                /* END GOOGLE CLOUD MESSAGING TEST */
 
                 //session.createLoginSession(personName, email);
 
