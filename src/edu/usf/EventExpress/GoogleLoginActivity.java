@@ -68,7 +68,7 @@ public class GoogleLoginActivity extends Activity implements
 
     private ConnectionResult mConnectionResult;
 
-    private SignInButton btnSignIn;
+    public SignInButton btnSignIn;
     private Button btnSignOut, btnHome, btnEventMenu, btnEventInvited;
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail, welcomeMsg, txtTitle;

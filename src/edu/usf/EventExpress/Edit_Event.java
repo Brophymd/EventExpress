@@ -8,6 +8,7 @@ import android.text.format.Time;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
@@ -19,11 +20,13 @@ public class Edit_Event extends Activity {
 
     EditText et_title, et_description, et_location, et_date, et_time;
     String title, description, location, time, date;
+    TextView CreateorEdit;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_event);
 
+        CreateorEdit = (TextView)findViewById(R.id.textView_editEvent);
         et_title = (EditText)findViewById(R.id.editText_titleEdit);
         et_description = (EditText)findViewById(R.id.editText_eventDescriptionEdit);
         et_location = (EditText)findViewById(R.id.editText_locationEdit);
@@ -31,18 +34,24 @@ public class Edit_Event extends Activity {
         et_time = (EditText)findViewById(R.id.editText_timeEdit);
 
         Bundle b = getIntent().getExtras();
-        title = b.getString("TITLE");
-        description = b.getString("DESCRIPTION");
-        location = b.getString("LOCATION");
-        time = b.getString("TIME");
-        date = b.getString("DATE");
 
-        et_title.setText(title);
-        et_description.setText(description);
-        et_location.setText(location);
-        et_date.setText(date);
-        et_time.setText(time);
+        if(b.getBoolean("CREATE",false)){
+            CreateorEdit.setText("Create Event");
+        }
+        else {
+            CreateorEdit.setText("Edit Event");
+            title = b.getString("TITLE");
+            description = b.getString("DESCRIPTION");
+            location = b.getString("LOCATION");
+            time = b.getString("TIME");
+            date = b.getString("DATE");
 
+            et_title.setText(title);
+            et_description.setText(description);
+            et_location.setText(location);
+            et_date.setText(date);
+            et_time.setText(time);
+        }
 
 
         View.OnClickListener dateClickEvent = new View.OnClickListener() {

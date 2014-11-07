@@ -5,7 +5,6 @@ import android.location.Geocoder;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.maps.GeoPoint;
 import android.content.Context;
-
 import java.util.List;
 
 /**
