@@ -65,13 +65,13 @@
                 android:authorities="edu.usf.EventExpress.provider"
                 android:exported="false"/>
         <receiver
-                android:name="gcm.GcmBroadcastReceiver"
+                android:name="edu.usf.EventExpress.gcm.GcmBroadcastReceiver"
                 android:permission="com.google.android.c2dm.permission.SEND" >
                 <intent-filter>
                     <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                     <category android:name="edu.usf.EventExpress" />
                 </intent-filter>
         </receiver>
-        <service android:name="gcm.GcmIntentService" />
+        <service android:name="edu.usf.EventExpress.gcm.GcmIntentService" />
     </application>
 </manifest>
