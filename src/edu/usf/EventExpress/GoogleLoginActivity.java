@@ -98,7 +98,6 @@ public class GoogleLoginActivity extends Activity implements
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(getApplicationContext());
-            Log.i(TAG, "Registration ID: " + regid);
 
             if (regid.isEmpty()) {
                 registerInBackground();
