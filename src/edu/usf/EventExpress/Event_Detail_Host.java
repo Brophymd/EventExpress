@@ -1,13 +1,18 @@
 package edu.usf.EventExpress;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.google.android.maps.GeoPoint;
+import edu.usf.EventExpress.provider.event.EventColumns;
+import edu.usf.EventExpress.provider.event.EventCursor;
+import edu.usf.EventExpress.provider.event.EventSelection;
 
 
 /**
@@ -18,10 +23,25 @@ public class Event_Detail_Host extends Activity {
     Button edit;
     ImageButton map;
     TextView title, description, location, date, time;
+    String event_id;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_detail_host);
+
+        Bundle b = getIntent().getExtras();
+        event_id = b.getString("_ID");
+        Long id_long = Long.parseLong(event_id);
+        Context context = getApplicationContext();
+
+        EventSelection where = new EventSelection();
+        where.id(id_long.longValue());
+        Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
+                where.sel(), where.args(), null);
+
+        EventCursor event = new EventCursor(cursor);
+        event.moveToFirst();
+
 
         map = (ImageButton)findViewById(R.id.imageButton2);
         edit = (Button)findViewById(R.id.button_edit);
@@ -31,6 +51,13 @@ public class Event_Detail_Host extends Activity {
         date = (TextView)findViewById(R.id.textView_date);
         time = (TextView)findViewById(R.id.textView_time);
 
+
+
+        title.setText(event.getEventTitle());
+        description.setText(event.getEventDescription());
+        location.setText(event.getEventAddress());
+        date.setText(event.getEventDate().toString());
+        time.setText(event.getEventDate().toString());
 
         View.OnClickListener editClickEvent = new View.OnClickListener(){
             @Override
