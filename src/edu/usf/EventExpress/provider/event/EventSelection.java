@@ -218,4 +218,79 @@ public class EventSelection extends AbstractSelection<EventSelection> {
         addLessThanOrEquals(EventColumns.EVENT_LONGITUDE, value);
         return this;
     }
+
+    public EventSelection timestamp(String... value) {
+        addEquals(EventColumns.TIMESTAMP, value);
+        return this;
+    }
+
+    public EventSelection timestampNot(String... value) {
+        addNotEquals(EventColumns.TIMESTAMP, value);
+        return this;
+    }
+
+    public EventSelection timestampLike(String... value) {
+        addLike(EventColumns.TIMESTAMP, value);
+        return this;
+    }
+
+    public EventSelection deleted(int... value) {
+        addEquals(EventColumns.DELETED, toObjectArray(value));
+        return this;
+    }
+
+    public EventSelection deletedNot(int... value) {
+        addNotEquals(EventColumns.DELETED, toObjectArray(value));
+        return this;
+    }
+
+    public EventSelection deletedGt(int value) {
+        addGreaterThan(EventColumns.DELETED, value);
+        return this;
+    }
+
+    public EventSelection deletedGtEq(int value) {
+        addGreaterThanOrEquals(EventColumns.DELETED, value);
+        return this;
+    }
+
+    public EventSelection deletedLt(int value) {
+        addLessThan(EventColumns.DELETED, value);
+        return this;
+    }
+
+    public EventSelection deletedLtEq(int value) {
+        addLessThanOrEquals(EventColumns.DELETED, value);
+        return this;
+    }
+
+    public EventSelection synced(int... value) {
+        addEquals(EventColumns.SYNCED, toObjectArray(value));
+        return this;
+    }
+
+    public EventSelection syncedNot(int... value) {
+        addNotEquals(EventColumns.SYNCED, toObjectArray(value));
+        return this;
+    }
+
+    public EventSelection syncedGt(int value) {
+        addGreaterThan(EventColumns.SYNCED, value);
+        return this;
+    }
+
+    public EventSelection syncedGtEq(int value) {
+        addGreaterThanOrEquals(EventColumns.SYNCED, value);
+        return this;
+    }
+
+    public EventSelection syncedLt(int value) {
+        addLessThan(EventColumns.SYNCED, value);
+        return this;
+    }
+
+    public EventSelection syncedLtEq(int value) {
+        addLessThanOrEquals(EventColumns.SYNCED, value);
+        return this;
+    }
 }

@@ -83,4 +83,27 @@ public class EventCursor extends AbstractCursor {
     public Float getEventLongitude() {
         return getFloatOrNull(EventColumns.EVENT_LONGITUDE);
     }
+
+    /**
+     * Get the {@code timestamp} value.
+     * Cannot be {@code null}.
+     */
+    public String getTimestamp() {
+        Integer index = getCachedColumnIndexOrThrow(EventColumns.TIMESTAMP);
+        return getString(index);
+    }
+
+    /**
+     * Get the {@code deleted} value.
+     */
+    public int getDeleted() {
+        return getIntegerOrNull(EventColumns.DELETED);
+    }
+
+    /**
+     * Get the {@code synced} value.
+     */
+    public int getSynced() {
+        return getIntegerOrNull(EventColumns.SYNCED);
+    }
 }

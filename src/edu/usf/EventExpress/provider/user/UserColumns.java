@@ -17,7 +17,10 @@ public class UserColumns implements BaseColumns {
 
     public static final String _ID = BaseColumns._ID;
     public static final String GOOGLE_ID = "google_id";
-    public static final String USER_NAME = "user_name";
+    public static final String NAME = "name";
+    public static final String TIMESTAMP = "timestamp";
+    public static final String DELETED = "deleted";
+    public static final String SYNCED = "synced";
 
     public static final String DEFAULT_ORDER = TABLE_NAME + "." +_ID;
 
@@ -25,7 +28,10 @@ public class UserColumns implements BaseColumns {
     public static final String[] FULL_PROJECTION = new String[] {
             TABLE_NAME + "." + _ID + " AS " + BaseColumns._ID,
             TABLE_NAME + "." + GOOGLE_ID,
-            TABLE_NAME + "." + USER_NAME
+            TABLE_NAME + "." + NAME,
+            TABLE_NAME + "." + TIMESTAMP,
+            TABLE_NAME + "." + DELETED,
+            TABLE_NAME + "." + SYNCED
     };
     // @formatter:on
 
@@ -33,7 +39,10 @@ public class UserColumns implements BaseColumns {
     static {
         ALL_COLUMNS.add(_ID);
         ALL_COLUMNS.add(GOOGLE_ID);
-        ALL_COLUMNS.add(USER_NAME);
+        ALL_COLUMNS.add(NAME);
+        ALL_COLUMNS.add(TIMESTAMP);
+        ALL_COLUMNS.add(DELETED);
+        ALL_COLUMNS.add(SYNCED);
     }
 
     public static boolean hasColumns(String[] projection) {

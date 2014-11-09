@@ -34,9 +34,31 @@ public class UserContentValues extends AbstractContentValues {
 
 
 
-    public UserContentValues putUserName(String value) {
-        if (value == null) throw new IllegalArgumentException("value for userName must not be null");
-        mContentValues.put(UserColumns.USER_NAME, value);
+    public UserContentValues putName(String value) {
+        if (value == null) throw new IllegalArgumentException("value for name must not be null");
+        mContentValues.put(UserColumns.NAME, value);
+        return this;
+    }
+
+
+
+    public UserContentValues putTimestamp(String value) {
+        if (value == null) throw new IllegalArgumentException("value for timestamp must not be null");
+        mContentValues.put(UserColumns.TIMESTAMP, value);
+        return this;
+    }
+
+
+
+    public UserContentValues putDeleted(int value) {
+        mContentValues.put(UserColumns.DELETED, value);
+        return this;
+    }
+
+
+
+    public UserContentValues putSynced(int value) {
+        mContentValues.put(UserColumns.SYNCED, value);
         return this;
     }
 

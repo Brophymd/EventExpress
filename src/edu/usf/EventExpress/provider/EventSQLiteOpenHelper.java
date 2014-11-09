@@ -35,7 +35,10 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventColumns.EVENT_DATE + " INTEGER, "
             + EventColumns.EVENT_ADDRESS + " TEXT, "
             + EventColumns.EVENT_LATITUDE + " REAL, "
-            + EventColumns.EVENT_LONGITUDE + " REAL "
+            + EventColumns.EVENT_LONGITUDE + " REAL, "
+            + EventColumns.TIMESTAMP + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, "
+            + EventColumns.DELETED + " INTEGER NOT NULL DEFAULT '0', "
+            + EventColumns.SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + " );";
 
     private static final String SQL_CREATE_INDEX_EVENT_EVENT_OWNER = "CREATE INDEX IDX_EVENT_EVENT_OWNER "
@@ -46,7 +49,10 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventMembersColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + EventMembersColumns.EVENT_ID + " INTEGER NOT NULL, "
             + EventMembersColumns.USER_ID + " INTEGER NOT NULL, "
-            + EventMembersColumns.RSVP_STATUS + " INTEGER DEFAULT 'INVITED' "
+            + EventMembersColumns.RSVP_STATUS + " INTEGER DEFAULT 'INVITED', "
+            + EventMembersColumns.TIMESTAMP + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, "
+            + EventMembersColumns.DELETED + " INTEGER NOT NULL DEFAULT '0', "
+            + EventMembersColumns.SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + ", CONSTRAINT fk_event_id FOREIGN KEY (event_id) REFERENCES event (_id) ON DELETE CASCADE"
             + ", CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user (_id) ON DELETE CASCADE"
             + " );";
@@ -55,7 +61,10 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + UserColumns.TABLE_NAME + " ( "
             + UserColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + UserColumns.GOOGLE_ID + " TEXT NOT NULL, "
-            + UserColumns.USER_NAME + " TEXT NOT NULL "
+            + UserColumns.NAME + " TEXT NOT NULL, "
+            + UserColumns.TIMESTAMP + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, "
+            + UserColumns.DELETED + " INTEGER NOT NULL DEFAULT '0', "
+            + UserColumns.SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + ", CONSTRAINT unique_name unique (google_id) on conflict replace"
             + " );";
 

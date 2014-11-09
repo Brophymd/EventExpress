@@ -68,18 +68,93 @@ public class UserSelection extends AbstractSelection<UserSelection> {
         return this;
     }
 
-    public UserSelection userName(String... value) {
-        addEquals(UserColumns.USER_NAME, value);
+    public UserSelection name(String... value) {
+        addEquals(UserColumns.NAME, value);
         return this;
     }
 
-    public UserSelection userNameNot(String... value) {
-        addNotEquals(UserColumns.USER_NAME, value);
+    public UserSelection nameNot(String... value) {
+        addNotEquals(UserColumns.NAME, value);
         return this;
     }
 
-    public UserSelection userNameLike(String... value) {
-        addLike(UserColumns.USER_NAME, value);
+    public UserSelection nameLike(String... value) {
+        addLike(UserColumns.NAME, value);
+        return this;
+    }
+
+    public UserSelection timestamp(String... value) {
+        addEquals(UserColumns.TIMESTAMP, value);
+        return this;
+    }
+
+    public UserSelection timestampNot(String... value) {
+        addNotEquals(UserColumns.TIMESTAMP, value);
+        return this;
+    }
+
+    public UserSelection timestampLike(String... value) {
+        addLike(UserColumns.TIMESTAMP, value);
+        return this;
+    }
+
+    public UserSelection deleted(int... value) {
+        addEquals(UserColumns.DELETED, toObjectArray(value));
+        return this;
+    }
+
+    public UserSelection deletedNot(int... value) {
+        addNotEquals(UserColumns.DELETED, toObjectArray(value));
+        return this;
+    }
+
+    public UserSelection deletedGt(int value) {
+        addGreaterThan(UserColumns.DELETED, value);
+        return this;
+    }
+
+    public UserSelection deletedGtEq(int value) {
+        addGreaterThanOrEquals(UserColumns.DELETED, value);
+        return this;
+    }
+
+    public UserSelection deletedLt(int value) {
+        addLessThan(UserColumns.DELETED, value);
+        return this;
+    }
+
+    public UserSelection deletedLtEq(int value) {
+        addLessThanOrEquals(UserColumns.DELETED, value);
+        return this;
+    }
+
+    public UserSelection synced(int... value) {
+        addEquals(UserColumns.SYNCED, toObjectArray(value));
+        return this;
+    }
+
+    public UserSelection syncedNot(int... value) {
+        addNotEquals(UserColumns.SYNCED, toObjectArray(value));
+        return this;
+    }
+
+    public UserSelection syncedGt(int value) {
+        addGreaterThan(UserColumns.SYNCED, value);
+        return this;
+    }
+
+    public UserSelection syncedGtEq(int value) {
+        addGreaterThanOrEquals(UserColumns.SYNCED, value);
+        return this;
+    }
+
+    public UserSelection syncedLt(int value) {
+        addLessThan(UserColumns.SYNCED, value);
+        return this;
+    }
+
+    public UserSelection syncedLtEq(int value) {
+        addLessThanOrEquals(UserColumns.SYNCED, value);
         return this;
     }
 }

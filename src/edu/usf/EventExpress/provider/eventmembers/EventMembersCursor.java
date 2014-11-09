@@ -41,6 +41,29 @@ public class EventMembersCursor extends AbstractCursor {
     }
 
     /**
+     * Get the {@code timestamp} value.
+     * Cannot be {@code null}.
+     */
+    public String getTimestamp() {
+        Integer index = getCachedColumnIndexOrThrow(EventMembersColumns.TIMESTAMP);
+        return getString(index);
+    }
+
+    /**
+     * Get the {@code deleted} value.
+     */
+    public int getDeleted() {
+        return getIntegerOrNull(EventMembersColumns.DELETED);
+    }
+
+    /**
+     * Get the {@code synced} value.
+     */
+    public int getSynced() {
+        return getIntegerOrNull(EventMembersColumns.SYNCED);
+    }
+
+    /**
      * Get the {@code event_owner} value.
      * Cannot be {@code null}.
      */
@@ -120,11 +143,11 @@ public class EventMembersCursor extends AbstractCursor {
     }
 
     /**
-     * Get the {@code user_name} value.
+     * Get the {@code name} value.
      * Cannot be {@code null}.
      */
-    public String getUserName() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.USER_NAME);
+    public String getName() {
+        Integer index = getCachedColumnIndexOrThrow(UserColumns.NAME);
         return getString(index);
     }
 }

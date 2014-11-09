@@ -19,6 +19,9 @@ public class EventMembersColumns implements BaseColumns {
     public static final String EVENT_ID = "event_id";
     public static final String USER_ID = "user_id";
     public static final String RSVP_STATUS = "rsvp_status";
+    public static final String TIMESTAMP = "timestamp";
+    public static final String DELETED = "deleted";
+    public static final String SYNCED = "synced";
 
     public static final String DEFAULT_ORDER = TABLE_NAME + "." +_ID;
 
@@ -27,7 +30,10 @@ public class EventMembersColumns implements BaseColumns {
             TABLE_NAME + "." + _ID + " AS " + BaseColumns._ID,
             TABLE_NAME + "." + EVENT_ID,
             TABLE_NAME + "." + USER_ID,
-            TABLE_NAME + "." + RSVP_STATUS
+            TABLE_NAME + "." + RSVP_STATUS,
+            TABLE_NAME + "." + TIMESTAMP,
+            TABLE_NAME + "." + DELETED,
+            TABLE_NAME + "." + SYNCED
     };
     // @formatter:on
 
@@ -37,6 +43,9 @@ public class EventMembersColumns implements BaseColumns {
         ALL_COLUMNS.add(EVENT_ID);
         ALL_COLUMNS.add(USER_ID);
         ALL_COLUMNS.add(RSVP_STATUS);
+        ALL_COLUMNS.add(TIMESTAMP);
+        ALL_COLUMNS.add(DELETED);
+        ALL_COLUMNS.add(SYNCED);
     }
 
     public static boolean hasColumns(String[] projection) {

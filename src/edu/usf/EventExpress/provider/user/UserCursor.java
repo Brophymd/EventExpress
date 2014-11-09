@@ -24,11 +24,34 @@ public class UserCursor extends AbstractCursor {
     }
 
     /**
-     * Get the {@code user_name} value.
+     * Get the {@code name} value.
      * Cannot be {@code null}.
      */
-    public String getUserName() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.USER_NAME);
+    public String getName() {
+        Integer index = getCachedColumnIndexOrThrow(UserColumns.NAME);
         return getString(index);
+    }
+
+    /**
+     * Get the {@code timestamp} value.
+     * Cannot be {@code null}.
+     */
+    public String getTimestamp() {
+        Integer index = getCachedColumnIndexOrThrow(UserColumns.TIMESTAMP);
+        return getString(index);
+    }
+
+    /**
+     * Get the {@code deleted} value.
+     */
+    public int getDeleted() {
+        return getIntegerOrNull(UserColumns.DELETED);
+    }
+
+    /**
+     * Get the {@code synced} value.
+     */
+    public int getSynced() {
+        return getIntegerOrNull(UserColumns.SYNCED);
     }
 }

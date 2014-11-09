@@ -24,6 +24,9 @@ public class EventColumns implements BaseColumns {
     public static final String EVENT_ADDRESS = "event_address";
     public static final String EVENT_LATITUDE = "event_latitude";
     public static final String EVENT_LONGITUDE = "event_longitude";
+    public static final String TIMESTAMP = "timestamp";
+    public static final String DELETED = "deleted";
+    public static final String SYNCED = "synced";
 
     public static final String DEFAULT_ORDER = TABLE_NAME + "." +_ID;
 
@@ -37,7 +40,10 @@ public class EventColumns implements BaseColumns {
             TABLE_NAME + "." + EVENT_DATE,
             TABLE_NAME + "." + EVENT_ADDRESS,
             TABLE_NAME + "." + EVENT_LATITUDE,
-            TABLE_NAME + "." + EVENT_LONGITUDE
+            TABLE_NAME + "." + EVENT_LONGITUDE,
+            TABLE_NAME + "." + TIMESTAMP,
+            TABLE_NAME + "." + DELETED,
+            TABLE_NAME + "." + SYNCED
     };
     // @formatter:on
 
@@ -52,6 +58,9 @@ public class EventColumns implements BaseColumns {
         ALL_COLUMNS.add(EVENT_ADDRESS);
         ALL_COLUMNS.add(EVENT_LATITUDE);
         ALL_COLUMNS.add(EVENT_LONGITUDE);
+        ALL_COLUMNS.add(TIMESTAMP);
+        ALL_COLUMNS.add(DELETED);
+        ALL_COLUMNS.add(SYNCED);
     }
 
     public static boolean hasColumns(String[] projection) {

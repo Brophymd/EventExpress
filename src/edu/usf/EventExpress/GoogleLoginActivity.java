@@ -285,17 +285,17 @@ public class GoogleLoginActivity extends Activity implements
                 String googleId = currentPerson.getId();
                 //insert user
                 UserContentValues values = new UserContentValues();
-                values.putGoogleId(googleId).putUserName(personName);
+                values.putGoogleId(googleId).putName(personName);
                 Context context = getApplicationContext();
                 context.getContentResolver().insert(UserColumns.CONTENT_URI, values.values());
                 //query for user and display in log
                 UserSelection where = new UserSelection();
-                where.userNameNot("superbutts");
+                where.nameNot("superbutts");
                 UserCursor user = where.query(context.getContentResolver());
                 if (user != null && user.moveToFirst()) {
                     do {
                         String dbGoogleId = user.getGoogleId();
-                        String dbUserName = user.getUserName();
+                        String dbUserName = user.getName();
                         Log.d(TAG, "dbGoogleId: " + dbGoogleId + ", dbUserName: " + dbUserName);
                     } while (user.moveToNext());
                 }

@@ -11,12 +11,16 @@
               android:targetSdkVersion="21"/>
     <!-- Google Cloud Messaging requires:
     c2dm.permission.RECEIVE, INTERNET, GET_ACCOUNTS, WAKE_LOCK, C2D_MESSAGE, c2dm.intent.RECEIVE, c2dm.SEND -->
+    <!-- SyncAdapter requires INTERNET, READ_SYNC_SETTINGS, WRITE_SYNC_SETTINGS, AUTHENTICATE_ACCOUNTS -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <permission android:name="edu.usf.EventExpress.permission.C2D_MESSAGE"
                 android:protectionLevel="signature" />
     <uses-permission android:name="edu.usf.EventExpress.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -61,17 +65,35 @@
         <activity android:name=".Edit_Event"/>
 
         <provider
-                android:name="edu.usf.EventExpress.provider.EventProvider"
+                android:name=".provider.EventProvider"
                 android:authorities="edu.usf.EventExpress.provider"
                 android:exported="false"/>
         <receiver
-                android:name="edu.usf.EventExpress.gcm.GcmBroadcastReceiver"
+                android:name=".gcm.GcmBroadcastReceiver"
                 android:permission="com.google.android.c2dm.permission.SEND" >
                 <intent-filter>
                     <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                     <category android:name="edu.usf.EventExpress" />
                 </intent-filter>
         </receiver>
-        <service android:name="edu.usf.EventExpress.gcm.GcmIntentService" />
+        <service android:name=".gcm.GcmIntentService" />
+        <service android:name=".auth.AuthenticatorService"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                    android:name="android.accounts.AccountAuthenticator"
+                    android:resource="@xml/authenticator" />
+        </service>
+        <service android:name=".sync.SyncService"
+                 android:exported="false"
+                 android:process=":sync">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter"
+                       android:resource="@xml/syncadapter" />
+        </service>
     </application>
 </manifest>
