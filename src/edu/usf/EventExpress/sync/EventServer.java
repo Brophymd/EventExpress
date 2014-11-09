@@ -4,6 +4,8 @@ import java.util.List;
 
 import edu.usf.EventExpress.provider.EventProvider;
 
+import edu.usf.EventExpress.provider.event.EventColumns;
+import edu.usf.EventExpress.provider.event.EventCursor;
 import edu.usf.EventExpress.provider.user.UserColumns;
 import edu.usf.EventExpress.provider.user.UserCursor;
 import retrofit.http.Body;
@@ -25,8 +27,11 @@ public interface EventServer {
      */
     // Server-app uses no prefixes in the URL
     public static final String API_URL = "https://www.eventexpress.me/api";
-    // Server on App Engine will have a Base URL like this
-    //public static final String API_URL = "http://192.168.1.17:8080/_ah/api/links/v1";
+
+    public static class EventItems {
+        String latestTimestamp;
+        List<EventColumns> items;
+    }
 
     public static class RegId {
         public String regid;
@@ -37,14 +42,22 @@ public interface EventServer {
     }
 
     @GET("/people/{remote_id}")
-    UserColumns getUser(@Header("Authorization") String token, @Path("id") Integer remote_id);
+    UserColumns getUser(@Header("Authorization") String token,
+                        @Path("id") Integer remote_id);
 
     @POST("/people")
-    UserColumns addUser(@Header("Authorization") String token, @Body UserCursor item);
+    UserColumns addUser(@Header("Authorization") String token,
+                        @Body UserCursor item);
 
     @GET("/events/{id}")
-    UserColumns getEvent(@Header("Authorization") String token, @Path("id") String id);
+    EventColumns getEvent(@Header("Authorization") String token,
+                         @Path("id") String id);
+
+    @GET("/events")
+    EventItems getEvents(@Header("Authorization") String token,
+                          @Query("timestampMin") String timestampMin);
 
     @POST("/registergcm")
-    Dummy registerGCM(@Header("Authorization") String token, @Body RegId regid);
+    Dummy registerGCM(@Header("Authorization") String token,
+                      @Body RegId regid);
 }

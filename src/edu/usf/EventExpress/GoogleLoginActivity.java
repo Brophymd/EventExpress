@@ -1,6 +1,8 @@
 package edu.usf.EventExpress;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
@@ -22,8 +24,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.plus.Account;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import edu.usf.EventExpress.provider.EventProvider;
 import edu.usf.EventExpress.provider.user.UserColumns;
 import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
@@ -51,6 +55,11 @@ public class GoogleLoginActivity extends Activity implements
     private static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final String SENDER_ID = "266877390111";
+
+    /* Create an account for use with SyncAdapter */
+    private static final String ACCOUNT_NAME = "EventExpress";
+    private static final String ACCOUNT_TYPE = "com.google";
+    private android.accounts.Account mAccount = new android.accounts.Account(ACCOUNT_NAME, ACCOUNT_TYPE);
 
     /* Client used to interact with Google APIs */
     private GoogleApiClient mGoogleApiClient;
@@ -325,6 +334,13 @@ public class GoogleLoginActivity extends Activity implements
                     }
                 }.execute(null, null, null);
                 /* END GOOGLE CLOUD MESSAGING TEST */
+                /* BEGIN SYNCADAPTER TEST */
+                AccountManager accountManager = AccountManager.get(getApplicationContext());
+                if (accountManager.addAccountExplicitly(mAccount, null, null)) {
+                    ContentResolver.setIsSyncable(mAccount, EventProvider.AUTHORITY, 1);
+                    ContentResolver.setSyncAutomatically(mAccount, EventProvider.AUTHORITY, true);
+                }
+                /* END SYNCADAPTER TEST */
 
                 //session.createLoginSession(personName, email);
 

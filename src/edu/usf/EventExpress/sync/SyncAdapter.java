@@ -11,7 +11,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import edu.usf.EventExpress.gcm.GCMHelper;
 import edu.usf.EventExpress.provider.EventProvider;
-import edu.usf.EventExpress.provider.EventSQLiteOpenHelper;
+import edu.usf.EventExpress.provider.event.EventColumns;
+import edu.usf.EventExpress.provider.event.EventCursor;
 import edu.usf.EventExpress.provider.user.UserColumns;
 import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
@@ -109,38 +110,37 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 }
             }
             // Download event info
-//            if (!extras.getBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, false)) {
-//                // Check if we synced before
-//                final String lastSync = PreferenceManager
-//                        .getDefaultSharedPreferences(getContext()).getString(
-//                                KEY_LASTSYNC, null);
-//                final LinkItems items;
-//                if (lastSync != null && !lastSync.isEmpty()) {
-//                    items = server.listLinks(token, "true", lastSync);
-//                }
-//                else {
-//                    items = server.listLinks(token, "false", null);
-//                }
-//                if (items != null && items.links != null) {
-//                    for (LinkMSG msg : items.links) {
+            if (!extras.getBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, false)) {
+                // Check if we synced before
+                final String lastSync = PreferenceManager
+                        .getDefaultSharedPreferences(getContext()).getString(
+                                KEY_LASTSYNC, null);
+                final EventServer.EventItems events;
+                if (lastSync != null && !lastSync.isEmpty()) {
+                    events = server.getEvents(token, lastSync);
+                }
+                else {
+                    events = server.getEvents(token, null);
+                }
+                if (events != null && events.items != null) {
+                    for (EventColumns msg : events.items) {
 //                        Log.d(TAG, "got url:" + msg.url + ", sha: " + msg.sha);
-//                        final LinkItem item = msg.toDBItem();
-//                        if (msg.deleted) {
-//                            Log.d(TAG, "Deleting:" + msg.url);
-//                            db.deleteItem(item);
+//                        if (msg.getDeleted() != 0) {
+////                            Log.d(TAG, "Deleting:" + msg.url);
+////                            db.deleteItem(item);
 //                        }
 //                        else {
-//                            Log.d(TAG, "Adding url:" + item.url);
-//                            item.synced = 1;
-//                            db.putItem(item);
+////                            Log.d(TAG, "Adding url:" + item.url);
+////                            item.synced = 1;
+////                            db.putItem(item);
 //                        }
-//                    }
-//                }
-//                // Save sync timestamp
-//                PreferenceManager.getDefaultSharedPreferences(getContext())
-//                        .edit().putString(KEY_LASTSYNC, items.latestTimestamp)
-//                        .commit();
-//            }
+                    }
+                }
+                // Save sync timestamp
+                PreferenceManager.getDefaultSharedPreferences(getContext())
+                        .edit().putString(KEY_LASTSYNC, events.latestTimestamp)
+                        .commit();
+            }
         }
         catch (RetrofitError e) {
             Log.d(TAG, "" + e);
