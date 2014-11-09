@@ -1,6 +1,8 @@
 package edu.usf.EventExpress;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
@@ -22,8 +24,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.plus.Account;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import edu.usf.EventExpress.provider.EventProvider;
 import edu.usf.EventExpress.provider.user.UserColumns;
 import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
@@ -281,10 +285,10 @@ public class GoogleLoginActivity extends Activity implements
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
                 /* LOCAL STORAGE TEST */
-                String googleId = currentPerson.getId();
+//                String googleId = currentPerson.getId();
                 //insert user
                 UserContentValues values = new UserContentValues();
-                values.putGoogleId(googleId).putName(personName);
+                values.putGoogleId(email).putName(personName);
                 Context context = getApplicationContext();
                 context.getContentResolver().insert(UserColumns.CONTENT_URI, values.values());
                 //query for user and display in log
@@ -322,6 +326,30 @@ public class GoogleLoginActivity extends Activity implements
                     @Override
                     protected void onPostExecute(String msg) {
                         Log.i(TAG, "Test done: " + msg + "\n");
+                        /* BEGIN SYNCADAPTER TEST */
+                        Log.i(TAG, "Before accountManager");
+                        AccountManager accountManager = AccountManager.get(getApplicationContext());
+                        android.accounts.Account[] accounts = accountManager.getAccountsByType("com.google");
+                        Log.i(TAG, "After accountManager");
+                        for (android.accounts.Account account : accounts) {
+                            // Pass the settings flags by inserting them in a bundle
+                            ContentResolver.setSyncAutomatically(account, EventProvider.AUTHORITY, true);
+                            Bundle settingsBundle = new Bundle();
+                            settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+                            settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+                            /*
+                             * Request the sync for the default account, authority, and
+                             * manual sync settings
+                             */
+                            try {
+                                Log.d(TAG, "Trying requestSync");
+                                ContentResolver.requestSync(account, EventProvider.AUTHORITY, settingsBundle);
+                            }
+                            catch (RuntimeException e) {
+                                Log.e(TAG, "Couldn't requestSync: " + e);
+                            }
+                        }
+                        /* END SYNCADAPTER TEST */
                     }
                 }.execute(null, null, null);
                 /* END GOOGLE CLOUD MESSAGING TEST */

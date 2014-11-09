@@ -34,6 +34,17 @@ public class EventContentValues extends AbstractContentValues {
 
 
 
+    public EventContentValues putRemoteId(Integer value) {
+        mContentValues.put(EventColumns.REMOTE_ID, value);
+        return this;
+    }
+
+    public EventContentValues putRemoteIdNull() {
+        mContentValues.putNull(EventColumns.REMOTE_ID);
+        return this;
+    }
+
+
     public EventContentValues putEventType(EventType value) {
         if (value == null) throw new IllegalArgumentException("value for eventType must not be null");
         mContentValues.put(EventColumns.EVENT_TYPE, value.ordinal());
@@ -113,23 +124,23 @@ public class EventContentValues extends AbstractContentValues {
     }
 
 
-    public EventContentValues putTimestamp(String value) {
-        if (value == null) throw new IllegalArgumentException("value for timestamp must not be null");
-        mContentValues.put(EventColumns.TIMESTAMP, value);
+    public EventContentValues putEventTimestamp(String value) {
+        if (value == null) throw new IllegalArgumentException("value for eventTimestamp must not be null");
+        mContentValues.put(EventColumns.EVENT_TIMESTAMP, value);
         return this;
     }
 
 
 
-    public EventContentValues putDeleted(int value) {
-        mContentValues.put(EventColumns.DELETED, value);
+    public EventContentValues putEventDeleted(int value) {
+        mContentValues.put(EventColumns.EVENT_DELETED, value);
         return this;
     }
 
 
 
-    public EventContentValues putSynced(int value) {
-        mContentValues.put(EventColumns.SYNCED, value);
+    public EventContentValues putEventSynced(int value) {
+        mContentValues.put(EventColumns.EVENT_SYNCED, value);
         return this;
     }
 

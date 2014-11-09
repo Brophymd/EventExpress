@@ -24,6 +24,14 @@ public class EventCursor extends AbstractCursor {
     }
 
     /**
+     * Get the {@code remote_id} value.
+     * Can be {@code null}.
+     */
+    public Integer getRemoteId() {
+        return getIntegerOrNull(EventColumns.REMOTE_ID);
+    }
+
+    /**
      * Get the {@code event_type} value.
      * Cannot be {@code null}.
      */
@@ -85,25 +93,25 @@ public class EventCursor extends AbstractCursor {
     }
 
     /**
-     * Get the {@code timestamp} value.
+     * Get the {@code event_timestamp} value.
      * Cannot be {@code null}.
      */
-    public String getTimestamp() {
-        Integer index = getCachedColumnIndexOrThrow(EventColumns.TIMESTAMP);
+    public String getEventTimestamp() {
+        Integer index = getCachedColumnIndexOrThrow(EventColumns.EVENT_TIMESTAMP);
         return getString(index);
     }
 
     /**
-     * Get the {@code deleted} value.
+     * Get the {@code event_deleted} value.
      */
-    public int getDeleted() {
-        return getIntegerOrNull(EventColumns.DELETED);
+    public int getEventDeleted() {
+        return getIntegerOrNull(EventColumns.EVENT_DELETED);
     }
 
     /**
-     * Get the {@code synced} value.
+     * Get the {@code event_synced} value.
      */
-    public int getSynced() {
-        return getIntegerOrNull(EventColumns.SYNCED);
+    public int getEventSynced() {
+        return getIntegerOrNull(EventColumns.EVENT_SYNCED);
     }
 }

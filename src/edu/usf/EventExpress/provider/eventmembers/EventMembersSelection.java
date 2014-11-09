@@ -124,78 +124,78 @@ public class EventMembersSelection extends AbstractSelection<EventMembersSelecti
     }
 
 
-    public EventMembersSelection timestamp(String... value) {
-        addEquals(EventMembersColumns.TIMESTAMP, value);
+    public EventMembersSelection eventMembersTimestamp(String... value) {
+        addEquals(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
         return this;
     }
 
-    public EventMembersSelection timestampNot(String... value) {
-        addNotEquals(EventMembersColumns.TIMESTAMP, value);
+    public EventMembersSelection eventMembersTimestampNot(String... value) {
+        addNotEquals(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
         return this;
     }
 
-    public EventMembersSelection timestampLike(String... value) {
-        addLike(EventMembersColumns.TIMESTAMP, value);
+    public EventMembersSelection eventMembersTimestampLike(String... value) {
+        addLike(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
         return this;
     }
 
-    public EventMembersSelection deleted(int... value) {
-        addEquals(EventMembersColumns.DELETED, toObjectArray(value));
+    public EventMembersSelection eventMembersDeleted(int... value) {
+        addEquals(EventMembersColumns.EVENT_MEMBERS_DELETED, toObjectArray(value));
         return this;
     }
 
-    public EventMembersSelection deletedNot(int... value) {
-        addNotEquals(EventMembersColumns.DELETED, toObjectArray(value));
+    public EventMembersSelection eventMembersDeletedNot(int... value) {
+        addNotEquals(EventMembersColumns.EVENT_MEMBERS_DELETED, toObjectArray(value));
         return this;
     }
 
-    public EventMembersSelection deletedGt(int value) {
-        addGreaterThan(EventMembersColumns.DELETED, value);
+    public EventMembersSelection eventMembersDeletedGt(int value) {
+        addGreaterThan(EventMembersColumns.EVENT_MEMBERS_DELETED, value);
         return this;
     }
 
-    public EventMembersSelection deletedGtEq(int value) {
-        addGreaterThanOrEquals(EventMembersColumns.DELETED, value);
+    public EventMembersSelection eventMembersDeletedGtEq(int value) {
+        addGreaterThanOrEquals(EventMembersColumns.EVENT_MEMBERS_DELETED, value);
         return this;
     }
 
-    public EventMembersSelection deletedLt(int value) {
-        addLessThan(EventMembersColumns.DELETED, value);
+    public EventMembersSelection eventMembersDeletedLt(int value) {
+        addLessThan(EventMembersColumns.EVENT_MEMBERS_DELETED, value);
         return this;
     }
 
-    public EventMembersSelection deletedLtEq(int value) {
-        addLessThanOrEquals(EventMembersColumns.DELETED, value);
+    public EventMembersSelection eventMembersDeletedLtEq(int value) {
+        addLessThanOrEquals(EventMembersColumns.EVENT_MEMBERS_DELETED, value);
         return this;
     }
 
-    public EventMembersSelection synced(int... value) {
-        addEquals(EventMembersColumns.SYNCED, toObjectArray(value));
+    public EventMembersSelection eventMembersSynced(int... value) {
+        addEquals(EventMembersColumns.EVENT_MEMBERS_SYNCED, toObjectArray(value));
         return this;
     }
 
-    public EventMembersSelection syncedNot(int... value) {
-        addNotEquals(EventMembersColumns.SYNCED, toObjectArray(value));
+    public EventMembersSelection eventMembersSyncedNot(int... value) {
+        addNotEquals(EventMembersColumns.EVENT_MEMBERS_SYNCED, toObjectArray(value));
         return this;
     }
 
-    public EventMembersSelection syncedGt(int value) {
-        addGreaterThan(EventMembersColumns.SYNCED, value);
+    public EventMembersSelection eventMembersSyncedGt(int value) {
+        addGreaterThan(EventMembersColumns.EVENT_MEMBERS_SYNCED, value);
         return this;
     }
 
-    public EventMembersSelection syncedGtEq(int value) {
-        addGreaterThanOrEquals(EventMembersColumns.SYNCED, value);
+    public EventMembersSelection eventMembersSyncedGtEq(int value) {
+        addGreaterThanOrEquals(EventMembersColumns.EVENT_MEMBERS_SYNCED, value);
         return this;
     }
 
-    public EventMembersSelection syncedLt(int value) {
-        addLessThan(EventMembersColumns.SYNCED, value);
+    public EventMembersSelection eventMembersSyncedLt(int value) {
+        addLessThan(EventMembersColumns.EVENT_MEMBERS_SYNCED, value);
         return this;
     }
 
-    public EventMembersSelection syncedLtEq(int value) {
-        addLessThanOrEquals(EventMembersColumns.SYNCED, value);
+    public EventMembersSelection eventMembersSyncedLtEq(int value) {
+        addLessThanOrEquals(EventMembersColumns.EVENT_MEMBERS_SYNCED, value);
         return this;
     }
 }

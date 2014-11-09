@@ -41,26 +41,26 @@ public class EventMembersCursor extends AbstractCursor {
     }
 
     /**
-     * Get the {@code timestamp} value.
+     * Get the {@code event_members_timestamp} value.
      * Cannot be {@code null}.
      */
-    public String getTimestamp() {
-        Integer index = getCachedColumnIndexOrThrow(EventMembersColumns.TIMESTAMP);
+    public String getEventMembersTimestamp() {
+        Integer index = getCachedColumnIndexOrThrow(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP);
         return getString(index);
     }
 
     /**
-     * Get the {@code deleted} value.
+     * Get the {@code event_members_deleted} value.
      */
-    public int getDeleted() {
-        return getIntegerOrNull(EventMembersColumns.DELETED);
+    public int getEventMembersDeleted() {
+        return getIntegerOrNull(EventMembersColumns.EVENT_MEMBERS_DELETED);
     }
 
     /**
-     * Get the {@code synced} value.
+     * Get the {@code event_members_synced} value.
      */
-    public int getSynced() {
-        return getIntegerOrNull(EventMembersColumns.SYNCED);
+    public int getEventMembersSynced() {
+        return getIntegerOrNull(EventMembersColumns.EVENT_MEMBERS_SYNCED);
     }
 
     /**
@@ -70,6 +70,14 @@ public class EventMembersCursor extends AbstractCursor {
     public String getEventOwner() {
         Integer index = getCachedColumnIndexOrThrow(EventColumns.EVENT_OWNER);
         return getString(index);
+    }
+
+    /**
+     * Get the {@code remote_id} value.
+     * Can be {@code null}.
+     */
+    public Integer getRemoteId() {
+        return getIntegerOrNull(EventColumns.REMOTE_ID);
     }
 
     /**
@@ -134,6 +142,29 @@ public class EventMembersCursor extends AbstractCursor {
     }
 
     /**
+     * Get the {@code event_timestamp} value.
+     * Cannot be {@code null}.
+     */
+    public String getEventTimestamp() {
+        Integer index = getCachedColumnIndexOrThrow(EventColumns.EVENT_TIMESTAMP);
+        return getString(index);
+    }
+
+    /**
+     * Get the {@code event_deleted} value.
+     */
+    public int getEventDeleted() {
+        return getIntegerOrNull(EventColumns.EVENT_DELETED);
+    }
+
+    /**
+     * Get the {@code event_synced} value.
+     */
+    public int getEventSynced() {
+        return getIntegerOrNull(EventColumns.EVENT_SYNCED);
+    }
+
+    /**
      * Get the {@code google_id} value.
      * Cannot be {@code null}.
      */
@@ -149,5 +180,28 @@ public class EventMembersCursor extends AbstractCursor {
     public String getName() {
         Integer index = getCachedColumnIndexOrThrow(UserColumns.NAME);
         return getString(index);
+    }
+
+    /**
+     * Get the {@code user_timestamp} value.
+     * Cannot be {@code null}.
+     */
+    public String getUserTimestamp() {
+        Integer index = getCachedColumnIndexOrThrow(UserColumns.USER_TIMESTAMP);
+        return getString(index);
+    }
+
+    /**
+     * Get the {@code user_deleted} value.
+     */
+    public int getUserDeleted() {
+        return getIntegerOrNull(UserColumns.USER_DELETED);
+    }
+
+    /**
+     * Get the {@code user_synced} value.
+     */
+    public int getUserSynced() {
+        return getIntegerOrNull(UserColumns.USER_SYNCED);
     }
 }

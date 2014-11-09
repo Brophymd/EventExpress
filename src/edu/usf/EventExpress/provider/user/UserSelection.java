@@ -83,78 +83,78 @@ public class UserSelection extends AbstractSelection<UserSelection> {
         return this;
     }
 
-    public UserSelection timestamp(String... value) {
-        addEquals(UserColumns.TIMESTAMP, value);
+    public UserSelection userTimestamp(String... value) {
+        addEquals(UserColumns.USER_TIMESTAMP, value);
         return this;
     }
 
-    public UserSelection timestampNot(String... value) {
-        addNotEquals(UserColumns.TIMESTAMP, value);
+    public UserSelection userTimestampNot(String... value) {
+        addNotEquals(UserColumns.USER_TIMESTAMP, value);
         return this;
     }
 
-    public UserSelection timestampLike(String... value) {
-        addLike(UserColumns.TIMESTAMP, value);
+    public UserSelection userTimestampLike(String... value) {
+        addLike(UserColumns.USER_TIMESTAMP, value);
         return this;
     }
 
-    public UserSelection deleted(int... value) {
-        addEquals(UserColumns.DELETED, toObjectArray(value));
+    public UserSelection userDeleted(int... value) {
+        addEquals(UserColumns.USER_DELETED, toObjectArray(value));
         return this;
     }
 
-    public UserSelection deletedNot(int... value) {
-        addNotEquals(UserColumns.DELETED, toObjectArray(value));
+    public UserSelection userDeletedNot(int... value) {
+        addNotEquals(UserColumns.USER_DELETED, toObjectArray(value));
         return this;
     }
 
-    public UserSelection deletedGt(int value) {
-        addGreaterThan(UserColumns.DELETED, value);
+    public UserSelection userDeletedGt(int value) {
+        addGreaterThan(UserColumns.USER_DELETED, value);
         return this;
     }
 
-    public UserSelection deletedGtEq(int value) {
-        addGreaterThanOrEquals(UserColumns.DELETED, value);
+    public UserSelection userDeletedGtEq(int value) {
+        addGreaterThanOrEquals(UserColumns.USER_DELETED, value);
         return this;
     }
 
-    public UserSelection deletedLt(int value) {
-        addLessThan(UserColumns.DELETED, value);
+    public UserSelection userDeletedLt(int value) {
+        addLessThan(UserColumns.USER_DELETED, value);
         return this;
     }
 
-    public UserSelection deletedLtEq(int value) {
-        addLessThanOrEquals(UserColumns.DELETED, value);
+    public UserSelection userDeletedLtEq(int value) {
+        addLessThanOrEquals(UserColumns.USER_DELETED, value);
         return this;
     }
 
-    public UserSelection synced(int... value) {
-        addEquals(UserColumns.SYNCED, toObjectArray(value));
+    public UserSelection userSynced(int... value) {
+        addEquals(UserColumns.USER_SYNCED, toObjectArray(value));
         return this;
     }
 
-    public UserSelection syncedNot(int... value) {
-        addNotEquals(UserColumns.SYNCED, toObjectArray(value));
+    public UserSelection userSyncedNot(int... value) {
+        addNotEquals(UserColumns.USER_SYNCED, toObjectArray(value));
         return this;
     }
 
-    public UserSelection syncedGt(int value) {
-        addGreaterThan(UserColumns.SYNCED, value);
+    public UserSelection userSyncedGt(int value) {
+        addGreaterThan(UserColumns.USER_SYNCED, value);
         return this;
     }
 
-    public UserSelection syncedGtEq(int value) {
-        addGreaterThanOrEquals(UserColumns.SYNCED, value);
+    public UserSelection userSyncedGtEq(int value) {
+        addGreaterThanOrEquals(UserColumns.USER_SYNCED, value);
         return this;
     }
 
-    public UserSelection syncedLt(int value) {
-        addLessThan(UserColumns.SYNCED, value);
+    public UserSelection userSyncedLt(int value) {
+        addLessThan(UserColumns.USER_SYNCED, value);
         return this;
     }
 
-    public UserSelection syncedLtEq(int value) {
-        addLessThanOrEquals(UserColumns.SYNCED, value);
+    public UserSelection userSyncedLtEq(int value) {
+        addLessThanOrEquals(UserColumns.USER_SYNCED, value);
         return this;
     }
 }

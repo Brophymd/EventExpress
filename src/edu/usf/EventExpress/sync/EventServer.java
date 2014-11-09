@@ -1,11 +1,12 @@
 package edu.usf.EventExpress.sync;
 
+import java.util.Date;
 import java.util.List;
 
-import edu.usf.EventExpress.provider.EventProvider;
-
-import edu.usf.EventExpress.provider.user.UserColumns;
+import edu.usf.EventExpress.provider.event.EventCursor;
+import edu.usf.EventExpress.provider.event.EventType;
 import edu.usf.EventExpress.provider.user.UserCursor;
+
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
@@ -25,26 +26,94 @@ public interface EventServer {
      */
     // Server-app uses no prefixes in the URL
     public static final String API_URL = "https://www.eventexpress.me/api";
-    // Server on App Engine will have a Base URL like this
-    //public static final String API_URL = "http://192.168.1.17:8080/_ah/api/links/v1";
+
+    public static class UserItem {
+        String google_id;
+        String name;
+        String timestamp;
+        int deleted;
+
+        public UserItem(UserCursor cursor) {
+            google_id = cursor.getGoogleId();
+            name = cursor.getName();
+            timestamp = cursor.getUserTimestamp();
+            deleted = cursor.getUserDeleted();
+        }
+    }
+
+    public static class EventItem {
+        String event_owner;
+        EventType event_type;
+        String event_title;
+        String event_description;
+        Date event_date;
+        String event_address;
+        Float event_latitude;
+        Float event_longitude;
+        String timestamp;
+        int deleted;
+
+        public EventItem(EventCursor cursor) {
+            this.event_owner = cursor.getEventOwner();
+            this.event_type = cursor.getEventType();
+            this.event_title = cursor.getEventTitle();
+            this.event_description = cursor.getEventDescription();
+            this.event_date = cursor.getEventDate();
+            this.event_address = cursor.getEventAddress();
+            this.event_latitude = cursor.getEventLatitude();
+            this.event_longitude = cursor.getEventLongitude();
+            this.timestamp = cursor.getEventTimestamp();
+            this.deleted = cursor.getEventDeleted();
+        }
+    }
+
+    public static class UserItems {
+        String latestTimestamp;
+        List<UserItem> items;
+    }
+
+    public static class EventItems {
+        String latestTimestamp;
+        List<EventItem> items;
+    }
 
     public static class RegId {
-        public String regid;
+        public String reg_id;
     }
 
     public static class Dummy {
         // Methods must have return type
     }
 
-    @GET("/people/{remote_id}")
-    UserColumns getUser(@Header("Authorization") String token, @Path("id") Integer remote_id);
+    @GET("/people/{id}")
+    UserItem getUser(@Header("Authorization") String token,
+                     @Path("id") Integer remote_id);
+
+    @GET("/people")
+    UserItems getUsers(@Header("Authorization") String token,
+                       @Query("timestampMin") String timestampMin);
 
     @POST("/people")
-    UserColumns addUser(@Header("Authorization") String token, @Body UserCursor item);
+    UserItem addUser(@Header("Authorization") String token,
+                     @Body UserItem item);
 
     @GET("/events/{id}")
-    UserColumns getEvent(@Header("Authorization") String token, @Path("id") String id);
+    EventItem getEvent(@Header("Authorization") String token,
+                       @Path("id") String id);
+
+    @GET("/events")
+    EventItems getEvents(@Header("Authorization") String token,
+                         @Query("timestampMin") String timestampMin);
+
+    @POST("/events")
+    EventItem addEvent(@Header("Authorization") String token,
+                       @Body EventItem item);
+
+    @DELETE("/events/{id}")
+    Dummy deleteEvent(@Header("Authorization") String token,
+                      @Path("id") Integer remote_id);
 
     @POST("/registergcm")
-    Dummy registerGCM(@Header("Authorization") String token, @Body RegId regid);
+    Dummy registerGCM(@Header("Authorization") String token,
+                      @Body RegId regid);
 }

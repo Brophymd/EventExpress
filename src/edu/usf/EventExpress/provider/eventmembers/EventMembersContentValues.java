@@ -51,23 +51,23 @@ public class EventMembersContentValues extends AbstractContentValues {
     }
 
 
-    public EventMembersContentValues putTimestamp(String value) {
-        if (value == null) throw new IllegalArgumentException("value for timestamp must not be null");
-        mContentValues.put(EventMembersColumns.TIMESTAMP, value);
+    public EventMembersContentValues putEventMembersTimestamp(String value) {
+        if (value == null) throw new IllegalArgumentException("value for eventMembersTimestamp must not be null");
+        mContentValues.put(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
         return this;
     }
 
 
 
-    public EventMembersContentValues putDeleted(int value) {
-        mContentValues.put(EventMembersColumns.DELETED, value);
+    public EventMembersContentValues putEventMembersDeleted(int value) {
+        mContentValues.put(EventMembersColumns.EVENT_MEMBERS_DELETED, value);
         return this;
     }
 
 
 
-    public EventMembersContentValues putSynced(int value) {
-        mContentValues.put(EventMembersColumns.SYNCED, value);
+    public EventMembersContentValues putEventMembersSynced(int value) {
+        mContentValues.put(EventMembersColumns.EVENT_MEMBERS_SYNCED, value);
         return this;
     }
 

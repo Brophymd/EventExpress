@@ -10,13 +10,16 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import edu.usf.EventExpress.gcm.GCMHelper;
-import edu.usf.EventExpress.provider.EventProvider;
-import edu.usf.EventExpress.provider.EventSQLiteOpenHelper;
-import edu.usf.EventExpress.provider.user.UserColumns;
+import edu.usf.EventExpress.provider.event.EventContentValues;
+import edu.usf.EventExpress.provider.event.EventCursor;
+import edu.usf.EventExpress.provider.event.EventSelection;
 import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
 import edu.usf.EventExpress.provider.user.UserSelection;
 import retrofit.RetrofitError;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Handle the transfer of data between a server and an
@@ -24,7 +27,7 @@ import retrofit.RetrofitError;
  */
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
     // Global variables
-    private static final String TAG = EventProvider.class.getSimpleName();
+    private static final String TAG = SyncAdapter.class.getSimpleName();
     private static final String KEY_LASTSYNC = "key_lastsync";
     // Define a variable to contain a content resolver instance
     ContentResolver mContentResolver;
@@ -67,10 +70,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(
             Account account,
             Bundle extras,
-            String authority,
-            ContentProviderClient provider,
-            SyncResult syncResult) {
+        String authority,
+        ContentProviderClient provider,
+        SyncResult syncResult) {
         try {
+            Log.i(TAG, "onPerformSync started");
+            Log.i(TAG, "Account name: " + account.name);
             // Need to get an access token first
             final String token = SyncHelper.getAuthToken(getContext(),
                     account.name);
@@ -90,22 +95,74 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             // Register for GCM if we need to
             GCMHelper.registerIfNotAlreadyDone(getContext());
             final EventServer server = SyncHelper.getRESTAdapter();
+            // Upload new users
             UserSelection userSelection = new UserSelection();
-            UserCursor userCursor = userSelection.synced(0).or().deleted(1)
-                    .query(getContext().getContentResolver());
+            UserSelection userNeedSync = userSelection.userSynced(0).or().userDeleted(1);
+            UserCursor userCursor = userNeedSync.query(getContext().getContentResolver());
             UserContentValues userContentValues = new UserContentValues();
-            // Upload new user
             while (userCursor.moveToNext()) {
-                if (userCursor.getDeleted() != 0) {
+                if (userCursor.getUserDeleted() != 0) {
                     // Delete the item
                     // we don't do any deletions in the user table right now
                 }
                 else {
-                    server.addUser(token, userCursor);
+                    Log.i(TAG, "Uploading user " + userCursor.getGoogleId());
+                    server.addUser(token, new EventServer.UserItem(userCursor));
                     syncResult.stats.numInserts++;
-                    userContentValues.putSynced(1);
-                    getContext().getContentResolver().update(UserColumns.CONTENT_URI,
-                            userContentValues.values(), null, null);
+                    userContentValues.putUserSynced(1).update(getContext().getContentResolver(), userNeedSync);
+                }
+            }
+            // Upload new events
+            EventSelection eventSelection = new EventSelection();
+            EventSelection eventNeedSync = eventSelection.eventSynced(0).or().eventDeleted(1);
+            EventCursor eventCursor = eventNeedSync.query(getContext().getContentResolver());
+            EventContentValues eventContentValues = new EventContentValues();
+            while (eventCursor.moveToNext()) {
+                if (eventCursor.getEventDeleted() != 0) {
+                    Log.i(TAG, "Deleting event " + eventCursor.getEventTitle());
+                    server.deleteEvent(token, eventCursor.getRemoteId());
+                }
+                else {
+                    Log.i(TAG, "Uploading event " + eventCursor.getEventTitle());
+                    server.addEvent(token, new EventServer.EventItem(eventCursor));
+                    syncResult.stats.numInserts++;
+                    eventContentValues.putEventSynced(1).update(getContext().getContentResolver(), eventNeedSync);
+                }
+            }
+            // Download user info
+            if (!extras.getBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, false)) {
+                // Check if we synced before
+                final String lastSync = PreferenceManager
+                        .getDefaultSharedPreferences(getContext()).getString(
+                                KEY_LASTSYNC, null);
+                final EventServer.UserItems users;
+                if (lastSync != null && !lastSync.isEmpty()) {
+                    users = server.getUsers(token, lastSync);
+                }
+                else {
+                    users = server.getUsers(token, null);
+                }
+                if (users != null && users.items != null) {
+                    for (EventServer.UserItem msg : users.items) {
+                        Log.d(TAG, "got google_id: " + msg.google_id + ", name: " + msg.name);
+                        if (msg.deleted != 0) {
+                            Log.d(TAG, "Deleting: " + msg.google_id);
+                            userSelection.googleId(msg.google_id).delete(getContext().getContentResolver());
+                        }
+                        else {
+                            Log.d(TAG, "Adding google_id:" + msg.google_id);
+                            userContentValues.putGoogleId(msg.google_id)
+                                    .putName(msg.name)
+                                    .insert(getContext().getContentResolver());
+                        }
+                    }
+                }
+                // Save sync timestamp
+                if (users != null) {
+                    users.latestTimestamp = new Timestamp(new Date().getTime()).toString();
+                    PreferenceManager.getDefaultSharedPreferences(getContext())
+                            .edit().putString(KEY_LASTSYNC, users.latestTimestamp)
+                            .commit();
                 }
             }
             // Download event info
@@ -114,32 +171,35 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 //                final String lastSync = PreferenceManager
 //                        .getDefaultSharedPreferences(getContext()).getString(
 //                                KEY_LASTSYNC, null);
-//                final LinkItems items;
+//                final EventServer.EventItems events;
 //                if (lastSync != null && !lastSync.isEmpty()) {
-//                    items = server.listLinks(token, "true", lastSync);
+//                    events = server.getEvents(token, lastSync);
 //                }
 //                else {
-//                    items = server.listLinks(token, "false", null);
+//                    events = server.getEvents(token, null);
 //                }
-//                if (items != null && items.links != null) {
-//                    for (LinkMSG msg : items.links) {
-//                        Log.d(TAG, "got url:" + msg.url + ", sha: " + msg.sha);
-//                        final LinkItem item = msg.toDBItem();
-//                        if (msg.deleted) {
-//                            Log.d(TAG, "Deleting:" + msg.url);
-//                            db.deleteItem(item);
+//                if (events != null && events.items != null) {
+//                    for (EventServer.EventItem msg : events.items) {
+//                        Log.d(TAG, "got google_id: " + msg.google_id + ", name: " + msg.name);
+//                        if (msg.deleted != 0) {
+//                            Log.d(TAG, "Deleting: " + msg.google_id);
+//                            userSelection.googleId(msg.google_id).delete(getContext().getContentResolver());
 //                        }
 //                        else {
-//                            Log.d(TAG, "Adding url:" + item.url);
-//                            item.synced = 1;
-//                            db.putItem(item);
+//                            Log.d(TAG, "Adding google_id:" + msg.google_id);
+//                            userContentValues.putGoogleId(msg.google_id)
+//                                    .putName(msg.name)
+//                                    .insert(getContext().getContentResolver());
 //                        }
 //                    }
 //                }
 //                // Save sync timestamp
-//                PreferenceManager.getDefaultSharedPreferences(getContext())
-//                        .edit().putString(KEY_LASTSYNC, items.latestTimestamp)
-//                        .commit();
+//                if (events != null) {
+//                    events.latestTimestamp = new Timestamp(new Date().getTime()).toString();
+//                    PreferenceManager.getDefaultSharedPreferences(getContext())
+//                            .edit().putString(KEY_LASTSYNC, events.latestTimestamp)
+//                            .commit();
+//                }
 //            }
         }
         catch (RetrofitError e) {

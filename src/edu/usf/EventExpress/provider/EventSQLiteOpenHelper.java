@@ -29,6 +29,7 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventColumns.TABLE_NAME + " ( "
             + EventColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + EventColumns.EVENT_OWNER + " TEXT NOT NULL, "
+            + EventColumns.REMOTE_ID + " INTEGER, "
             + EventColumns.EVENT_TYPE + " INTEGER NOT NULL, "
             + EventColumns.EVENT_TITLE + " TEXT, "
             + EventColumns.EVENT_DESCRIPTION + " TEXT, "
@@ -36,9 +37,9 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventColumns.EVENT_ADDRESS + " TEXT, "
             + EventColumns.EVENT_LATITUDE + " REAL, "
             + EventColumns.EVENT_LONGITUDE + " REAL, "
-            + EventColumns.TIMESTAMP + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, "
-            + EventColumns.DELETED + " INTEGER NOT NULL DEFAULT '0', "
-            + EventColumns.SYNCED + " INTEGER NOT NULL DEFAULT '0' "
+            + EventColumns.EVENT_TIMESTAMP + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, "
+            + EventColumns.EVENT_DELETED + " INTEGER NOT NULL DEFAULT '0', "
+            + EventColumns.EVENT_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + " );";
 
     private static final String SQL_CREATE_INDEX_EVENT_EVENT_OWNER = "CREATE INDEX IDX_EVENT_EVENT_OWNER "
@@ -50,9 +51,9 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventMembersColumns.EVENT_ID + " INTEGER NOT NULL, "
             + EventMembersColumns.USER_ID + " INTEGER NOT NULL, "
             + EventMembersColumns.RSVP_STATUS + " INTEGER DEFAULT 'INVITED', "
-            + EventMembersColumns.TIMESTAMP + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, "
-            + EventMembersColumns.DELETED + " INTEGER NOT NULL DEFAULT '0', "
-            + EventMembersColumns.SYNCED + " INTEGER NOT NULL DEFAULT '0' "
+            + EventMembersColumns.EVENT_MEMBERS_TIMESTAMP + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, "
+            + EventMembersColumns.EVENT_MEMBERS_DELETED + " INTEGER NOT NULL DEFAULT '0', "
+            + EventMembersColumns.EVENT_MEMBERS_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + ", CONSTRAINT fk_event_id FOREIGN KEY (event_id) REFERENCES event (_id) ON DELETE CASCADE"
             + ", CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user (_id) ON DELETE CASCADE"
             + " );";
@@ -62,9 +63,9 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + UserColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + UserColumns.GOOGLE_ID + " TEXT NOT NULL, "
             + UserColumns.NAME + " TEXT NOT NULL, "
-            + UserColumns.TIMESTAMP + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, "
-            + UserColumns.DELETED + " INTEGER NOT NULL DEFAULT '0', "
-            + UserColumns.SYNCED + " INTEGER NOT NULL DEFAULT '0' "
+            + UserColumns.USER_TIMESTAMP + " TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, "
+            + UserColumns.USER_DELETED + " INTEGER NOT NULL DEFAULT '0', "
+            + UserColumns.USER_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + ", CONSTRAINT unique_name unique (google_id) on conflict replace"
             + " );";
 
