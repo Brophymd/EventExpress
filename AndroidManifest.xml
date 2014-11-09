@@ -54,7 +54,7 @@
         <activity android:name=".createEvent"/>
         <activity android:name=".Event_Invitations"/>
         <activity android:name=".Event_Attending"/>
-        <activity android:name=".Events_Area"/>
+        <!--<activity android:name=".Events_Area"/>-->
         <activity android:name=".Event_Detail"/>
         <activity android:name=".Event_Detail_Host"/>
         <activity android:name=".Event_Map"/>

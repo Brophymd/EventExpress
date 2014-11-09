@@ -1,11 +1,13 @@
 package edu.usf.EventExpress;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-
+import edu.usf.EventExpress.provider.event.EventCursor;
+import edu.usf.EventExpress.provider.event.EventSelection;
 
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
  * Created by Varik on 10/12/2014.
  */
 public class Event_myevents extends Activity {
-    //private String userid = "";
+    public String userID;
     ArrayList<String> myStringArray;
     ArrayAdapter listAdapter;
     ListView mainListView;
@@ -27,9 +29,20 @@ public class Event_myevents extends Activity {
         setContentView(R.layout.event_myevents);
         myStringArray = new ArrayList<String>();
         mainListView = (ListView) findViewById( R.id.listView_myEvents);
-        myStringArray.add("SushiHut Dinner");
+        //myStringArray.add("SushiHut Dinner");
         //myStringArray.add("Halloween Party!");
+        SessionManager session = new SessionManager(getApplicationContext());
+        userID = session.getUserID();
 
+        //Context context = getApplicationContext();
+        EventSelection where = new EventSelection();
+        where.eventOwner(userID);
+        EventCursor event = where.query(getContentResolver());
+        //event.moveToNext();
+        //String title = event.getEventTitle();
+        while(event.moveToNext()){
+            myStringArray.add(event.getEventTitle());
+        }
 
         listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
         mainListView.setAdapter(listAdapter);
@@ -67,13 +80,8 @@ public class Event_myevents extends Activity {
 
     protected void onActivityResult(int request_code, int result_code, Intent data){
         if(result_code == 1){
-            if(request_code == fromCreate){
 
 
-            }
-            if(request_code == fromEdit){
-
-            }
         }
 
     }

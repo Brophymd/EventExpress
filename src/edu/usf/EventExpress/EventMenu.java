@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by Varik on 10/12/2014.
@@ -15,6 +16,7 @@ public class EventMenu extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventmenu);
+
     }
 
     public void createdEvents(View v){
@@ -35,11 +37,11 @@ public class EventMenu extends Activity {
         startActivity(myIntent);
     }
 
-    public void eventsArea(View v){
+    /*public void eventsArea(View v){
 
         Intent myIntent = new Intent(this, Events_Area.class);
         startActivity(myIntent);
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu m){

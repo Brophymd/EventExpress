@@ -3,13 +3,12 @@ package edu.usf.EventExpress;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.view.View;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TimePicker;
+import android.widget.*;
+import edu.usf.EventExpress.provider.event.EventContentValues;
 
 import java.util.Calendar;
 
@@ -21,17 +20,21 @@ public class Edit_Event extends Activity {
     EditText et_title, et_description, et_location, et_date, et_time;
     String title, description, location, time, date;
     TextView CreateorEdit;
+    Button Save;
+    String userID;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_event);
 
+        Save = (Button)findViewById(R.id.button_save);
         CreateorEdit = (TextView)findViewById(R.id.textView_editEvent);
         et_title = (EditText)findViewById(R.id.editText_titleEdit);
         et_description = (EditText)findViewById(R.id.editText_eventDescriptionEdit);
         et_location = (EditText)findViewById(R.id.editText_locationEdit);
         et_date = (EditText)findViewById(R.id.editText_dateEdit);
         et_time = (EditText)findViewById(R.id.editText_timeEdit);
+        userID = new SessionManager(getApplicationContext()).getUserID();
 
         Bundle b = getIntent().getExtras();
 
@@ -107,6 +110,21 @@ public class Edit_Event extends Activity {
         };
 
         et_time.setOnClickListener(timeClickEvent);
+
+        Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventContentValues values = new EventContentValues();
+
+
+                Intent returnIntent = new Intent();
+                //returnIntent.putExtra("result",result);
+                setResult(RESULT_OK,returnIntent);
+                finish();
+            }
+        });
+
+
 
     }
 }

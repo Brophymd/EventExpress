@@ -281,6 +281,9 @@ public class GoogleLoginActivity extends Activity implements
                 String personGooglePlusProfile = currentPerson.getUrl();
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
+                session = new SessionManager(getApplicationContext());
+                session.createLoginSession(currentPerson.getId());
+
                 /* LOCAL STORAGE TEST */
                 String googleId = currentPerson.getId();
                 //insert user
@@ -327,7 +330,7 @@ public class GoogleLoginActivity extends Activity implements
                 }.execute(null, null, null);
                 /* END GOOGLE CLOUD MESSAGING TEST */
 
-                //session.createLoginSession(personName, email);
+
 
                 Log.d(TAG, "Name: " + personName + ", plusProfile: "
                         + personGooglePlusProfile + ", email: " + email
