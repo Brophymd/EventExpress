@@ -145,13 +145,13 @@ public class Edit_Event extends Activity {
 
 
 
-//                Intent returnIntent = new Intent();
-//                //returnIntent.putExtra("result",result);
-//                setResult(RESULT_OK,returnIntent);
-//                finish();
+                Intent returnIntent = new Intent();
+                //returnIntent.putExtra("result",result);
+                setResult(RESULT_OK,returnIntent);
+                finish();
 
-                Intent intent = new Intent(getApplicationContext(),Event_myevents.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(),Event_myevents.class);
+                //startActivity(intent);
             }
         });
 

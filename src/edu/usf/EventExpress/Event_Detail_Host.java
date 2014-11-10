@@ -104,6 +104,7 @@ public class Event_Detail_Host extends Activity {
     protected void onActivityResult(int request_code, int result_code, Intent data){
         if(result_code == RESULT_OK){
             onRestart();
+            setData();
 
 
         }
@@ -114,8 +115,12 @@ public class Event_Detail_Host extends Activity {
         EventSelection where = new EventSelection();
         where.id(event_id);
         where.delete(getContentResolver());
-        Intent intent = new Intent(getApplicationContext(), Event_myevents.class);
-        startActivity(intent);
+        //Intent intent = new Intent(getApplicationContext(), Event_myevents.class);
+        //startActivity(intent);
+        Intent returnIntent = new Intent();
+        //returnIntent.putExtra("result",result);
+        setResult(RESULT_OK,returnIntent);
+        finish();
     }
 
     private void setData(){

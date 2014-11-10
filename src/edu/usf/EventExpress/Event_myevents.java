@@ -29,7 +29,7 @@ public class Event_myevents extends Activity {
     ArrayAdapter listAdapter;
     ListView mainListView;
     static int fromCreate = 1;
-    static int fromEdit = 2;
+    static int fromList = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class Event_myevents extends Activity {
 
                 Intent intent = new Intent(view.getContext(), Event_Detail_Host.class);
                 intent.putExtras(b);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, fromList);
             }
         });
 
@@ -104,6 +104,7 @@ public class Event_myevents extends Activity {
     protected void onActivityResult(int request_code, int result_code, Intent data){
         if(result_code == RESULT_OK){
             onRestart();
+            fillList();
 
 
         }
@@ -153,8 +154,53 @@ public class Event_myevents extends Activity {
 //
 //    }
 //
-//    private void fillList(){
-//
-//    }
+    private void fillList(){
+        String[] columns = new String[]{
+                EventColumns.EVENT_TITLE,
+                EventColumns.EVENT_DATE,
+                EventColumns._ID
+        };
+
+        int[] to = new int[]{
+                R.id.text_Title_row,
+                R.id.text_Date_row,
+                R.id.text_ID_row
+        };
+
+        Context context = getApplicationContext();
+
+        //context.getContentResolver().insert(EventColumns.CONTENT_URI,values.values());
+
+        EventSelection where = new EventSelection();
+        Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
+                where.sel(), where.args(), null);
+
+        myAdapter = new SimpleCursorAdapter(this, R.layout.two_line_list_item,
+                cursor,
+                columns,
+                to,
+                0
+        );
+
+        //Find ListView to populate
+        ListView lvItems = (ListView) findViewById(R.id.listView_myEvents);
+
+        lvItems.setAdapter(myAdapter);
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long arg3) {
+                Bundle b = new Bundle();
+                TextView id = (TextView) view.findViewById(R.id.text_ID_row);
+                String id_string = id.getText().toString();
+                Long event_id = Long.parseLong(id_string);
+
+                b.putLong("_ID", event_id.longValue());
+
+                Intent intent = new Intent(view.getContext(), Event_Detail_Host.class);
+                intent.putExtras(b);
+                startActivityForResult(intent, fromList);
+            }
+        });
+    }
 
 }
