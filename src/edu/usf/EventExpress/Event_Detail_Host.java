@@ -103,7 +103,7 @@ public class Event_Detail_Host extends Activity {
 
     protected void onActivityResult(int request_code, int result_code, Intent data){
         if(result_code == RESULT_OK){
-            setData();
+            onRestart();
 
 
         }
