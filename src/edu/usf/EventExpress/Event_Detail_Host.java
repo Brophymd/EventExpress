@@ -118,7 +118,7 @@ public class Event_Detail_Host extends Activity {
         //Intent intent = new Intent(getApplicationContext(), Event_myevents.class);
         //startActivity(intent);
         Intent returnIntent = new Intent();
-        //returnIntent.putExtra("result",result);
+        ////returnIntent.putExtra("result",result);
         setResult(RESULT_OK,returnIntent);
         finish();
     }

@@ -146,7 +146,7 @@ public class Edit_Event extends Activity {
 
 
                 Intent returnIntent = new Intent();
-                //returnIntent.putExtra("result",result);
+                ////returnIntent.putExtra("result",result);
                 setResult(RESULT_OK,returnIntent);
                 finish();
 

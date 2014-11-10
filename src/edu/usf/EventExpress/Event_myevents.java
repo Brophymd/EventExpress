@@ -182,7 +182,7 @@ public class Event_myevents extends Activity {
                 0
         );
 
-        //Find ListView to populate
+        ////Find ListView to populate
         ListView lvItems = (ListView) findViewById(R.id.listView_myEvents);
 
         lvItems.setAdapter(myAdapter);
