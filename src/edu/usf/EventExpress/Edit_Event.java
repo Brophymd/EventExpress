@@ -3,12 +3,13 @@ package edu.usf.EventExpress;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.view.View;
 import android.widget.*;
-import edu.usf.EventExpress.provider.event.EventContentValues;
+import edu.usf.EventExpress.provider.event.*;
 
 import java.util.Calendar;
 
@@ -22,11 +23,13 @@ public class Edit_Event extends Activity {
     TextView CreateorEdit;
     Button Save;
     String userID;
+    Long eventID;
+    boolean fromCreate;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_event);
-
+        fromCreate = false;
         Save = (Button)findViewById(R.id.button_save);
         CreateorEdit = (TextView)findViewById(R.id.textView_editEvent);
         et_title = (EditText)findViewById(R.id.editText_titleEdit);
@@ -40,20 +43,27 @@ public class Edit_Event extends Activity {
 
         if(b.getBoolean("CREATE",false)){
             CreateorEdit.setText("Create Event");
+            fromCreate = true;
         }
         else {
             CreateorEdit.setText("Edit Event");
-            title = b.getString("TITLE");
+            eventID = getIntent().getExtras().getLong("EVENT_ID");
+            EventSelection where = new EventSelection();
+            where.id(eventID);
+            EventCursor event = where.query(getContentResolver());
+            event.moveToNext();
+            /*title = b.getString("TITLE");
             description = b.getString("DESCRIPTION");
             location = b.getString("LOCATION");
             time = b.getString("TIME");
-            date = b.getString("DATE");
+            date = b.getString("DATE");*/
 
-            et_title.setText(title);
-            et_description.setText(description);
-            et_location.setText(location);
-            et_date.setText(date);
-            et_time.setText(time);
+            et_title.setText(event.getEventTitle());
+            et_description.setText(event.getEventDescription());
+            et_location.setText(event.getEventAddress());
+            //et_date.setText(date);
+            //et_time.setText(time);
+
         }
 
 
@@ -114,7 +124,30 @@ public class Edit_Event extends Activity {
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventContentValues values = new EventContentValues();
+                Context context = getApplicationContext();
+                if(fromCreate) {
+                    EventContentValues values = new EventContentValues();
+                    values.putEventOwner(userID).putEventType(EventType.OPEN)
+                            .putEventTitle(et_title.getText().toString())
+                            .putEventDescription(et_description.getText().toString())
+                            .putEventAddress(et_location.getText().toString());
+                    context.getContentResolver().insert(EventColumns.CONTENT_URI, values.values());
+                }
+                else{
+                    EventSelection where = new EventSelection();
+                    EventSelection x = where.id(eventID);
+                    EventCursor event = where.query(getContentResolver());
+                    event.moveToNext();
+                    EventContentValues values = new EventContentValues();
+                    values.putEventOwner(event.getEventOwner()).putEventType(EventType.OPEN)
+                            .putEventTitle(et_title.getText().toString())
+                            .putEventDescription(et_description.getText().toString())
+                            .putEventAddress(et_location.getText().toString())
+                            .update(context.getContentResolver(), x);
+                    //context.getContentResolver().update(EventColumns.CONTENT_URI, values.values(), x.sel(), null);
+
+                }
+
 
 
                 Intent returnIntent = new Intent();

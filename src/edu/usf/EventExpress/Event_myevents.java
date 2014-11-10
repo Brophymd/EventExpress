@@ -12,6 +12,7 @@ import edu.usf.EventExpress.provider.EventSQLiteOpenHelper;
 import edu.usf.EventExpress.provider.event.*;
 //import edu.usf.EventExpress.provider.event.EventCursorAdapter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,13 @@ import java.util.Date;
 public class Event_myevents extends Activity {
 
     SimpleCursorAdapter myAdapter;
+    public String userID;
+    ArrayList<String> myStringArray;
+    ArrayList<Long> eventIDList;
+    ArrayAdapter listAdapter;
+    ListView mainListView;
+    static int fromCreate = 1;
+    static int fromEdit = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,37 +37,9 @@ public class Event_myevents extends Activity {
         setContentView(R.layout.event_myevents);
 
 
-//        mainListView = (ListView) findViewById( R.id.listView_myEvents);
-//        myStringArray.add("SushiHut Dinner");
-//        myStringArray.add("Halloween Party!");
-//
-//        listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
-//        mainListView.setAdapter(listAdapter);
-//        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View view, int pos, long arg3) {
-//                //String temp = (String) ((TextView) view).getText();
-//                //Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(view.getContext(), Event_Detail_Host.class);
-//                startActivity(intent);
-//            }
-//        });
-//        mainListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                String temp = (String) ((TextView) view).getText();
-//                temp = "Long press on "+ temp;
-//                Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
-//                return true;
-//            }
-//        });
-//
-        /*
-         *new list stuff
-            */
-
-        Calendar rightNow = Calendar.getInstance();
-        EventContentValues values = new EventContentValues();
-        values.putEventAddress("612 stupid st se largo fl 33771").putEventDate(rightNow.getTimeInMillis()).putEventTitle("Program-a-Bull").putEventOwner("Vi").putEventType(EventType.OPEN);
+        //Calendar rightNow = Calendar.getInstance();
+        //EventContentValues values = new EventContentValues();
+        //values.putEventAddress("612 St se largo fl 33771").putEventDate(rightNow.getTimeInMillis()).putEventTitle("Program-a-Bull").putEventOwner("Vi").putEventType(EventType.OPEN);
 
         String[] columns = new String[]{
                 EventColumns.EVENT_TITLE,
@@ -75,10 +55,9 @@ public class Event_myevents extends Activity {
 
         Context context = getApplicationContext();
 
-        context.getContentResolver().insert(EventColumns.CONTENT_URI,values.values());
+        //context.getContentResolver().insert(EventColumns.CONTENT_URI,values.values());
 
         EventSelection where = new EventSelection();
-        //where.eventTitle("Sushi Hut Dinner");
         Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
                 where.sel(), where.args(), null);
 
@@ -89,10 +68,6 @@ public class Event_myevents extends Activity {
                 0
                 );
 
-
-
-
-
         //Find ListView to populate
         ListView lvItems = (ListView) findViewById(R.id.listView_myEvents);
 
@@ -100,14 +75,12 @@ public class Event_myevents extends Activity {
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int pos, long arg3) {
-                //String temp = (String) ((TextView) view).getText();
-                //Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
-                Bundle b = new Bundle();
+                 Bundle b = new Bundle();
                 TextView id = (TextView) view.findViewById(R.id.text_ID_row);
                 String id_string = id.getText().toString();
-                //System.out.println("ID is: " + id.getText().toString());
+                Long event_id = Long.parseLong(id_string);
 
-                b.putString("_ID", id_string);
+                b.putLong("_ID", event_id.longValue());
 
                 Intent intent = new Intent(view.getContext(), Event_Detail_Host.class);
                 intent.putExtras(b);
@@ -117,10 +90,71 @@ public class Event_myevents extends Activity {
 
     }
 
+
+
     public void CreateEvent(View v){
 
-        Intent myIntent = new Intent(this, createEvent.class);
-        startActivity(myIntent);
+        Bundle myBundle = new Bundle();
+        myBundle.putBoolean("CREATE",true);
+        Intent myIntent = new Intent(this, Edit_Event.class);
+        myIntent.putExtras(myBundle);
+        startActivityForResult(myIntent, fromCreate);
+    }
+
+    protected void onActivityResult(int request_code, int result_code, Intent data){
+        if(result_code == RESULT_OK){
+            setList();
+
+
+        }
+
+    }
+
+    private void setList(){
+        myStringArray = new ArrayList<String>();
+        eventIDList = new ArrayList<Long>();
+        mainListView = (ListView) findViewById( R.id.listView_myEvents);
+
+        SessionManager session = new SessionManager(getApplicationContext());
+        userID = session.getUserID();
+
+        EventSelection where = new EventSelection();
+        where.eventOwner(userID);
+        EventCursor event = where.query(getContentResolver());
+
+        while(event.moveToNext()){
+            myStringArray.add(event.getEventTitle());
+            eventIDList.add(event.getId());
+        }
+
+        listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
+        mainListView.setAdapter(listAdapter);
+
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                //String temp = (String) ((TextView) view).getText();
+                //Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(view.getContext(), Event_Detail_Host.class);
+                Bundle myBundle = new Bundle();
+                myBundle.putLong("EVENT_ID",eventIDList.get(pos));
+                myIntent.putExtras(myBundle);
+                startActivityForResult(myIntent, fromEdit);
+            }
+        });
+        mainListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String temp = (String) ((TextView) view).getText();
+                temp = "Long press on "+ temp;
+                Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+    }
+
+    private void fillList(){
+
     }
 
 }

@@ -20,22 +20,22 @@ import edu.usf.EventExpress.provider.event.EventSelection;
  */
 public class Event_Detail_Host extends Activity {
 
-    Button edit;
+    Button edit, cancel;
     ImageButton map;
     TextView title, description, location, date, time;
-    String event_id;
+    long event_id;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_detail_host);
 
         Bundle b = getIntent().getExtras();
-        event_id = b.getString("_ID");
-        Long id_long = Long.parseLong(event_id);
+        event_id = b.getLong("_ID");
+
         Context context = getApplicationContext();
 
         EventSelection where = new EventSelection();
-        where.id(id_long.longValue());
+        where.id(event_id);
         Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
                 where.sel(), where.args(), null);
 
@@ -45,30 +45,32 @@ public class Event_Detail_Host extends Activity {
 
         map = (ImageButton)findViewById(R.id.imageButton2);
         edit = (Button)findViewById(R.id.button_edit);
+        cancel = (Button)findViewById(R.id.button_cancel);
         title = (TextView)findViewById(R.id.textView_eventTitle);
         description = (TextView)findViewById(R.id.textView_eventDescription);
         location = (TextView)findViewById(R.id.textView_HD_location);
         date = (TextView)findViewById(R.id.textView_date);
         time = (TextView)findViewById(R.id.textView_time);
+        //eventID = getIntent().getExtras().getLong("EVENT_ID");
+
+        //setData();
 
 
 
         title.setText(event.getEventTitle());
         description.setText(event.getEventDescription());
         location.setText(event.getEventAddress());
-        date.setText(event.getEventDate().toString());
-        time.setText(event.getEventDate().toString());
+        if(event.getEventDate() != null) {
+            date.setText(event.getEventDate().toString());
+            time.setText(event.getEventDate().toString());
+        }
 
         View.OnClickListener editClickEvent = new View.OnClickListener(){
             @Override
             public void onClick(View arg0){
                 Intent myIntent = new Intent(arg0.getContext(), Edit_Event.class);
                 Bundle b = new Bundle();
-                b.putString("TITLE", title.getText().toString());
-                b.putString("DESCRIPTION", description.getText().toString());
-                b.putString("LOCATION",location.getText().toString());
-                b.putString("TIME", time.getText().toString());
-                b.putString("DATE", date.getText().toString());
+                b.putLong("EVENT_ID",event_id);
 
                 myIntent.putExtras(b);
                 startActivityForResult(myIntent,0);
@@ -91,8 +93,39 @@ public class Event_Detail_Host extends Activity {
         };
         map.setOnClickListener(showOnMap);
 
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteEvent();
+            }
+        });
+    }
+
+    protected void onActivityResult(int request_code, int result_code, Intent data){
+        if(result_code == RESULT_OK){
+            setData();
 
 
+        }
+
+    }
+
+    private void deleteEvent(){
+        EventSelection where = new EventSelection();
+        where.id(event_id);
+        where.delete(getContentResolver());
+        Intent intent = new Intent(getApplicationContext(), Event_myevents.class);
+        startActivity(intent);
+    }
+
+    private void setData(){
+        EventSelection where = new EventSelection();
+        where.id(event_id);
+        EventCursor event = where.query(getContentResolver());
+        event.moveToNext();
+        title.setText(event.getEventTitle());
+        description.setText(event.getEventDescription());
+        location.setText(event.getEventAddress());
     }
 
 }
