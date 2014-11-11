@@ -101,7 +101,7 @@ public class GoogleLoginActivity extends Activity implements
         txtTitle = (TextView)findViewById(R.id.textView_appTitle);
         llProfileLayout = (LinearLayout)findViewById(R.id.llProfile);
 
-        new SessionManager(getApplicationContext());
+        session = new SessionManager(getApplicationContext());
 
         // Check for Google Play Services APK
         if (checkPlayServices()) {
@@ -125,6 +125,7 @@ public class GoogleLoginActivity extends Activity implements
                 @Override
                 public void onClick(View v) {
                     // Signout button clicked
+                    session.logOut();
                     signOutFromGplus();
                 }
             });
@@ -289,7 +290,7 @@ public class GoogleLoginActivity extends Activity implements
                 String personGooglePlusProfile = currentPerson.getUrl();
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
-                session = new SessionManager(getApplicationContext());
+                //session = new SessionManager(getApplicationContext());
                 session.createLoginSession(currentPerson.getId());
                 Log.d(TAG, "Name: " + personName + ", plusProfile: "
                         + personGooglePlusProfile + ", email: " + email
