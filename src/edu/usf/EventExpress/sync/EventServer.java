@@ -28,7 +28,7 @@ public interface EventServer {
     public static final String API_URL = "https://www.eventexpress.me/api";
 
     public static class UserItem {
-        Long google_id;
+        String google_id;
         String name;
         String timestamp;
         int deleted;
