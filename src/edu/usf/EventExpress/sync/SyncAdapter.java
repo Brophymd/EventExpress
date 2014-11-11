@@ -152,7 +152,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                         else {
                             Log.d(TAG, "Adding google_id:" + msg.google_id);
                             userContentValues.putGoogleId(msg.google_id)
-                                    .putName(msg.name)
+                                    .putUserName(msg.name)
                                     .insert(getContext().getContentResolver());
                         }
                     }

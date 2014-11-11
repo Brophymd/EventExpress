@@ -26,17 +26,16 @@ public class UserContentValues extends AbstractContentValues {
         return contentResolver.update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
-    public UserContentValues putGoogleId(String value) {
-        if (value == null) throw new IllegalArgumentException("value for googleId must not be null");
+    public UserContentValues putGoogleId(long value) {
         mContentValues.put(UserColumns.GOOGLE_ID, value);
         return this;
     }
 
 
 
-    public UserContentValues putName(String value) {
-        if (value == null) throw new IllegalArgumentException("value for name must not be null");
-        mContentValues.put(UserColumns.NAME, value);
+    public UserContentValues putUserName(String value) {
+        if (value == null) throw new IllegalArgumentException("value for userName must not be null");
+        mContentValues.put(UserColumns.USER_NAME, value);
         return this;
     }
 

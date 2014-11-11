@@ -2,7 +2,7 @@
     "fields": [
         {
             "name": "event_id",
-            "type": "Integer",
+            "type": "Long",
             "nullable": false,
             "foreignKey": {
                 "table": "event",
@@ -11,7 +11,7 @@
         },
         {
             "name": "user_id",
-            "type": "Integer",
+            "type": "Long",
             "nullable": false,
             "foreignKey": {
                 "table": "user",
@@ -31,5 +31,23 @@
             ],
             "defaultValue": "INVITED",
         },
+	{
+	    "name": "event_members_timestamp",
+	    "type": "String",
+	    "nullable": false,
+	    "defaultValue": "CURRENT_TIMESTAMP",
+	},
+	{
+	    "name": "event_members_deleted",
+	    "type": "Integer",
+	    "nullable": false,
+	    "defaultValue": 0,
+	},
+	{
+	    "name": "event_members_synced",
+	    "type": "Integer",
+	    "nullable": false,
+	    "defaultValue": 0,
+	},
         ]
 }

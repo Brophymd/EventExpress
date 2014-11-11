@@ -53,33 +53,48 @@ public class UserSelection extends AbstractSelection<UserSelection> {
     }
 
 
-    public UserSelection googleId(String... value) {
-        addEquals(UserColumns.GOOGLE_ID, value);
+    public UserSelection googleId(long... value) {
+        addEquals(UserColumns.GOOGLE_ID, toObjectArray(value));
         return this;
     }
 
-    public UserSelection googleIdNot(String... value) {
-        addNotEquals(UserColumns.GOOGLE_ID, value);
+    public UserSelection googleIdNot(long... value) {
+        addNotEquals(UserColumns.GOOGLE_ID, toObjectArray(value));
         return this;
     }
 
-    public UserSelection googleIdLike(String... value) {
-        addLike(UserColumns.GOOGLE_ID, value);
+    public UserSelection googleIdGt(long value) {
+        addGreaterThan(UserColumns.GOOGLE_ID, value);
         return this;
     }
 
-    public UserSelection name(String... value) {
-        addEquals(UserColumns.NAME, value);
+    public UserSelection googleIdGtEq(long value) {
+        addGreaterThanOrEquals(UserColumns.GOOGLE_ID, value);
         return this;
     }
 
-    public UserSelection nameNot(String... value) {
-        addNotEquals(UserColumns.NAME, value);
+    public UserSelection googleIdLt(long value) {
+        addLessThan(UserColumns.GOOGLE_ID, value);
         return this;
     }
 
-    public UserSelection nameLike(String... value) {
-        addLike(UserColumns.NAME, value);
+    public UserSelection googleIdLtEq(long value) {
+        addLessThanOrEquals(UserColumns.GOOGLE_ID, value);
+        return this;
+    }
+
+    public UserSelection userName(String... value) {
+        addEquals(UserColumns.USER_NAME, value);
+        return this;
+    }
+
+    public UserSelection userNameNot(String... value) {
+        addNotEquals(UserColumns.USER_NAME, value);
+        return this;
+    }
+
+    public UserSelection userNameLike(String... value) {
+        addLike(UserColumns.USER_NAME, value);
         return this;
     }
 

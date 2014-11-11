@@ -28,14 +28,14 @@ public interface EventServer {
     public static final String API_URL = "https://www.eventexpress.me/api";
 
     public static class UserItem {
-        String google_id;
+        Long google_id;
         String name;
         String timestamp;
         int deleted;
 
         public UserItem(UserCursor cursor) {
             google_id = cursor.getGoogleId();
-            name = cursor.getName();
+            name = cursor.getUserName();
             timestamp = cursor.getUserTimestamp();
             deleted = cursor.getUserDeleted();
         }
@@ -87,7 +87,7 @@ public interface EventServer {
 
     @GET("/people/{id}")
     UserItem getUser(@Header("Authorization") String token,
-                     @Path("id") Integer remote_id);
+                     @Path("id") Long remote_id);
 
     @GET("/people")
     UserItems getUsers(@Header("Authorization") String token,
@@ -111,7 +111,7 @@ public interface EventServer {
 
     @DELETE("/events/{id}")
     Dummy deleteEvent(@Header("Authorization") String token,
-                      @Path("id") Integer remote_id);
+                      @Path("id") Long remote_id);
 
     @POST("/registergcm")
     Dummy registerGCM(@Header("Authorization") String token,

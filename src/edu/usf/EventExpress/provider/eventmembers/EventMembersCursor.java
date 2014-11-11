@@ -19,15 +19,15 @@ public class EventMembersCursor extends AbstractCursor {
     /**
      * Get the {@code event_id} value.
      */
-    public int getEventId() {
-        return getIntegerOrNull(EventMembersColumns.EVENT_ID);
+    public long getEventId() {
+        return getLongOrNull(EventMembersColumns.EVENT_ID);
     }
 
     /**
      * Get the {@code user_id} value.
      */
-    public int getUserId() {
-        return getIntegerOrNull(EventMembersColumns.USER_ID);
+    public long getUserId() {
+        return getLongOrNull(EventMembersColumns.USER_ID);
     }
 
     /**
@@ -76,8 +76,8 @@ public class EventMembersCursor extends AbstractCursor {
      * Get the {@code remote_id} value.
      * Can be {@code null}.
      */
-    public Integer getRemoteId() {
-        return getIntegerOrNull(EventColumns.REMOTE_ID);
+    public Long getRemoteId() {
+        return getLongOrNull(EventColumns.REMOTE_ID);
     }
 
     /**
@@ -166,19 +166,17 @@ public class EventMembersCursor extends AbstractCursor {
 
     /**
      * Get the {@code google_id} value.
-     * Cannot be {@code null}.
      */
-    public String getGoogleId() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.GOOGLE_ID);
-        return getString(index);
+    public long getGoogleId() {
+        return getLongOrNull(UserColumns.GOOGLE_ID);
     }
 
     /**
-     * Get the {@code name} value.
+     * Get the {@code user_name} value.
      * Cannot be {@code null}.
      */
-    public String getName() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.NAME);
+    public String getUserName() {
+        Integer index = getCachedColumnIndexOrThrow(UserColumns.USER_NAME);
         return getString(index);
     }
 

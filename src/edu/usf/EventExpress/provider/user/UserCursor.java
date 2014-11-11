@@ -16,19 +16,17 @@ public class UserCursor extends AbstractCursor {
 
     /**
      * Get the {@code google_id} value.
-     * Cannot be {@code null}.
      */
-    public String getGoogleId() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.GOOGLE_ID);
-        return getString(index);
+    public long getGoogleId() {
+        return getLongOrNull(UserColumns.GOOGLE_ID);
     }
 
     /**
-     * Get the {@code name} value.
+     * Get the {@code user_name} value.
      * Cannot be {@code null}.
      */
-    public String getName() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.NAME);
+    public String getUserName() {
+        Integer index = getCachedColumnIndexOrThrow(UserColumns.USER_NAME);
         return getString(index);
     }
 

@@ -17,7 +17,7 @@ public class UserColumns implements BaseColumns {
 
     public static final String _ID = BaseColumns._ID;
     public static final String GOOGLE_ID = "google_id";
-    public static final String NAME = "name";
+    public static final String USER_NAME = "user_name";
     public static final String USER_TIMESTAMP = "user_timestamp";
     public static final String USER_DELETED = "user_deleted";
     public static final String USER_SYNCED = "user_synced";
@@ -28,7 +28,7 @@ public class UserColumns implements BaseColumns {
     public static final String[] FULL_PROJECTION = new String[] {
             TABLE_NAME + "." + _ID + " AS " + BaseColumns._ID,
             TABLE_NAME + "." + GOOGLE_ID,
-            TABLE_NAME + "." + NAME,
+            TABLE_NAME + "." + USER_NAME,
             TABLE_NAME + "." + USER_TIMESTAMP,
             TABLE_NAME + "." + USER_DELETED,
             TABLE_NAME + "." + USER_SYNCED
@@ -39,7 +39,7 @@ public class UserColumns implements BaseColumns {
     static {
         ALL_COLUMNS.add(_ID);
         ALL_COLUMNS.add(GOOGLE_ID);
-        ALL_COLUMNS.add(NAME);
+        ALL_COLUMNS.add(USER_NAME);
         ALL_COLUMNS.add(USER_TIMESTAMP);
         ALL_COLUMNS.add(USER_DELETED);
         ALL_COLUMNS.add(USER_SYNCED);

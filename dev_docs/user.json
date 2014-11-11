@@ -2,7 +2,7 @@
     "fields": [
         {
             "name": "google_id",
-            "type": "String",
+            "type": "Long",
             "index": true,
             "nullable": false,
         },
@@ -11,6 +11,24 @@
             "type": "String",
             "nullable": false,
         },
+	{
+	    "name": "user_timestamp",
+	    "type": "String",
+	    "nullable": false,
+	    "defaultValue": CURRENT_TIMESTAMP,
+	},
+	{
+	    "name": "user_deleted",
+	    "type": "Integer",
+	    "nullable": false,
+	    "defaultValue": 0,
+	},
+	{
+	    "name": "user_synced",
+	    "type": "Integer",
+	    "nullable": false,
+	    "defaultValue": 0,
+	},
     ],
 
     "constraints": [

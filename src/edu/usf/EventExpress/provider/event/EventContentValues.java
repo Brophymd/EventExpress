@@ -34,7 +34,7 @@ public class EventContentValues extends AbstractContentValues {
 
 
 
-    public EventContentValues putRemoteId(Integer value) {
+    public EventContentValues putRemoteId(Long value) {
         mContentValues.put(EventColumns.REMOTE_ID, value);
         return this;
     }

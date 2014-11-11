@@ -26,14 +26,14 @@ public class EventMembersContentValues extends AbstractContentValues {
         return contentResolver.update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
-    public EventMembersContentValues putEventId(int value) {
+    public EventMembersContentValues putEventId(long value) {
         mContentValues.put(EventMembersColumns.EVENT_ID, value);
         return this;
     }
 
 
 
-    public EventMembersContentValues putUserId(int value) {
+    public EventMembersContentValues putUserId(long value) {
         mContentValues.put(EventMembersColumns.USER_ID, value);
         return this;
     }

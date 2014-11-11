@@ -6,6 +6,10 @@
             "index": true,
             "nullable": false,
         },
+	{
+	    "name": "remote_id",
+	    "type": "Long",
+	},
         {
             "name": "event_type",
             "type": "enum",
@@ -40,5 +44,23 @@
             "name": "event_longitude",
             "type": "Float",
         },
+	{
+	    "name": "event_timestamp",
+	    "type": "String",
+	    "nullable": false,
+	    "defaultValue": CURRENT_TIMESTAMP,
+	},
+	{
+	    "name": "event_deleted",
+	    "type": "Integer",
+	    "nullable": false,
+	    "defaultValue": 0,
+	},
+	{
+	    "name": "event_synced",
+	    "type": "Integer",
+	    "nullable": false,
+	    "defaultValue": 0,
+	},
         ]
 }

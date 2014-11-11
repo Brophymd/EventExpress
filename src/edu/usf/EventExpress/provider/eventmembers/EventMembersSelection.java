@@ -53,62 +53,62 @@ public class EventMembersSelection extends AbstractSelection<EventMembersSelecti
     }
 
 
-    public EventMembersSelection eventId(int... value) {
+    public EventMembersSelection eventId(long... value) {
         addEquals(EventMembersColumns.EVENT_ID, toObjectArray(value));
         return this;
     }
 
-    public EventMembersSelection eventIdNot(int... value) {
+    public EventMembersSelection eventIdNot(long... value) {
         addNotEquals(EventMembersColumns.EVENT_ID, toObjectArray(value));
         return this;
     }
 
-    public EventMembersSelection eventIdGt(int value) {
+    public EventMembersSelection eventIdGt(long value) {
         addGreaterThan(EventMembersColumns.EVENT_ID, value);
         return this;
     }
 
-    public EventMembersSelection eventIdGtEq(int value) {
+    public EventMembersSelection eventIdGtEq(long value) {
         addGreaterThanOrEquals(EventMembersColumns.EVENT_ID, value);
         return this;
     }
 
-    public EventMembersSelection eventIdLt(int value) {
+    public EventMembersSelection eventIdLt(long value) {
         addLessThan(EventMembersColumns.EVENT_ID, value);
         return this;
     }
 
-    public EventMembersSelection eventIdLtEq(int value) {
+    public EventMembersSelection eventIdLtEq(long value) {
         addLessThanOrEquals(EventMembersColumns.EVENT_ID, value);
         return this;
     }
 
-    public EventMembersSelection userId(int... value) {
+    public EventMembersSelection userId(long... value) {
         addEquals(EventMembersColumns.USER_ID, toObjectArray(value));
         return this;
     }
 
-    public EventMembersSelection userIdNot(int... value) {
+    public EventMembersSelection userIdNot(long... value) {
         addNotEquals(EventMembersColumns.USER_ID, toObjectArray(value));
         return this;
     }
 
-    public EventMembersSelection userIdGt(int value) {
+    public EventMembersSelection userIdGt(long value) {
         addGreaterThan(EventMembersColumns.USER_ID, value);
         return this;
     }
 
-    public EventMembersSelection userIdGtEq(int value) {
+    public EventMembersSelection userIdGtEq(long value) {
         addGreaterThanOrEquals(EventMembersColumns.USER_ID, value);
         return this;
     }
 
-    public EventMembersSelection userIdLt(int value) {
+    public EventMembersSelection userIdLt(long value) {
         addLessThan(EventMembersColumns.USER_ID, value);
         return this;
     }
 
-    public EventMembersSelection userIdLtEq(int value) {
+    public EventMembersSelection userIdLtEq(long value) {
         addLessThanOrEquals(EventMembersColumns.USER_ID, value);
         return this;
     }

@@ -27,8 +27,8 @@ public class EventCursor extends AbstractCursor {
      * Get the {@code remote_id} value.
      * Can be {@code null}.
      */
-    public Integer getRemoteId() {
-        return getIntegerOrNull(EventColumns.REMOTE_ID);
+    public Long getRemoteId() {
+        return getLongOrNull(EventColumns.REMOTE_ID);
     }
 
     /**
