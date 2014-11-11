@@ -11,7 +11,10 @@ import android.view.View;
 import android.widget.*;
 import edu.usf.EventExpress.provider.event.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Vi Tran on 10/26/2014.
@@ -25,6 +28,11 @@ public class Edit_Event extends Activity {
     String userID;
     Long eventID;
     boolean fromCreate;
+    static DateFormat DF = new SimpleDateFormat("MM/dd/yyyy");
+    static DateFormat TF = new SimpleDateFormat("h:mm a");
+    Date DateandTime;
+    int selYear, selMonth, selDay, selHour, selMinute;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +46,7 @@ public class Edit_Event extends Activity {
         et_date = (EditText)findViewById(R.id.editText_dateEdit);
         et_time = (EditText)findViewById(R.id.editText_timeEdit);
         userID = new SessionManager(getApplicationContext()).getUserID();
+
 
         Bundle b = getIntent().getExtras();
 
@@ -56,8 +65,18 @@ public class Edit_Event extends Activity {
             et_title.setText(event.getEventTitle());
             et_description.setText(event.getEventDescription());
             et_location.setText(event.getEventAddress());
-            //et_date.setText(date);
-            //et_time.setText(time);
+            et_date.setText(DF.format(event.getEventDate()));
+            et_time.setText(TF.format(event.getEventDate()));
+            DateandTime = event.getEventDate();
+            Calendar loadDate = Calendar.getInstance();
+            loadDate.setTime(DateandTime);
+            selYear = loadDate.get(Calendar.YEAR);
+            selMonth = loadDate.get(Calendar.MONTH);
+            selDay = loadDate.get(Calendar.DAY_OF_MONTH);
+            selHour = loadDate.get(Calendar.HOUR_OF_DAY);
+            selMinute = loadDate.get(Calendar.MINUTE);
+
+
 
         }
 
@@ -74,6 +93,10 @@ public class Edit_Event extends Activity {
                     public void onDateSet(DatePicker datePicker, int yearPick, int monthPick, int dayPick) {
                         monthPick += 1;
                         et_date.setText(monthPick + "/" + dayPick + "/" + yearPick);
+                        //selectedDate = new Date(yearPick - 1900,monthPick - 1,dayPick);
+                        selYear = yearPick;
+                        selMonth = monthPick;
+                        selDay = dayPick;
                     }
                 }, year, month, day);
                 myDatePicker.setTitle(R.string.lbl_Pick_Date);
@@ -106,6 +129,8 @@ public class Edit_Event extends Activity {
                         if(hourPick == 0)
                             displayHour = 12;
                         et_time.setText(displayHour + ":" + String.format("%02d",minutePick)  + " " + AMPM);
+                        selHour = hourPick;
+                        selMinute = minutePick;
                     }
                 }, hour,minute, false);
                 myTimePicker.setTitle(R.string.lbl_Pick_Date);
@@ -119,13 +144,21 @@ public class Edit_Event extends Activity {
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, selYear);
+                cal.set(Calendar.MONTH, selMonth);
+                cal.set(Calendar.DAY_OF_MONTH, selDay);
+                cal.set(Calendar.HOUR_OF_DAY, selHour);
+                cal.set(Calendar.MINUTE,selMinute);
+                DateandTime = cal.getTime();
                 Context context = getApplicationContext();
                 if(fromCreate) {
                     EventContentValues values = new EventContentValues();
                     values.putEventOwner(userID).putEventType(EventType.OPEN)
                             .putEventTitle(et_title.getText().toString())
                             .putEventDescription(et_description.getText().toString())
-                            .putEventAddress(et_location.getText().toString());
+                            .putEventAddress(et_location.getText().toString())
+                            .putEventDate(DateandTime);
                     context.getContentResolver().insert(EventColumns.CONTENT_URI, values.values());
                 }
                 else{
@@ -138,6 +171,7 @@ public class Edit_Event extends Activity {
                             .putEventTitle(et_title.getText().toString())
                             .putEventDescription(et_description.getText().toString())
                             .putEventAddress(et_location.getText().toString())
+                            .putEventDate(DateandTime)
                             .update(context.getContentResolver(), x);
                     //context.getContentResolver().update(EventColumns.CONTENT_URI, values.values(), x.sel(), null);
 

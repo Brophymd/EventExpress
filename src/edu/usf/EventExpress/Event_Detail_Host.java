@@ -14,6 +14,9 @@ import edu.usf.EventExpress.provider.event.EventColumns;
 import edu.usf.EventExpress.provider.event.EventCursor;
 import edu.usf.EventExpress.provider.event.EventSelection;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 
 /**
  * Created by Vi Tran on 10/19/2014.
@@ -23,6 +26,8 @@ public class Event_Detail_Host extends Activity {
     Button edit, cancel;
     ImageButton map;
     TextView title, description, location, date, time;
+    static DateFormat DF = new SimpleDateFormat("MM/dd/yyyy");
+    static DateFormat TF = new SimpleDateFormat("h:mm a");
     long event_id;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class Event_Detail_Host extends Activity {
 
         EventSelection where = new EventSelection();
         where.id(event_id);
+
         Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
                 where.sel(), where.args(), null);
 
@@ -61,8 +67,8 @@ public class Event_Detail_Host extends Activity {
         description.setText(event.getEventDescription());
         location.setText(event.getEventAddress());
         if(event.getEventDate() != null) {
-            date.setText(event.getEventDate().toString());
-            time.setText(event.getEventDate().toString());
+            date.setText(DF.format(event.getEventDate()));
+            time.setText(TF.format(event.getEventDate()));
         }
 
         View.OnClickListener editClickEvent = new View.OnClickListener(){
@@ -85,7 +91,7 @@ public class Event_Detail_Host extends Activity {
                 Intent myIntent = new Intent(v.getContext(),Event_Map.class);
                 Bundle myBundle = new Bundle();
                 myBundle.putString("LOCATION", location.getText().toString());
-                myBundle.putBoolean("fromEventDetail",true);
+                myBundle.putBoolean("fromEventDetailHost",true);
                 myIntent.putExtras(myBundle);
                 startActivity(myIntent);
 
@@ -131,6 +137,8 @@ public class Event_Detail_Host extends Activity {
         title.setText(event.getEventTitle());
         description.setText(event.getEventDescription());
         location.setText(event.getEventAddress());
+        date.setText(DF.format(event.getEventDate()));
+        time.setText(TF.format(event.getEventDate()));
     }
 
 }
