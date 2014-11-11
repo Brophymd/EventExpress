@@ -63,6 +63,7 @@
         <activity android:name=".Event_Detail_Host"/>
         <activity android:name=".Event_Map"/>
         <activity android:name=".Edit_Event"/>
+        <activity android:name=".Friend_Invite"/>
 
         <provider
                 android:name=".provider.EventProvider"

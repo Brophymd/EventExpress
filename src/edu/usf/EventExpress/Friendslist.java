@@ -17,7 +17,7 @@ import android.view.View;
  * Created by Varik on 10/12/2014.
  */
 public class Friendslist extends Activity{
-    private String userid = "";
+    String userID;
     ArrayList<String> myStringArray = new ArrayList<String>();
     ArrayAdapter listAdapter;
     ListView mainListView;
@@ -25,6 +25,7 @@ public class Friendslist extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friendslist);
+        userID = new SessionManager(getApplicationContext()).getUserID();
         mainListView = (ListView) findViewById( R.id.mainList );
         myStringArray.add("Mark");
         myStringArray.add("James");
@@ -86,14 +87,14 @@ public class Friendslist extends Activity{
 
     private void sendFriendRequest(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter friend's UserID");
+        builder.setTitle("Enter friend's E-mail address");
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
         builder.setPositiveButton("Request",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                userid = input.getText().toString();
+                String friend_request_id = input.getText().toString();
 
             }
         });

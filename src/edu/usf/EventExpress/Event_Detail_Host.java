@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
  */
 public class Event_Detail_Host extends Activity {
 
-    Button edit, cancel;
+    Button edit, cancel, inviteFriends;
     ImageButton map;
     TextView title, description, location, date, time;
     static DateFormat DF = new SimpleDateFormat("MM/dd/yyyy");
@@ -57,6 +57,7 @@ public class Event_Detail_Host extends Activity {
         location = (TextView)findViewById(R.id.textView_HD_location);
         date = (TextView)findViewById(R.id.textView_date);
         time = (TextView)findViewById(R.id.textView_time);
+        inviteFriends = (Button)findViewById(R.id.button_invite_Host);
         //eventID = getIntent().getExtras().getLong("EVENT_ID");
 
         //setData();
@@ -103,6 +104,14 @@ public class Event_Detail_Host extends Activity {
             @Override
             public void onClick(View v) {
                 deleteEvent();
+            }
+        });
+
+        inviteFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), Friend_Invite.class);
+                startActivity(myIntent);
             }
         });
     }

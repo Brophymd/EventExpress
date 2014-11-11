@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_invite"
-                android:id="@+id/button_invite"
+                android:id="@+id/button_invite_Host"
                 />
 
         <Button
