@@ -56,6 +56,11 @@ public class GoogleLoginActivity extends Activity implements
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final String SENDER_ID = "266877390111";
 
+    /* Create an account for use with SyncAdapter */
+    private static final String ACCOUNT_NAME = "EventExpress";
+    private static final String ACCOUNT_TYPE = "com.google";
+    private android.accounts.Account mAccount = new android.accounts.Account(ACCOUNT_NAME, ACCOUNT_TYPE);
+
     /* Client used to interact with Google APIs */
     private GoogleApiClient mGoogleApiClient;
 
@@ -353,6 +358,13 @@ public class GoogleLoginActivity extends Activity implements
                     }
                 }.execute(null, null, null);
                 /* END GOOGLE CLOUD MESSAGING TEST */
+                /* BEGIN SYNCADAPTER TEST */
+                AccountManager accountManager = AccountManager.get(getApplicationContext());
+                if (accountManager.addAccountExplicitly(mAccount, null, null)) {
+                    ContentResolver.setIsSyncable(mAccount, EventProvider.AUTHORITY, 1);
+                    ContentResolver.setSyncAutomatically(mAccount, EventProvider.AUTHORITY, true);
+                }
+                /* END SYNCADAPTER TEST */
 
                 //session.createLoginSession(personName, email);
 
