@@ -2,7 +2,7 @@
     "fields": [
         {
             "name": "google_id",
-            "type": "Long",
+            "type": "String",
             "index": true,
             "nullable": false,
         },
