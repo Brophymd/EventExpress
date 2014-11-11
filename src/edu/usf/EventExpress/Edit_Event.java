@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.format.Time;
 import android.view.View;
 import android.widget.*;
+import com.google.android.gms.maps.model.LatLng;
 import edu.usf.EventExpress.provider.event.*;
 
 import java.text.DateFormat;
@@ -151,6 +152,10 @@ public class Edit_Event extends Activity {
                 cal.set(Calendar.HOUR_OF_DAY, selHour);
                 cal.set(Calendar.MINUTE,selMinute);
                 DateandTime = cal.getTime();
+                LatLng mylatlng;
+                GeoLocation geo = new GeoLocation(getApplicationContext());
+                mylatlng = geo.getLatLngfromAddress(et_location.getText().toString());
+                //Toast.makeText(getApplicationContext(), addr,Toast.LENGTH_SHORT).show();
                 Context context = getApplicationContext();
                 if(fromCreate) {
                     EventContentValues values = new EventContentValues();
@@ -158,7 +163,9 @@ public class Edit_Event extends Activity {
                             .putEventTitle(et_title.getText().toString())
                             .putEventDescription(et_description.getText().toString())
                             .putEventAddress(et_location.getText().toString())
-                            .putEventDate(DateandTime);
+                            .putEventDate(DateandTime)
+                            .putEventLatitude((float) mylatlng.latitude)
+                            .putEventLongitude((float)mylatlng.longitude);
                     context.getContentResolver().insert(EventColumns.CONTENT_URI, values.values());
                 }
                 else{
@@ -172,6 +179,8 @@ public class Edit_Event extends Activity {
                             .putEventDescription(et_description.getText().toString())
                             .putEventAddress(et_location.getText().toString())
                             .putEventDate(DateandTime)
+                            .putEventLatitude((float) mylatlng.latitude)
+                            .putEventLongitude((float)mylatlng.longitude)
                             .update(context.getContentResolver(), x);
                     //context.getContentResolver().update(EventColumns.CONTENT_URI, values.values(), x.sel(), null);
 
