@@ -19,17 +19,8 @@
             android:text="@string/lbl_Event_Invitations"
             android:id="@+id/button_cancel"
             android:onClick="eventsInvites"
-            android:layout_above="@+id/button3" android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"/>
-
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_Events_in_my_area"
-            android:id="@+id/button3"
-            android:onClick="eventsArea"
-            android:layout_above="@+id/button4" android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true" android:layout_above="@+id/button4"/>
 
     <Button
             android:layout_width="wrap_content"

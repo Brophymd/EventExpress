@@ -22,6 +22,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.maps.GeoPoint;
 
 import java.net.URI;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Varik on 10/26/2014.
@@ -32,6 +34,7 @@ public class Event_Map extends Activity {
     private LocationManager locationManager;
     private Location myLocation;
     private Bundle myBundle;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +88,7 @@ public class Event_Map extends Activity {
     }
 
     private void guidance(){
-        if(myBundle != null && myBundle.getBoolean("fromEventDetail",false)){
+        if(myBundle != null && myBundle.getBoolean("fromEventDetailHost",false)){
             Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                     Uri.parse("google.navigation:q=" + myBundle.getString("LOCATION")));
             startActivity(intent);
