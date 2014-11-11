@@ -166,9 +166,11 @@ public class EventMembersCursor extends AbstractCursor {
 
     /**
      * Get the {@code google_id} value.
+     * Cannot be {@code null}.
      */
-    public long getGoogleId() {
-        return getLongOrNull(UserColumns.GOOGLE_ID);
+    public String getGoogleId() {
+        Integer index = getCachedColumnIndexOrThrow(UserColumns.GOOGLE_ID);
+        return getString(index);
     }
 
     /**

@@ -53,33 +53,18 @@ public class UserSelection extends AbstractSelection<UserSelection> {
     }
 
 
-    public UserSelection googleId(long... value) {
-        addEquals(UserColumns.GOOGLE_ID, toObjectArray(value));
+    public UserSelection googleId(String... value) {
+        addEquals(UserColumns.GOOGLE_ID, value);
         return this;
     }
 
-    public UserSelection googleIdNot(long... value) {
-        addNotEquals(UserColumns.GOOGLE_ID, toObjectArray(value));
+    public UserSelection googleIdNot(String... value) {
+        addNotEquals(UserColumns.GOOGLE_ID, value);
         return this;
     }
 
-    public UserSelection googleIdGt(long value) {
-        addGreaterThan(UserColumns.GOOGLE_ID, value);
-        return this;
-    }
-
-    public UserSelection googleIdGtEq(long value) {
-        addGreaterThanOrEquals(UserColumns.GOOGLE_ID, value);
-        return this;
-    }
-
-    public UserSelection googleIdLt(long value) {
-        addLessThan(UserColumns.GOOGLE_ID, value);
-        return this;
-    }
-
-    public UserSelection googleIdLtEq(long value) {
-        addLessThanOrEquals(UserColumns.GOOGLE_ID, value);
+    public UserSelection googleIdLike(String... value) {
+        addLike(UserColumns.GOOGLE_ID, value);
         return this;
     }
 

@@ -26,7 +26,8 @@ public class UserContentValues extends AbstractContentValues {
         return contentResolver.update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
-    public UserContentValues putGoogleId(long value) {
+    public UserContentValues putGoogleId(String value) {
+        if (value == null) throw new IllegalArgumentException("value for googleId must not be null");
         mContentValues.put(UserColumns.GOOGLE_ID, value);
         return this;
     }
