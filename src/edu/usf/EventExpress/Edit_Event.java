@@ -96,7 +96,7 @@ public class Edit_Event extends Activity {
                         et_date.setText(monthPick + "/" + dayPick + "/" + yearPick);
                         //selectedDate = new Date(yearPick - 1900,monthPick - 1,dayPick);
                         selYear = yearPick;
-                        selMonth = monthPick;
+                        selMonth = monthPick-1;
                         selDay = dayPick;
                     }
                 }, year, month, day);
