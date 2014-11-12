@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 
 /**
- * Created by Varik on 10/12/2014.
+ * Created by Varik on 10/12/2014.          NOT USED ANYMORE
  */
 public class mainScreen extends Activity {
 

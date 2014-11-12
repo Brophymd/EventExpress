@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * Created by Varik on 10/12/2014.
+ * Created by Varik on 10/12/2014.                  NOT USED ANYMORE
  */
 public class newUser extends Activity {
     @Override

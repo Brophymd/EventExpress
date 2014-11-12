@@ -15,7 +15,7 @@ import java.util.Calendar;
 
 
 /**
- * Created by Varik on 10/12/2014.
+ * Created by Varik on 10/12/2014.                                      NOT USED ANYMORE
  */
 public class createEvent extends Activity {
 

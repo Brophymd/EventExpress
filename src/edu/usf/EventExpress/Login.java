@@ -11,7 +11,7 @@ import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallback
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
 
 /**
- * Created by Varik on 10/11/2014.
+ * Created by Varik on 10/11/2014.                  NOT USED ANYMORE
  */
 public class Login extends Activity {
 

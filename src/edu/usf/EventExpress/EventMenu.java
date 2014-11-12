@@ -43,7 +43,7 @@ public class EventMenu extends Activity {
         startActivity(myIntent);
     }*/
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu m){
         super.onCreateOptionsMenu(m);
         CreateMenu(m);
@@ -71,5 +71,5 @@ public class EventMenu extends Activity {
 
         }
         return false;
-    }
+    }*/
 }
