@@ -16,16 +16,20 @@ public class FriendStatusCursor extends AbstractCursor {
 
     /**
      * Get the {@code from_user_id} value.
+     * Cannot be {@code null}.
      */
-    public long getFromUserId() {
-        return getLongOrNull(FriendStatusColumns.FROM_USER_ID);
+    public String getFromUserId() {
+        Integer index = getCachedColumnIndexOrThrow(FriendStatusColumns.FROM_USER_ID);
+        return getString(index);
     }
 
     /**
      * Get the {@code to_user_id} value.
+     * Cannot be {@code null}.
      */
-    public long getToUserId() {
-        return getLongOrNull(FriendStatusColumns.TO_USER_ID);
+    public String getToUserId() {
+        Integer index = getCachedColumnIndexOrThrow(FriendStatusColumns.TO_USER_ID);
+        return getString(index);
     }
 
     /**

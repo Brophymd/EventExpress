@@ -38,7 +38,7 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventColumns.EVENT_ADDRESS + " TEXT, "
             + EventColumns.EVENT_LATITUDE + " REAL, "
             + EventColumns.EVENT_LONGITUDE + " REAL, "
-            + EventColumns.EVENT_TIMESTAMP + " INTEGER NOT NULL DEFAULT 'CURRENT_TIMESTAMP', "
+            + EventColumns.EVENT_TIMESTAMP + " INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, "
             + EventColumns.EVENT_DELETED + " INTEGER NOT NULL DEFAULT '0', "
             + EventColumns.EVENT_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + " );";
@@ -52,7 +52,7 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventMembersColumns.EVENT_ID + " INTEGER NOT NULL, "
             + EventMembersColumns.USER_ID + " INTEGER NOT NULL, "
             + EventMembersColumns.RSVP_STATUS + " INTEGER DEFAULT 'INVITED', "
-            + EventMembersColumns.EVENT_MEMBERS_TIMESTAMP + " INTEGER NOT NULL DEFAULT 'CURRENT_TIMESTAMP', "
+            + EventMembersColumns.EVENT_MEMBERS_TIMESTAMP + " INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, "
             + EventMembersColumns.EVENT_MEMBERS_DELETED + " INTEGER NOT NULL DEFAULT '0', "
             + EventMembersColumns.EVENT_MEMBERS_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + ", CONSTRAINT fk_event_id FOREIGN KEY (event_id) REFERENCES event (_id) ON DELETE CASCADE"
@@ -62,15 +62,21 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TABLE_FRIEND_STATUS = "CREATE TABLE IF NOT EXISTS "
             + FriendStatusColumns.TABLE_NAME + " ( "
             + FriendStatusColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + FriendStatusColumns.FROM_USER_ID + " INTEGER NOT NULL, "
-            + FriendStatusColumns.TO_USER_ID + " INTEGER NOT NULL, "
+            + FriendStatusColumns.FROM_USER_ID + " TEXT NOT NULL, "
+            + FriendStatusColumns.TO_USER_ID + " TEXT NOT NULL, "
             + FriendStatusColumns.STATUS + " INTEGER NOT NULL, "
-            + FriendStatusColumns.SENT_TIME + " INTEGER DEFAULT 'CURRENT_TIMESTAMP', "
+            + FriendStatusColumns.SENT_TIME + " INTEGER DEFAULT CURRENT_TIMESTAMP, "
             + FriendStatusColumns.RESPONSE_TIME + " INTEGER, "
-            + FriendStatusColumns.FRIEND_STATUS_TIMESTAMP + " INTEGER NOT NULL DEFAULT 'CURRENT_TIMESTAMP', "
+            + FriendStatusColumns.FRIEND_STATUS_TIMESTAMP + " INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, "
             + FriendStatusColumns.FRIEND_STATUS_DELETED + " INTEGER NOT NULL DEFAULT '0', "
             + FriendStatusColumns.FRIEND_STATUS_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + " );";
+
+    private static final String SQL_CREATE_INDEX_FRIEND_STATUS_FROM_USER_ID = "CREATE INDEX IDX_FRIEND_STATUS_FROM_USER_ID "
+            + " ON " + FriendStatusColumns.TABLE_NAME + " ( " + FriendStatusColumns.FROM_USER_ID + " );";
+
+    private static final String SQL_CREATE_INDEX_FRIEND_STATUS_TO_USER_ID = "CREATE INDEX IDX_FRIEND_STATUS_TO_USER_ID "
+            + " ON " + FriendStatusColumns.TABLE_NAME + " ( " + FriendStatusColumns.TO_USER_ID + " );";
 
     private static final String SQL_CREATE_TABLE_USER = "CREATE TABLE IF NOT EXISTS "
             + UserColumns.TABLE_NAME + " ( "
@@ -78,7 +84,7 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + UserColumns.GOOGLE_ID + " TEXT NOT NULL, "
             + UserColumns.USER_EMAIL + " TEXT NOT NULL, "
             + UserColumns.USER_NAME + " TEXT NOT NULL, "
-            + UserColumns.USER_TIMESTAMP + " INTEGER NOT NULL DEFAULT 'CURRENT_TIMESTAMP', "
+            + UserColumns.USER_TIMESTAMP + " INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, "
             + UserColumns.USER_DELETED + " INTEGER NOT NULL DEFAULT '0', "
             + UserColumns.USER_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + ", CONSTRAINT unique_name unique (google_id) on conflict replace"
@@ -147,6 +153,8 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_INDEX_EVENT_EVENT_OWNER);
         db.execSQL(SQL_CREATE_TABLE_EVENT_MEMBERS);
         db.execSQL(SQL_CREATE_TABLE_FRIEND_STATUS);
+        db.execSQL(SQL_CREATE_INDEX_FRIEND_STATUS_FROM_USER_ID);
+        db.execSQL(SQL_CREATE_INDEX_FRIEND_STATUS_TO_USER_ID);
         db.execSQL(SQL_CREATE_TABLE_USER);
         db.execSQL(SQL_CREATE_INDEX_USER_GOOGLE_ID);
         mOpenHelperCallbacks.onPostCreate(mContext, db);

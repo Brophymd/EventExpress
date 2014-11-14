@@ -30,12 +30,14 @@ public interface EventServer {
     public static class UserItem {
         long remote_id;
         String google_id;
+        String user_email;
         String name;
         Date timestamp;
         int deleted;
 
         public UserItem(UserCursor cursor) {
             google_id = cursor.getGoogleId();
+            user_email = cursor.getUserEmail();
             name = cursor.getUserName();
             timestamp = cursor.getUserTimestamp();
             deleted = cursor.getUserDeleted();
