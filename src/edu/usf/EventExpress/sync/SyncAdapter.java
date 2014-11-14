@@ -166,41 +166,49 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 }
             }
             // Download event info
-//            if (!extras.getBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, false)) {
-//                // Check if we synced before
-//                final String lastSync = PreferenceManager
-//                        .getDefaultSharedPreferences(getContext()).getString(
-//                                KEY_LASTSYNC, null);
-//                final EventServer.EventItems events;
-//                if (lastSync != null && !lastSync.isEmpty()) {
-//                    events = server.getEvents(token, lastSync);
-//                }
-//                else {
-//                    events = server.getEvents(token, null);
-//                }
-//                if (events != null && events.items != null) {
-//                    for (EventServer.EventItem msg : events.items) {
-//                        Log.d(TAG, "got google_id: " + msg.google_id + ", name: " + msg.name);
-//                        if (msg.deleted != 0) {
-//                            Log.d(TAG, "Deleting: " + msg.google_id);
-//                            userSelection.googleId(msg.google_id).delete(getContext().getContentResolver());
-//                        }
-//                        else {
-//                            Log.d(TAG, "Adding google_id:" + msg.google_id);
-//                            userContentValues.putGoogleId(msg.google_id)
-//                                    .putName(msg.name)
-//                                    .insert(getContext().getContentResolver());
-//                        }
-//                    }
-//                }
-//                // Save sync timestamp
-//                if (events != null) {
-//                    events.latestTimestamp = new Timestamp(new Date().getTime()).toString();
-//                    PreferenceManager.getDefaultSharedPreferences(getContext())
-//                            .edit().putString(KEY_LASTSYNC, events.latestTimestamp)
-//                            .commit();
-//                }
-//            }
+            if (!extras.getBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, false)) {
+                // Check if we synced before
+                final String lastSync = PreferenceManager
+                        .getDefaultSharedPreferences(getContext()).getString(
+                                KEY_LASTSYNC, null);
+                final EventServer.EventItems events;
+                if (lastSync != null && !lastSync.isEmpty()) {
+                    events = server.getEvents(token, lastSync);
+                }
+                else {
+                    events = server.getEvents(token, null);
+                }
+                if (events != null && events.items != null) {
+                    for (EventServer.EventItem msg : events.items) {
+                        Log.d(TAG, "got event: " + msg.event_title);
+                        if (msg.deleted != 0) {
+                            Log.d(TAG, "Deleting: " + msg.event_title);
+                            eventSelection.id(msg.remote_id).delete(getContext().getContentResolver());
+                        }
+                        else {
+                            Log.d(TAG, "Adding event:" + msg.event_title);
+                            eventContentValues.putEventTitle(msg.event_title)
+                                    .putEventAddress(msg.event_address)
+                                    .putEventDate(msg.event_date)
+                                    .putEventDescription(msg.event_description)
+                                    .putEventLatitude(msg.event_latitude)
+                                    .putEventLongitude(msg.event_longitude)
+                                    .putEventOwner(msg.event_owner)
+                                    .putEventTimestamp(msg.timestamp)
+                                    .putEventType(msg.event_type)
+                                    .putRemoteId(msg.remote_id)
+                                    .insert(getContext().getContentResolver());
+                        }
+                    }
+                }
+                // Save sync timestamp
+                if (events != null) {
+                    events.latestTimestamp = new Timestamp(new Date().getTime()).toString();
+                    PreferenceManager.getDefaultSharedPreferences(getContext())
+                            .edit().putString(KEY_LASTSYNC, events.latestTimestamp)
+                            .commit();
+                }
+            }
         }
         catch (RetrofitError e) {
             Log.d(TAG, "" + e);
