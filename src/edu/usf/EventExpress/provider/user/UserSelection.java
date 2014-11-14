@@ -68,6 +68,21 @@ public class UserSelection extends AbstractSelection<UserSelection> {
         return this;
     }
 
+    public UserSelection userEmail(String... value) {
+        addEquals(UserColumns.USER_EMAIL, value);
+        return this;
+    }
+
+    public UserSelection userEmailNot(String... value) {
+        addNotEquals(UserColumns.USER_EMAIL, value);
+        return this;
+    }
+
+    public UserSelection userEmailLike(String... value) {
+        addLike(UserColumns.USER_EMAIL, value);
+        return this;
+    }
+
     public UserSelection userName(String... value) {
         addEquals(UserColumns.USER_NAME, value);
         return this;

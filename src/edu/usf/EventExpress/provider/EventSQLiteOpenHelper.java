@@ -76,6 +76,7 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + UserColumns.TABLE_NAME + " ( "
             + UserColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + UserColumns.GOOGLE_ID + " TEXT NOT NULL, "
+            + UserColumns.USER_EMAIL + " TEXT NOT NULL, "
             + UserColumns.USER_NAME + " TEXT NOT NULL, "
             + UserColumns.USER_TIMESTAMP + " INTEGER NOT NULL DEFAULT 'CURRENT_TIMESTAMP', "
             + UserColumns.USER_DELETED + " INTEGER NOT NULL DEFAULT '0', "

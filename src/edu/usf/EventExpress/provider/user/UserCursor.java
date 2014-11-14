@@ -24,6 +24,15 @@ public class UserCursor extends AbstractCursor {
     }
 
     /**
+     * Get the {@code user_email} value.
+     * Cannot be {@code null}.
+     */
+    public String getUserEmail() {
+        Integer index = getCachedColumnIndexOrThrow(UserColumns.USER_EMAIL);
+        return getString(index);
+    }
+
+    /**
      * Get the {@code user_name} value.
      * Cannot be {@code null}.
      */

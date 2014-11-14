@@ -34,6 +34,14 @@ public class UserContentValues extends AbstractContentValues {
 
 
 
+    public UserContentValues putUserEmail(String value) {
+        if (value == null) throw new IllegalArgumentException("value for userEmail must not be null");
+        mContentValues.put(UserColumns.USER_EMAIL, value);
+        return this;
+    }
+
+
+
     public UserContentValues putUserName(String value) {
         if (value == null) throw new IllegalArgumentException("value for userName must not be null");
         mContentValues.put(UserColumns.USER_NAME, value);
