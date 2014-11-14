@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.maps.GeoPoint;
 import edu.usf.EventExpress.provider.event.EventColumns;
 import edu.usf.EventExpress.provider.event.EventCursor;
@@ -26,6 +28,7 @@ public class Event_Detail_Host extends Activity {
     Button edit, cancel, inviteFriends;
     ImageButton map;
     TextView title, description, location, date, time;
+    LatLng mylatlng;
     static DateFormat DF = new SimpleDateFormat("MM/dd/yyyy");
     static DateFormat TF = new SimpleDateFormat("h:mm a");
     long event_id;
@@ -67,6 +70,9 @@ public class Event_Detail_Host extends Activity {
         title.setText(event.getEventTitle());
         description.setText(event.getEventDescription());
         location.setText(event.getEventAddress());
+//        if(event.getEventLatitude() != null && event.getEventLongitude()!= null)
+//            mylatlng = new LatLng(event.getEventLatitude(),event.getEventLongitude());
+
         if(event.getEventDate() != null) {
             date.setText(DF.format(event.getEventDate()));
             time.setText(TF.format(event.getEventDate()));
@@ -89,12 +95,14 @@ public class Event_Detail_Host extends Activity {
         View.OnClickListener showOnMap = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(),Event_Map.class);
-                Bundle myBundle = new Bundle();
-                myBundle.putString("LOCATION", location.getText().toString());
-                myBundle.putBoolean("fromEventDetailHost",true);
-                myIntent.putExtras(myBundle);
-                startActivity(myIntent);
+                if(mylatlng != null) {
+                    Intent myIntent = new Intent(v.getContext(), Event_Map.class);
+                    Bundle myBundle = new Bundle();
+                    myBundle.putString("LOCATION", location.getText().toString());
+                    myBundle.putBoolean("fromEventDetailHost", true);
+                    myIntent.putExtras(myBundle);
+                    startActivity(myIntent);
+                }else Toast.makeText(getApplicationContext(), "Location cannot be mapped", Toast.LENGTH_SHORT).show();
 
             }
         };
@@ -116,12 +124,23 @@ public class Event_Detail_Host extends Activity {
         });
     }
 
+//    @Override
+//    public void onRestart(){
+//        EventSelection where = new EventSelection();
+//        where.id(event_id);
+//        Context context = getApplicationContext();
+//        Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
+//                where.sel(), where.args(), null);
+//
+//        EventCursor event = new EventCursor(cursor);
+//        event.moveToFirst();
+//        if(event.getEventLatitude() != null && event.getEventLongitude() != null)
+//             mylatlng = new LatLng(event.getEventLatitude(),event.getEventLongitude());
+//    }
     protected void onActivityResult(int request_code, int result_code, Intent data){
         if(result_code == RESULT_OK){
             onRestart();
             setData();
-
-
         }
 
     }
