@@ -124,18 +124,38 @@ public class EventMembersSelection extends AbstractSelection<EventMembersSelecti
     }
 
 
-    public EventMembersSelection eventMembersTimestamp(String... value) {
+    public EventMembersSelection eventMembersTimestamp(Date... value) {
         addEquals(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
         return this;
     }
 
-    public EventMembersSelection eventMembersTimestampNot(String... value) {
+    public EventMembersSelection eventMembersTimestampNot(Date... value) {
         addNotEquals(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
         return this;
     }
 
-    public EventMembersSelection eventMembersTimestampLike(String... value) {
-        addLike(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
+    public EventMembersSelection eventMembersTimestamp(long... value) {
+        addEquals(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, toObjectArray(value));
+        return this;
+    }
+
+    public EventMembersSelection eventMembersTimestampAfter(Date value) {
+        addGreaterThan(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
+        return this;
+    }
+
+    public EventMembersSelection eventMembersTimestampAfterEq(Date value) {
+        addGreaterThanOrEquals(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
+        return this;
+    }
+
+    public EventMembersSelection eventMembersTimestampBefore(Date value) {
+        addLessThan(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
+        return this;
+    }
+
+    public EventMembersSelection eventMembersTimestampBeforeEq(Date value) {
+        addLessThanOrEquals(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP, value);
         return this;
     }
 

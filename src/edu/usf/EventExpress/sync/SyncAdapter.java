@@ -209,6 +209,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             .commit();
                 }
             }
+            userCursor.close();
+            eventCursor.close();
         }
         catch (RetrofitError e) {
             Log.d(TAG, "" + e);

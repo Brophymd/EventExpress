@@ -20,6 +20,7 @@ import android.util.Log;
 import edu.usf.EventExpress.BuildConfig;
 import edu.usf.EventExpress.provider.event.EventColumns;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
+import edu.usf.EventExpress.provider.friendstatus.FriendStatusColumns;
 import edu.usf.EventExpress.provider.user.UserColumns;
 
 public class EventProvider extends ContentProvider {
@@ -42,8 +43,11 @@ public class EventProvider extends ContentProvider {
     private static final int URI_TYPE_EVENT_MEMBERS = 2;
     private static final int URI_TYPE_EVENT_MEMBERS_ID = 3;
 
-    private static final int URI_TYPE_USER = 4;
-    private static final int URI_TYPE_USER_ID = 5;
+    private static final int URI_TYPE_FRIEND_STATUS = 4;
+    private static final int URI_TYPE_FRIEND_STATUS_ID = 5;
+
+    private static final int URI_TYPE_USER = 6;
+    private static final int URI_TYPE_USER_ID = 7;
 
 
 
@@ -54,6 +58,8 @@ public class EventProvider extends ContentProvider {
         URI_MATCHER.addURI(AUTHORITY, EventColumns.TABLE_NAME + "/#", URI_TYPE_EVENT_ID);
         URI_MATCHER.addURI(AUTHORITY, EventMembersColumns.TABLE_NAME, URI_TYPE_EVENT_MEMBERS);
         URI_MATCHER.addURI(AUTHORITY, EventMembersColumns.TABLE_NAME + "/#", URI_TYPE_EVENT_MEMBERS_ID);
+        URI_MATCHER.addURI(AUTHORITY, FriendStatusColumns.TABLE_NAME, URI_TYPE_FRIEND_STATUS);
+        URI_MATCHER.addURI(AUTHORITY, FriendStatusColumns.TABLE_NAME + "/#", URI_TYPE_FRIEND_STATUS_ID);
         URI_MATCHER.addURI(AUTHORITY, UserColumns.TABLE_NAME, URI_TYPE_USER);
         URI_MATCHER.addURI(AUTHORITY, UserColumns.TABLE_NAME + "/#", URI_TYPE_USER_ID);
     }
@@ -96,6 +102,11 @@ public class EventProvider extends ContentProvider {
                 return TYPE_CURSOR_DIR + EventMembersColumns.TABLE_NAME;
             case URI_TYPE_EVENT_MEMBERS_ID:
                 return TYPE_CURSOR_ITEM + EventMembersColumns.TABLE_NAME;
+
+            case URI_TYPE_FRIEND_STATUS:
+                return TYPE_CURSOR_DIR + FriendStatusColumns.TABLE_NAME;
+            case URI_TYPE_FRIEND_STATUS_ID:
+                return TYPE_CURSOR_ITEM + FriendStatusColumns.TABLE_NAME;
 
             case URI_TYPE_USER:
                 return TYPE_CURSOR_DIR + UserColumns.TABLE_NAME;
@@ -244,6 +255,13 @@ public class EventProvider extends ContentProvider {
                 res.orderBy = EventMembersColumns.DEFAULT_ORDER;
                 break;
 
+            case URI_TYPE_FRIEND_STATUS:
+            case URI_TYPE_FRIEND_STATUS_ID:
+                res.table = FriendStatusColumns.TABLE_NAME;
+                res.tablesWithJoins = FriendStatusColumns.TABLE_NAME;
+                res.orderBy = FriendStatusColumns.DEFAULT_ORDER;
+                break;
+
             case URI_TYPE_USER:
             case URI_TYPE_USER_ID:
                 res.table = UserColumns.TABLE_NAME;
@@ -258,6 +276,7 @@ public class EventProvider extends ContentProvider {
         switch (matchedId) {
             case URI_TYPE_EVENT_ID:
             case URI_TYPE_EVENT_MEMBERS_ID:
+            case URI_TYPE_FRIEND_STATUS_ID:
             case URI_TYPE_USER_ID:
                 id = uri.getLastPathSegment();
         }

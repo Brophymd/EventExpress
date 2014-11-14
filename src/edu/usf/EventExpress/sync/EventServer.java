@@ -31,7 +31,7 @@ public interface EventServer {
         long remote_id;
         String google_id;
         String name;
-        String timestamp;
+        Date timestamp;
         int deleted;
 
         public UserItem(UserCursor cursor) {
@@ -52,7 +52,7 @@ public interface EventServer {
         String event_address;
         Float event_latitude;
         Float event_longitude;
-        String timestamp;
+        Date timestamp;
         int deleted;
 
         public EventItem(EventCursor cursor) {

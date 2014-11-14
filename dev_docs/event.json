@@ -46,9 +46,9 @@
         },
 	{
 	    "name": "event_timestamp",
-	    "type": "String",
+	    "type": "Date",
 	    "nullable": false,
-	    "defaultValue": CURRENT_TIMESTAMP,
+	    "defaultValue": "CURRENT_TIMESTAMP",
 	},
 	{
 	    "name": "event_deleted",

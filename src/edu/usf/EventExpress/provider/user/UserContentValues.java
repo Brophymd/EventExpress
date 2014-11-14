@@ -42,12 +42,17 @@ public class UserContentValues extends AbstractContentValues {
 
 
 
-    public UserContentValues putUserTimestamp(String value) {
+    public UserContentValues putUserTimestamp(Date value) {
         if (value == null) throw new IllegalArgumentException("value for userTimestamp must not be null");
-        mContentValues.put(UserColumns.USER_TIMESTAMP, value);
+        mContentValues.put(UserColumns.USER_TIMESTAMP, value.getTime());
         return this;
     }
 
+
+    public UserContentValues putUserTimestamp(long value) {
+        mContentValues.put(UserColumns.USER_TIMESTAMP, value);
+        return this;
+    }
 
 
     public UserContentValues putUserDeleted(int value) {

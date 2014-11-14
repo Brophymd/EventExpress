@@ -36,9 +36,8 @@ public class UserCursor extends AbstractCursor {
      * Get the {@code user_timestamp} value.
      * Cannot be {@code null}.
      */
-    public String getUserTimestamp() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.USER_TIMESTAMP);
-        return getString(index);
+    public Date getUserTimestamp() {
+        return getDate(UserColumns.USER_TIMESTAMP);
     }
 
     /**

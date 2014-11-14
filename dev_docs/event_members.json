@@ -33,7 +33,7 @@
         },
 	{
 	    "name": "event_members_timestamp",
-	    "type": "String",
+	    "type": "Date",
 	    "nullable": false,
 	    "defaultValue": "CURRENT_TIMESTAMP",
 	},

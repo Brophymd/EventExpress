@@ -249,18 +249,38 @@ public class EventSelection extends AbstractSelection<EventSelection> {
         return this;
     }
 
-    public EventSelection eventTimestamp(String... value) {
+    public EventSelection eventTimestamp(Date... value) {
         addEquals(EventColumns.EVENT_TIMESTAMP, value);
         return this;
     }
 
-    public EventSelection eventTimestampNot(String... value) {
+    public EventSelection eventTimestampNot(Date... value) {
         addNotEquals(EventColumns.EVENT_TIMESTAMP, value);
         return this;
     }
 
-    public EventSelection eventTimestampLike(String... value) {
-        addLike(EventColumns.EVENT_TIMESTAMP, value);
+    public EventSelection eventTimestamp(long... value) {
+        addEquals(EventColumns.EVENT_TIMESTAMP, toObjectArray(value));
+        return this;
+    }
+
+    public EventSelection eventTimestampAfter(Date value) {
+        addGreaterThan(EventColumns.EVENT_TIMESTAMP, value);
+        return this;
+    }
+
+    public EventSelection eventTimestampAfterEq(Date value) {
+        addGreaterThanOrEquals(EventColumns.EVENT_TIMESTAMP, value);
+        return this;
+    }
+
+    public EventSelection eventTimestampBefore(Date value) {
+        addLessThan(EventColumns.EVENT_TIMESTAMP, value);
+        return this;
+    }
+
+    public EventSelection eventTimestampBeforeEq(Date value) {
+        addLessThanOrEquals(EventColumns.EVENT_TIMESTAMP, value);
         return this;
     }
 

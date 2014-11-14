@@ -16,7 +16,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 16 Platform" jdkType="Android SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="google-play-services_lib1" exported="" />
     <orderEntry type="module-library" exported="">
@@ -66,4 +66,3 @@
     </orderEntry>
   </component>
 </module>
-

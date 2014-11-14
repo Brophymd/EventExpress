@@ -83,18 +83,38 @@ public class UserSelection extends AbstractSelection<UserSelection> {
         return this;
     }
 
-    public UserSelection userTimestamp(String... value) {
+    public UserSelection userTimestamp(Date... value) {
         addEquals(UserColumns.USER_TIMESTAMP, value);
         return this;
     }
 
-    public UserSelection userTimestampNot(String... value) {
+    public UserSelection userTimestampNot(Date... value) {
         addNotEquals(UserColumns.USER_TIMESTAMP, value);
         return this;
     }
 
-    public UserSelection userTimestampLike(String... value) {
-        addLike(UserColumns.USER_TIMESTAMP, value);
+    public UserSelection userTimestamp(long... value) {
+        addEquals(UserColumns.USER_TIMESTAMP, toObjectArray(value));
+        return this;
+    }
+
+    public UserSelection userTimestampAfter(Date value) {
+        addGreaterThan(UserColumns.USER_TIMESTAMP, value);
+        return this;
+    }
+
+    public UserSelection userTimestampAfterEq(Date value) {
+        addGreaterThanOrEquals(UserColumns.USER_TIMESTAMP, value);
+        return this;
+    }
+
+    public UserSelection userTimestampBefore(Date value) {
+        addLessThan(UserColumns.USER_TIMESTAMP, value);
+        return this;
+    }
+
+    public UserSelection userTimestampBeforeEq(Date value) {
+        addLessThanOrEquals(UserColumns.USER_TIMESTAMP, value);
         return this;
     }
 

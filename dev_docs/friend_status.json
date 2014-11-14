@@ -1,0 +1,52 @@
+{
+    "fields": [
+        {
+            "name": "from_user_id",
+            "type": "Long",
+            "nullable": false,
+        },
+        {
+            "name": "to_user_id",
+            "type": "Long",
+            "nullable": false,
+        },
+        {
+            "name": "status",
+            "type": "enum",
+            "enumName": "FriendStatusType",
+            "enumValues": [
+                "Requested",
+                "Accepted",
+                "Rejected",
+            ],
+            "nullable": false,
+        },
+        {
+            "name": "sent_time",
+            "type": "Date",
+            "defaultValue": "CURRENT_TIMESTAMP",
+        },
+        {
+            "name": "response_time",
+            "type": "Date",
+        },
+        {
+            "name": "friend_status_timestamp",
+            "type": "Date",
+            "nullable": false,
+            "defaultValue": "CURRENT_TIMESTAMP",
+        },
+        {
+            "name": "friend_status_deleted",
+            "type": "Integer",
+            "nullable": false,
+            "defaultValue": 0,
+        },
+        {
+            "name": "friend_status_synced",
+            "type": "Integer",
+            "nullable": false,
+            "defaultValue": 0,
+        },
+        ]
+}

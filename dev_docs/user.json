@@ -13,9 +13,9 @@
         },
 	{
 	    "name": "user_timestamp",
-	    "type": "String",
+	    "type": "Date",
 	    "nullable": false,
-	    "defaultValue": CURRENT_TIMESTAMP,
+	    "defaultValue": "CURRENT_TIMESTAMP",
 	},
 	{
 	    "name": "user_deleted",

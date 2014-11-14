@@ -96,9 +96,8 @@ public class EventCursor extends AbstractCursor {
      * Get the {@code event_timestamp} value.
      * Cannot be {@code null}.
      */
-    public String getEventTimestamp() {
-        Integer index = getCachedColumnIndexOrThrow(EventColumns.EVENT_TIMESTAMP);
-        return getString(index);
+    public Date getEventTimestamp() {
+        return getDate(EventColumns.EVENT_TIMESTAMP);
     }
 
     /**

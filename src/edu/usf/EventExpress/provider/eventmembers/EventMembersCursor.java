@@ -44,9 +44,8 @@ public class EventMembersCursor extends AbstractCursor {
      * Get the {@code event_members_timestamp} value.
      * Cannot be {@code null}.
      */
-    public String getEventMembersTimestamp() {
-        Integer index = getCachedColumnIndexOrThrow(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP);
-        return getString(index);
+    public Date getEventMembersTimestamp() {
+        return getDate(EventMembersColumns.EVENT_MEMBERS_TIMESTAMP);
     }
 
     /**
@@ -145,9 +144,8 @@ public class EventMembersCursor extends AbstractCursor {
      * Get the {@code event_timestamp} value.
      * Cannot be {@code null}.
      */
-    public String getEventTimestamp() {
-        Integer index = getCachedColumnIndexOrThrow(EventColumns.EVENT_TIMESTAMP);
-        return getString(index);
+    public Date getEventTimestamp() {
+        return getDate(EventColumns.EVENT_TIMESTAMP);
     }
 
     /**
@@ -186,9 +184,8 @@ public class EventMembersCursor extends AbstractCursor {
      * Get the {@code user_timestamp} value.
      * Cannot be {@code null}.
      */
-    public String getUserTimestamp() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.USER_TIMESTAMP);
-        return getString(index);
+    public Date getUserTimestamp() {
+        return getDate(UserColumns.USER_TIMESTAMP);
     }
 
     /**

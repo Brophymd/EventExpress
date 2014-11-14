@@ -124,12 +124,17 @@ public class EventContentValues extends AbstractContentValues {
     }
 
 
-    public EventContentValues putEventTimestamp(String value) {
+    public EventContentValues putEventTimestamp(Date value) {
         if (value == null) throw new IllegalArgumentException("value for eventTimestamp must not be null");
-        mContentValues.put(EventColumns.EVENT_TIMESTAMP, value);
+        mContentValues.put(EventColumns.EVENT_TIMESTAMP, value.getTime());
         return this;
     }
 
+
+    public EventContentValues putEventTimestamp(long value) {
+        mContentValues.put(EventColumns.EVENT_TIMESTAMP, value);
+        return this;
+    }
 
 
     public EventContentValues putEventDeleted(int value) {
