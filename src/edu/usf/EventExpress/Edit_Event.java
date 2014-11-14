@@ -48,6 +48,12 @@ public class Edit_Event extends Activity {
         et_time = (EditText)findViewById(R.id.editText_timeEdit);
         userID = new SessionManager(getApplicationContext()).getUserID();
 
+        Calendar loadDate = Calendar.getInstance();
+        selYear = loadDate.get(Calendar.YEAR);
+        selMonth = loadDate.get(Calendar.MONTH);
+        selDay = loadDate.get(Calendar.DAY_OF_MONTH);
+        selHour = loadDate.get(Calendar.HOUR_OF_DAY);
+        selMinute = loadDate.get(Calendar.MINUTE);
 
         Bundle b = getIntent().getExtras();
 
@@ -69,16 +75,7 @@ public class Edit_Event extends Activity {
             et_date.setText(DF.format(event.getEventDate()));
             et_time.setText(TF.format(event.getEventDate()));
             DateandTime = event.getEventDate();
-            Calendar loadDate = Calendar.getInstance();
             loadDate.setTime(DateandTime);
-            selYear = loadDate.get(Calendar.YEAR);
-            selMonth = loadDate.get(Calendar.MONTH);
-            selDay = loadDate.get(Calendar.DAY_OF_MONTH);
-            selHour = loadDate.get(Calendar.HOUR_OF_DAY);
-            selMinute = loadDate.get(Calendar.MINUTE);
-
-
-
         }
 
 
@@ -159,13 +156,7 @@ public class Edit_Event extends Activity {
                 Context context = getApplicationContext();
                 if(fromCreate) {
                     EventContentValues values = new EventContentValues();
-                    values.putEventOwner(userID).putEventType(EventType.OPEN)
-                            .putEventTitle(et_title.getText().toString())
-                            .putEventDescription(et_description.getText().toString())
-                            .putEventAddress(et_location.getText().toString())
-                            .putEventDate(DateandTime)
-                            .putEventLatitude((float) mylatlng.latitude)
-                            .putEventLongitude((float)mylatlng.longitude);
+                    setValues(values, mylatlng);
                     context.getContentResolver().insert(EventColumns.CONTENT_URI, values.values());
                 }
                 else{
@@ -174,16 +165,8 @@ public class Edit_Event extends Activity {
                     EventCursor event = where.query(getContentResolver());
                     event.moveToNext();
                     EventContentValues values = new EventContentValues();
-                    values.putEventOwner(event.getEventOwner()).putEventType(EventType.OPEN)
-                            .putEventTitle(et_title.getText().toString())
-                            .putEventDescription(et_description.getText().toString())
-                            .putEventAddress(et_location.getText().toString())
-                            .putEventDate(DateandTime)
-                            .putEventLatitude((float) mylatlng.latitude)
-                            .putEventLongitude((float)mylatlng.longitude)
-                            .update(context.getContentResolver(), x);
-                    //context.getContentResolver().update(EventColumns.CONTENT_URI, values.values(), x.sel(), null);
-
+                    setValues(values, mylatlng);
+                    values.update(context.getContentResolver(), x);
                 }
 
 
@@ -200,5 +183,17 @@ public class Edit_Event extends Activity {
 
 
 
+    }
+
+    private void setValues(EventContentValues values, LatLng mylatlng ){
+        values.putEventOwner(userID).putEventType(EventType.OPEN)
+                .putEventTitle(et_title.getText().toString())
+                .putEventDescription(et_description.getText().toString())
+                .putEventAddress(et_location.getText().toString());
+        if(DateandTime != null)
+            values.putEventDate(DateandTime);
+        if(mylatlng != null)
+            values.putEventLatitude((float) mylatlng.latitude)
+                    .putEventLongitude((float)mylatlng.longitude);
     }
 }

@@ -105,8 +105,6 @@ public class Event_myevents extends Activity {
         if(result_code == RESULT_OK){
             onRestart();
             fillList();
-
-
         }
 
     }
