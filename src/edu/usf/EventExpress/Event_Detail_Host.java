@@ -1,20 +1,25 @@
 package edu.usf.EventExpress;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.plus.Plus;
 import com.google.android.maps.GeoPoint;
 import edu.usf.EventExpress.provider.event.EventColumns;
 import edu.usf.EventExpress.provider.event.EventCursor;
 import edu.usf.EventExpress.provider.event.EventSelection;
+import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
+import edu.usf.EventExpress.provider.eventmembers.EventMembersCursor;
+import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
+import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,8 +32,10 @@ public class Event_Detail_Host extends Activity {
 
     Button edit, cancel, inviteFriends;
     ImageButton map;
-    TextView title, description, location, date, time;
+    TextView title, description, location, date, time, attending;
     LatLng mylatlng;
+    String memberCount;
+    Context context;
     static DateFormat DF = new SimpleDateFormat("MM/dd/yyyy");
     static DateFormat TF = new SimpleDateFormat("h:mm a");
     long event_id;
@@ -40,17 +47,16 @@ public class Event_Detail_Host extends Activity {
         Bundle b = getIntent().getExtras();
         event_id = b.getLong("_ID");
 
-        Context context = getApplicationContext();
+        context = getApplicationContext();
 
-        EventSelection where = new EventSelection();
-        where.id(event_id);
-
-        Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
-                where.sel(), where.args(), null);
-
-        EventCursor event = new EventCursor(cursor);
-        event.moveToFirst();
-
+//        EventSelection where = new EventSelection();
+//        where.id(event_id);
+//
+//        Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
+//                where.sel(), where.args(), null);
+//
+//        EventCursor event = new EventCursor(cursor);
+//        event.moveToFirst();
 
         map = (ImageButton)findViewById(R.id.imageButton2);
         edit = (Button)findViewById(R.id.button_edit);
@@ -60,23 +66,13 @@ public class Event_Detail_Host extends Activity {
         location = (TextView)findViewById(R.id.textView_HD_location);
         date = (TextView)findViewById(R.id.textView_date);
         time = (TextView)findViewById(R.id.textView_time);
+        attending =(TextView)findViewById(R.id.textView_HD_attending);
+        attending.setPaintFlags(attending.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         inviteFriends = (Button)findViewById(R.id.button_invite_Host);
         //eventID = getIntent().getExtras().getLong("EVENT_ID");
 
-        //setData();
+        setData(getEventCursor());
 
-
-
-        title.setText(event.getEventTitle());
-        description.setText(event.getEventDescription());
-        location.setText(event.getEventAddress());
-        if(event.getEventLatitude() != null && event.getEventLongitude()!= null)
-            mylatlng = new LatLng(event.getEventLatitude(),event.getEventLongitude());
-
-        if(event.getEventDate() != null) {
-            date.setText(DF.format(event.getEventDate()));
-            time.setText(TF.format(event.getEventDate()));
-        }
 
         View.OnClickListener editClickEvent = new View.OnClickListener(){
             @Override
@@ -122,6 +118,52 @@ public class Event_Detail_Host extends Activity {
                 startActivity(myIntent);
             }
         });
+
+        attending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(
+                        Event_Detail_Host.this);
+                builderSingle.setTitle("Attendees: ");
+//
+//                SimpleCursorAdapter myAdapter = new SimpleCursorAdapter(getApplicationContext(),R.layout.single_list_item, )
+//                builderSingle.setNegativeButton("Done",
+//                        new DialogInterface.OnClickListener() {
+//
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//
+//                builderSingle.setAdapter(arrayAdapter,
+//                        new DialogInterface.OnClickListener() {
+//
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                String strName = arrayAdapter.getItem(which);
+//                                AlertDialog.Builder builderInner = new AlertDialog.Builder(
+//                                        DialogActivity.this);
+//                                builderInner.setMessage(strName);
+//                                builderInner.setTitle("Your Selected Item is");
+//                                builderInner.setPositiveButton("Ok",
+//                                        new DialogInterface.OnClickListener() {
+//
+//                                            @Override
+//                                            public void onClick(
+//                                                    DialogInterface dialog,
+//                                                    int which) {
+//                                                dialog.dismiss();
+//                                            }
+//                                        });
+//                                builderInner.show();
+//                            }
+//                        });
+                builderSingle.show();
+            }
+        });
+
+
     }
 
 //    @Override
@@ -140,7 +182,7 @@ public class Event_Detail_Host extends Activity {
     protected void onActivityResult(int request_code, int result_code, Intent data){
         if(result_code == RESULT_OK){
             onRestart();
-            setData();
+            setData(getEventCursor());
         }
 
     }
@@ -157,16 +199,39 @@ public class Event_Detail_Host extends Activity {
         finish();
     }
 
-    private void setData(){
-        EventSelection where = new EventSelection();
-        where.id(event_id);
-        EventCursor event = where.query(getContentResolver());
-        event.moveToNext();
+    private void setData(EventCursor event){
         title.setText(event.getEventTitle());
         description.setText(event.getEventDescription());
         location.setText(event.getEventAddress());
-        date.setText(DF.format(event.getEventDate()));
-        time.setText(TF.format(event.getEventDate()));
+        if(event.getEventLatitude() != null && event.getEventLongitude()!= null)
+            mylatlng = new LatLng(event.getEventLatitude(),event.getEventLongitude());
+
+        if(event.getEventDate() != null) {
+            date.setText(DF.format(event.getEventDate()));
+            time.setText(TF.format(event.getEventDate()));
+        }
+        attending.setText(Integer.toString(getEventMemberCount()));
+    }
+
+    private int getEventMemberCount(){
+        EventMembersSelection where = new EventMembersSelection();
+        where.eventId(event_id).and().rsvpStatus(RSVPStatus.YES);
+
+        Cursor cursor = context.getContentResolver().query(EventMembersColumns.CONTENT_URI, null,
+                where.sel(), where.args(), null);
+        return cursor.getCount();
+    }
+
+    private EventCursor getEventCursor(){
+        EventSelection where = new EventSelection();
+        where.id(event_id);
+
+        Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
+                where.sel(), where.args(), null);
+
+        EventCursor event = new EventCursor(cursor);
+        event.moveToFirst();
+        return event;
     }
 
 }

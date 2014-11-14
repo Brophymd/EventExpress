@@ -71,6 +71,24 @@
                     android:text=""
                     android:id="@+id/textView_HD_location"/>
         </TableRow>
+        <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Attending: "
+                android:id="@+id/textView_lblAttending"/>
+        <TextView
+                style = "@style/HyperLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=""
+                android:clickable="true"
+                android:id="@+id/textView_HD_attending"/>
+        </TableRow>
     </TableLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
