@@ -70,8 +70,8 @@ public class Event_Detail_Host extends Activity {
         title.setText(event.getEventTitle());
         description.setText(event.getEventDescription());
         location.setText(event.getEventAddress());
-//        if(event.getEventLatitude() != null && event.getEventLongitude()!= null)
-//            mylatlng = new LatLng(event.getEventLatitude(),event.getEventLongitude());
+        if(event.getEventLatitude() != null && event.getEventLongitude()!= null)
+            mylatlng = new LatLng(event.getEventLatitude(),event.getEventLongitude());
 
         if(event.getEventDate() != null) {
             date.setText(DF.format(event.getEventDate()));
