@@ -4,23 +4,36 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import android.widget.AdapterView.OnItemClickListener;
 import android.view.View;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.plus.People;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.PersonBuffer;
 
 /**
  * Created by Varik on 10/12/2014.
  */
-public class Friendslist extends Activity{
+public class Friendslist extends Activity implements GoogleApiClient.ConnectionCallbacks,ResultCallback<People.LoadPeopleResult> {
     String userID;
     ArrayList<String> myStringArray = new ArrayList<String>();
     ArrayAdapter listAdapter;
     ListView mainListView;
+    GoogleApiClient mGoogleApiClient;
+    private static final String TAG = "FriendListActivity";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +61,63 @@ public class Friendslist extends Activity{
             }
         });
 
+        // Initializing google plus api client
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addApi(Plus.API)
+                .addScope(Plus.SCOPE_PLUS_LOGIN)
+                .build();
+
+    }
+//    @Override
+//    public void onConnected() {
+//        Plus.PeopleApi.loadVisible(mGoogleApiClient, null)
+//                .setResultCallback(this);
+//    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        mGoogleApiClient.connect();
+        if(!mGoogleApiClient.isConnecting())
+            Toast.makeText(getApplicationContext(), "Client did not connect!", Toast.LENGTH_SHORT).show();
 
 
+    }
+
+    @Override
+    public void onConnected(Bundle arg0){
+
+        Log.d(TAG,"Successful Connection!");
+//        Plus.PeopleApi.loadVisible(mGoogleApiClient, null)
+//                .setResultCallback(this);
+        List<String> userIds = new ArrayList<String>();
+        userIds.add(userID);
+        Plus.PeopleApi.load(mGoogleApiClient, userIds).setResultCallback(this);
+    }
+
+   @Override
+   public void onConnectionSuspended(int i){
+       Toast.makeText(getApplicationContext(),"Connection Suspended", Toast.LENGTH_SHORT).show();
+   }
+    @Override
+    public void onResult(People.LoadPeopleResult peopleData) {
+        if (peopleData.getStatus().getStatusCode() == CommonStatusCodes.SUCCESS) {
+            PersonBuffer personBuffer = peopleData.getPersonBuffer();
+            Log.d(TAG, "Status was Success!");
+            try {
+                int count = personBuffer.getCount();
+
+                Log.d(TAG, "personBuffer Count: "+count);
+                for (int i = 0; i < count; i++) {
+                    Log.d(TAG, "Display name: " + personBuffer.get(i).getDisplayName());
+                }
+            } finally {
+                personBuffer.close();
+            }
+        } else {
+            Log.e(TAG, "Error requesting visible circles: " + peopleData.getStatus());
+        }
     }
 
 
@@ -86,6 +154,7 @@ public class Friendslist extends Activity{
     }
 
     private void sendFriendRequest(){
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter friend's E-mail address");
         final EditText input = new EditText(this);
