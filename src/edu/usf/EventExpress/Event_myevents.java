@@ -45,6 +45,12 @@ public class Event_myevents extends Activity {
 //        });
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        fillList();
+    }
+
     public void CreateEvent(View v){
 
         Bundle myBundle = new Bundle();
@@ -64,8 +70,11 @@ public class Event_myevents extends Activity {
 
     private void fillList(){
         Context context = getApplicationContext();
+        SessionManager session = new SessionManager(getApplicationContext());
+        userID = session.getUserID();
 
         EventSelection where = new EventSelection();
+        where.eventOwner(userID);
         Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
                 where.sel(), where.args(), null);
         myEventCursorAdaptor = new EventCursorAdapter(context,cursor, 0);
