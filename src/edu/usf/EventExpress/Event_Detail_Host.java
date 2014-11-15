@@ -211,6 +211,8 @@ public class Event_Detail_Host extends Activity {
             time.setText(TF.format(event.getEventDate()));
         }
         attending.setText(Integer.toString(getEventMemberCount()));
+
+        event.close();
     }
 
     private int getEventMemberCount(){
@@ -219,7 +221,9 @@ public class Event_Detail_Host extends Activity {
 
         Cursor cursor = context.getContentResolver().query(EventMembersColumns.CONTENT_URI, null,
                 where.sel(), where.args(), null);
-        return cursor.getCount();
+        int memberCount = cursor.getCount();
+        cursor.close();
+        return memberCount;
     }
 
     private EventCursor getEventCursor(){
