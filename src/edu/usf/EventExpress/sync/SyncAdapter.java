@@ -361,7 +361,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 // An HTTP error was encountered.
                 switch (status) {
                     case 401: // Unauthorized
-                        // attendee may already exist, so try patching:
+                        // friend may already exist, so try patching:
                         try {
                             Log.i(TAG, "relationship modified between: "
                                     + friendStatusCursor.getFromUserId() + " and " + friendStatusCursor.getToUserId());
