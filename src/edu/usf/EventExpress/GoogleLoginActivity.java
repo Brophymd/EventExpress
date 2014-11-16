@@ -291,7 +291,7 @@ public class GoogleLoginActivity extends Activity implements
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
                 //session = new SessionManager(getApplicationContext());
-                session.createLoginSession(currentPerson.getId());
+                session.createLoginSession(currentPerson.getId(), Plus.AccountApi.getAccountName(mGoogleApiClient));
                 Log.d(TAG, "Name: " + personName + ", plusProfile: "
                         + personGooglePlusProfile + ", email: " + email
                         + ", Image: " + personPhotoUrl);

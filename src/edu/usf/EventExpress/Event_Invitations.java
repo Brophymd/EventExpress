@@ -72,6 +72,7 @@ public class Event_Invitations extends Activity {
         mainListView = (ListView) findViewById( R.id.listView_invitations );
         listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
         mainListView.setAdapter(listAdapter);
+
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int pos, long arg3) {
                 //String temp = (String) ((TextView) view).getText();
