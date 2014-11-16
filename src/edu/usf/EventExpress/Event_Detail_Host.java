@@ -115,7 +115,9 @@ public class Event_Detail_Host extends Activity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), Friend_Invite.class);
-                startActivity(myIntent);
+                Bundle b = new Bundle();
+                b.putLong("EVENT_ID",event_id);
+                myIntent.putExtras(b);
             }
         });
 
