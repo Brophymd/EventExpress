@@ -28,10 +28,14 @@ import com.google.android.gms.plus.Account;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import edu.usf.EventExpress.provider.EventProvider;
+import edu.usf.EventExpress.provider.eventmembers.EventMembersCursor;
+import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
+import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
 import edu.usf.EventExpress.provider.user.UserColumns;
 import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
 import edu.usf.EventExpress.provider.user.UserSelection;
+import edu.usf.EventExpress.sync.SyncHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -101,7 +105,7 @@ public class GoogleLoginActivity extends Activity implements
         txtTitle = (TextView)findViewById(R.id.textView_appTitle);
         llProfileLayout = (LinearLayout)findViewById(R.id.llProfile);
 
-        session = new SessionManager(getApplicationContext());
+        new SessionManager(getApplicationContext());
 
         // Check for Google Play Services APK
         if (checkPlayServices()) {
@@ -125,7 +129,6 @@ public class GoogleLoginActivity extends Activity implements
                 @Override
                 public void onClick(View v) {
                     // Signout button clicked
-                    session.logOut();
                     signOutFromGplus();
                 }
             });
@@ -289,9 +292,20 @@ public class GoogleLoginActivity extends Activity implements
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 String personGooglePlusProfile = currentPerson.getUrl();
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                String googleId = currentPerson.getId();
 
-                //session = new SessionManager(getApplicationContext());
-                session.createLoginSession(currentPerson.getId());
+                session = new SessionManager(getApplicationContext());
+                session.createLoginSession(googleId, email);
+
+                // add user to database
+                UserContentValues values = new UserContentValues();
+                values.putGoogleId(googleId).putUserEmail(email).putUserName(personName);
+                Context context = getApplicationContext();
+                context.getContentResolver().insert(UserColumns.CONTENT_URI, values.values());
+
+                // request sync
+                SyncHelper.manualSync(getApplicationContext());
+
                 Log.d(TAG, "Name: " + personName + ", plusProfile: "
                         + personGooglePlusProfile + ", email: " + email
                         + ", Image: " + personPhotoUrl);
