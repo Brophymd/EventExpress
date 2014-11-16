@@ -19,6 +19,7 @@ public class FriendStatusColumns implements BaseColumns {
     public static final String FRIENDS_REMOTE_ID = "friends_remote_id";
     public static final String FROM_USER_ID = "from_user_id";
     public static final String TO_USER_ID = "to_user_id";
+    public static final String TO_USER_EMAIL = "to_user_email";
     public static final String STATUS = "status";
     public static final String SENT_TIME = "sent_time";
     public static final String RESPONSE_TIME = "response_time";
@@ -34,6 +35,7 @@ public class FriendStatusColumns implements BaseColumns {
             TABLE_NAME + "." + FRIENDS_REMOTE_ID,
             TABLE_NAME + "." + FROM_USER_ID,
             TABLE_NAME + "." + TO_USER_ID,
+            TABLE_NAME + "." + TO_USER_EMAIL,
             TABLE_NAME + "." + STATUS,
             TABLE_NAME + "." + SENT_TIME,
             TABLE_NAME + "." + RESPONSE_TIME,
@@ -49,6 +51,7 @@ public class FriendStatusColumns implements BaseColumns {
         ALL_COLUMNS.add(FRIENDS_REMOTE_ID);
         ALL_COLUMNS.add(FROM_USER_ID);
         ALL_COLUMNS.add(TO_USER_ID);
+        ALL_COLUMNS.add(TO_USER_EMAIL);
         ALL_COLUMNS.add(STATUS);
         ALL_COLUMNS.add(SENT_TIME);
         ALL_COLUMNS.add(RESPONSE_TIME);

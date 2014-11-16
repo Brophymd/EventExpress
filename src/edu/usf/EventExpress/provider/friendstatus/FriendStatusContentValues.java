@@ -46,8 +46,19 @@ public class FriendStatusContentValues extends AbstractContentValues {
 
 
     public FriendStatusContentValues putToUserId(String value) {
-        if (value == null) throw new IllegalArgumentException("value for toUserId must not be null");
         mContentValues.put(FriendStatusColumns.TO_USER_ID, value);
+        return this;
+    }
+
+    public FriendStatusContentValues putToUserIdNull() {
+        mContentValues.putNull(FriendStatusColumns.TO_USER_ID);
+        return this;
+    }
+
+
+    public FriendStatusContentValues putToUserEmail(String value) {
+        if (value == null) throw new IllegalArgumentException("value for toUserEmail must not be null");
+        mContentValues.put(FriendStatusColumns.TO_USER_EMAIL, value);
         return this;
     }
 
