@@ -87,7 +87,8 @@ public class Event_Map extends Activity {
         GeoLocation x = new GeoLocation(getApplicationContext());
         mylatlng = x.getLatLngfromAddress(addr);
         if(mylatlng == null){
-            Toast.makeText(getApplicationContext(),"Error here",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Unable to Resolve Location",Toast.LENGTH_SHORT).show();
+            return;
         }
         MarkerOptions marker = new MarkerOptions().position(mylatlng).title("Here");
         googleMap.addMarker(marker);

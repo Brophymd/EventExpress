@@ -28,9 +28,6 @@ import com.google.android.gms.plus.Account;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import edu.usf.EventExpress.provider.EventProvider;
-import edu.usf.EventExpress.provider.eventmembers.EventMembersCursor;
-import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
-import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
 import edu.usf.EventExpress.provider.user.UserColumns;
 import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
@@ -105,7 +102,7 @@ public class GoogleLoginActivity extends Activity implements
         txtTitle = (TextView)findViewById(R.id.textView_appTitle);
         llProfileLayout = (LinearLayout)findViewById(R.id.llProfile);
 
-        new SessionManager(getApplicationContext());
+        session = new SessionManager(getApplicationContext());
 
         // Check for Google Play Services APK
         if (checkPlayServices()) {
@@ -129,6 +126,7 @@ public class GoogleLoginActivity extends Activity implements
                 @Override
                 public void onClick(View v) {
                     // Signout button clicked
+                    session.logOut();
                     signOutFromGplus();
                 }
             });
