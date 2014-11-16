@@ -16,6 +16,8 @@ import edu.usf.EventExpress.provider.event.EventSelection;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersCursor;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
 import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
+import edu.usf.EventExpress.provider.user.UserCursor;
+import edu.usf.EventExpress.provider.user.UserSelection;
 
 import java.util.ArrayList;
 
@@ -34,16 +36,17 @@ public class Event_Invitations extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_invitations);
+        userID = new SessionManager(getApplicationContext()).getUserID();
         loadList();
 
 
     }
 
-    public void eventDetail(View v) {
+    /*public void eventDetail(View v) {
 
         Intent myIntent = new Intent(this, Event_Detail.class);
         startActivity(myIntent);
-    }
+    }*/
 
     private void loadList(){
         SessionManager session = new SessionManager(getApplicationContext());
@@ -51,8 +54,14 @@ public class Event_Invitations extends Activity {
         myStringArray = new ArrayList<String>();
         eventIDList = new ArrayList<Long>();
 
+        UserSelection userSel = new UserSelection();
+        UserCursor ucur = userSel.googleId(userID).query(getContentResolver());
+        Long databaseID = null;
+        while(ucur.moveToNext()){
+            databaseID = ucur.getId();
+        }
         EventMembersSelection emSel = new EventMembersSelection();
-        emSel.userId().and().rsvpStatus(RSVPStatus.INVITED);
+        emSel.userId(databaseID).and().rsvpStatus(RSVPStatus.INVITED);
         EventMembersCursor emcursor = emSel.query(getContentResolver());
 
         while(emcursor.moveToNext()){
