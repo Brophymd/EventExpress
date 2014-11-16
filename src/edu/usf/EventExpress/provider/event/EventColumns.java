@@ -17,7 +17,7 @@ public class EventColumns implements BaseColumns {
 
     public static final String _ID = BaseColumns._ID;
     public static final String EVENT_OWNER = "event_owner";
-    public static final String REMOTE_ID = "remote_id";
+    public static final String EVENT_REMOTE_ID = "event_remote_id";
     public static final String EVENT_TYPE = "event_type";
     public static final String EVENT_TITLE = "event_title";
     public static final String EVENT_DESCRIPTION = "event_description";
@@ -35,7 +35,7 @@ public class EventColumns implements BaseColumns {
     public static final String[] FULL_PROJECTION = new String[] {
             TABLE_NAME + "." + _ID + " AS " + BaseColumns._ID,
             TABLE_NAME + "." + EVENT_OWNER,
-            TABLE_NAME + "." + REMOTE_ID,
+            TABLE_NAME + "." + EVENT_REMOTE_ID,
             TABLE_NAME + "." + EVENT_TYPE,
             TABLE_NAME + "." + EVENT_TITLE,
             TABLE_NAME + "." + EVENT_DESCRIPTION,
@@ -53,7 +53,7 @@ public class EventColumns implements BaseColumns {
     static {
         ALL_COLUMNS.add(_ID);
         ALL_COLUMNS.add(EVENT_OWNER);
-        ALL_COLUMNS.add(REMOTE_ID);
+        ALL_COLUMNS.add(EVENT_REMOTE_ID);
         ALL_COLUMNS.add(EVENT_TYPE);
         ALL_COLUMNS.add(EVENT_TITLE);
         ALL_COLUMNS.add(EVENT_DESCRIPTION);

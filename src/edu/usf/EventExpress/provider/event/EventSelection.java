@@ -68,33 +68,33 @@ public class EventSelection extends AbstractSelection<EventSelection> {
         return this;
     }
 
-    public EventSelection remoteId(Long... value) {
-        addEquals(EventColumns.REMOTE_ID, value);
+    public EventSelection eventRemoteId(Long... value) {
+        addEquals(EventColumns.EVENT_REMOTE_ID, value);
         return this;
     }
 
-    public EventSelection remoteIdNot(Long... value) {
-        addNotEquals(EventColumns.REMOTE_ID, value);
+    public EventSelection eventRemoteIdNot(Long... value) {
+        addNotEquals(EventColumns.EVENT_REMOTE_ID, value);
         return this;
     }
 
-    public EventSelection remoteIdGt(long value) {
-        addGreaterThan(EventColumns.REMOTE_ID, value);
+    public EventSelection eventRemoteIdGt(long value) {
+        addGreaterThan(EventColumns.EVENT_REMOTE_ID, value);
         return this;
     }
 
-    public EventSelection remoteIdGtEq(long value) {
-        addGreaterThanOrEquals(EventColumns.REMOTE_ID, value);
+    public EventSelection eventRemoteIdGtEq(long value) {
+        addGreaterThanOrEquals(EventColumns.EVENT_REMOTE_ID, value);
         return this;
     }
 
-    public EventSelection remoteIdLt(long value) {
-        addLessThan(EventColumns.REMOTE_ID, value);
+    public EventSelection eventRemoteIdLt(long value) {
+        addLessThan(EventColumns.EVENT_REMOTE_ID, value);
         return this;
     }
 
-    public EventSelection remoteIdLtEq(long value) {
-        addLessThanOrEquals(EventColumns.REMOTE_ID, value);
+    public EventSelection eventRemoteIdLtEq(long value) {
+        addLessThanOrEquals(EventColumns.EVENT_REMOTE_ID, value);
         return this;
     }
 

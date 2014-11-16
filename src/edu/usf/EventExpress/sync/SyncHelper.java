@@ -2,6 +2,8 @@ package edu.usf.EventExpress.sync;
 
 import java.io.IOException;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import edu.usf.EventExpress.provider.EventProvider;
 import retrofit.RestAdapter;
 import android.accounts.Account;
@@ -14,6 +16,7 @@ import android.util.Log;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableNotifiedException;
+import retrofit.converter.GsonConverter;
 
 /**
  * Created by Micah on 11/7/2014.
@@ -22,11 +25,17 @@ public class SyncHelper {
 
     public static final String KEY_ACCOUNT = "key_account";
     public static final String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.email";
-    static final String TAG = "Links";
+    static final String TAG = SyncHelper.class.getSimpleName();
 
     public static EventServer getRESTAdapter() {
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(
-                EventServer.API_URL).build();
+        // Help Gson parse our date format
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(EventServer.API_URL)
+                .setConverter(new GsonConverter(gson))
+                .build();
         return restAdapter.create(EventServer.class);
     }
 

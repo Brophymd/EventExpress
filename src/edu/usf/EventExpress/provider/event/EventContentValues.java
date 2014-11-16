@@ -34,13 +34,13 @@ public class EventContentValues extends AbstractContentValues {
 
 
 
-    public EventContentValues putRemoteId(Long value) {
-        mContentValues.put(EventColumns.REMOTE_ID, value);
+    public EventContentValues putEventRemoteId(Long value) {
+        mContentValues.put(EventColumns.EVENT_REMOTE_ID, value);
         return this;
     }
 
-    public EventContentValues putRemoteIdNull() {
-        mContentValues.putNull(EventColumns.REMOTE_ID);
+    public EventContentValues putEventRemoteIdNull() {
+        mContentValues.putNull(EventColumns.EVENT_REMOTE_ID);
         return this;
     }
 

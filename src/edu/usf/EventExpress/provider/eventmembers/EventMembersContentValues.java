@@ -26,6 +26,17 @@ public class EventMembersContentValues extends AbstractContentValues {
         return contentResolver.update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
+    public EventMembersContentValues putAttendeesRemoteId(Long value) {
+        mContentValues.put(EventMembersColumns.ATTENDEES_REMOTE_ID, value);
+        return this;
+    }
+
+    public EventMembersContentValues putAttendeesRemoteIdNull() {
+        mContentValues.putNull(EventMembersColumns.ATTENDEES_REMOTE_ID);
+        return this;
+    }
+
+
     public EventMembersContentValues putEventId(long value) {
         mContentValues.put(EventMembersColumns.EVENT_ID, value);
         return this;

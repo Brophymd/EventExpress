@@ -16,6 +16,7 @@ public class FriendStatusColumns implements BaseColumns {
     public static final Uri CONTENT_URI = Uri.parse(EventProvider.CONTENT_URI_BASE + "/" + TABLE_NAME);
 
     public static final String _ID = BaseColumns._ID;
+    public static final String FRIENDS_REMOTE_ID = "friends_remote_id";
     public static final String FROM_USER_ID = "from_user_id";
     public static final String TO_USER_ID = "to_user_id";
     public static final String STATUS = "status";
@@ -30,6 +31,7 @@ public class FriendStatusColumns implements BaseColumns {
     // @formatter:off
     public static final String[] FULL_PROJECTION = new String[] {
             TABLE_NAME + "." + _ID + " AS " + BaseColumns._ID,
+            TABLE_NAME + "." + FRIENDS_REMOTE_ID,
             TABLE_NAME + "." + FROM_USER_ID,
             TABLE_NAME + "." + TO_USER_ID,
             TABLE_NAME + "." + STATUS,
@@ -44,6 +46,7 @@ public class FriendStatusColumns implements BaseColumns {
     private static final Set<String> ALL_COLUMNS = new HashSet<String>();
     static {
         ALL_COLUMNS.add(_ID);
+        ALL_COLUMNS.add(FRIENDS_REMOTE_ID);
         ALL_COLUMNS.add(FROM_USER_ID);
         ALL_COLUMNS.add(TO_USER_ID);
         ALL_COLUMNS.add(STATUS);

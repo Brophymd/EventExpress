@@ -12,7 +12,7 @@ public class SessionManager {
     SharedPreferences.Editor editor;
     private static final String IS_LOGIN = "Is_Logged_In";
     private static final String KEY_USERID = "UserID";
-    //private static final String KEY_EMAIL = "Email";
+    private static final String KEY_EMAIL = "Email";
     private static final String PREF_NAME = "EventExpress";
     int PRIVATE_MODE = 0;
     Context _context;
@@ -23,10 +23,10 @@ public class SessionManager {
         editor = myPref.edit();
     }
 
-    public void createLoginSession(String userid){
+    public void createLoginSession(String userid, String email) {
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_USERID, userid);
-        //editor.putString(KEY_EMAIL, email);
+        editor.putString(KEY_EMAIL, email);
         editor.commit();
     }
 
@@ -43,7 +43,7 @@ public class SessionManager {
         return myPref.getString(KEY_USERID, null);
     }
 
-    /*public String getEmail(){
+    public String getEmail(){
         return myPref.getString(KEY_EMAIL, null);
-    }*/
+    }
 }

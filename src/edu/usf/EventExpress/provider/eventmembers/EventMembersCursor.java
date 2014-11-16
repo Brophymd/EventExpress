@@ -17,6 +17,14 @@ public class EventMembersCursor extends AbstractCursor {
     }
 
     /**
+     * Get the {@code attendees_remote_id} value.
+     * Can be {@code null}.
+     */
+    public Long getAttendeesRemoteId() {
+        return getLongOrNull(EventMembersColumns.ATTENDEES_REMOTE_ID);
+    }
+
+    /**
      * Get the {@code event_id} value.
      */
     public long getEventId() {
@@ -72,11 +80,11 @@ public class EventMembersCursor extends AbstractCursor {
     }
 
     /**
-     * Get the {@code remote_id} value.
+     * Get the {@code event_remote_id} value.
      * Can be {@code null}.
      */
-    public Long getRemoteId() {
-        return getLongOrNull(EventColumns.REMOTE_ID);
+    public Long getEventRemoteId() {
+        return getLongOrNull(EventColumns.EVENT_REMOTE_ID);
     }
 
     /**

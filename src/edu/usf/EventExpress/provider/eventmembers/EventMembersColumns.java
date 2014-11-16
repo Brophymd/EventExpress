@@ -16,6 +16,7 @@ public class EventMembersColumns implements BaseColumns {
     public static final Uri CONTENT_URI = Uri.parse(EventProvider.CONTENT_URI_BASE + "/" + TABLE_NAME);
 
     public static final String _ID = BaseColumns._ID;
+    public static final String ATTENDEES_REMOTE_ID = "attendees_remote_id";
     public static final String EVENT_ID = "event_id";
     public static final String USER_ID = "user_id";
     public static final String RSVP_STATUS = "rsvp_status";
@@ -28,6 +29,7 @@ public class EventMembersColumns implements BaseColumns {
     // @formatter:off
     public static final String[] FULL_PROJECTION = new String[] {
             TABLE_NAME + "." + _ID + " AS " + BaseColumns._ID,
+            TABLE_NAME + "." + ATTENDEES_REMOTE_ID,
             TABLE_NAME + "." + EVENT_ID,
             TABLE_NAME + "." + USER_ID,
             TABLE_NAME + "." + RSVP_STATUS,
@@ -40,6 +42,7 @@ public class EventMembersColumns implements BaseColumns {
     private static final Set<String> ALL_COLUMNS = new HashSet<String>();
     static {
         ALL_COLUMNS.add(_ID);
+        ALL_COLUMNS.add(ATTENDEES_REMOTE_ID);
         ALL_COLUMNS.add(EVENT_ID);
         ALL_COLUMNS.add(USER_ID);
         ALL_COLUMNS.add(RSVP_STATUS);

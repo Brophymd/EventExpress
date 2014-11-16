@@ -26,6 +26,17 @@ public class FriendStatusContentValues extends AbstractContentValues {
         return contentResolver.update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
+    public FriendStatusContentValues putFriendsRemoteId(Long value) {
+        mContentValues.put(FriendStatusColumns.FRIENDS_REMOTE_ID, value);
+        return this;
+    }
+
+    public FriendStatusContentValues putFriendsRemoteIdNull() {
+        mContentValues.putNull(FriendStatusColumns.FRIENDS_REMOTE_ID);
+        return this;
+    }
+
+
     public FriendStatusContentValues putFromUserId(String value) {
         if (value == null) throw new IllegalArgumentException("value for fromUserId must not be null");
         mContentValues.put(FriendStatusColumns.FROM_USER_ID, value);

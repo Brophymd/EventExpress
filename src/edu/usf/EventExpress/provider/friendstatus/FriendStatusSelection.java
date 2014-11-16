@@ -53,6 +53,36 @@ public class FriendStatusSelection extends AbstractSelection<FriendStatusSelecti
     }
 
 
+    public FriendStatusSelection friendsRemoteId(Long... value) {
+        addEquals(FriendStatusColumns.FRIENDS_REMOTE_ID, value);
+        return this;
+    }
+
+    public FriendStatusSelection friendsRemoteIdNot(Long... value) {
+        addNotEquals(FriendStatusColumns.FRIENDS_REMOTE_ID, value);
+        return this;
+    }
+
+    public FriendStatusSelection friendsRemoteIdGt(long value) {
+        addGreaterThan(FriendStatusColumns.FRIENDS_REMOTE_ID, value);
+        return this;
+    }
+
+    public FriendStatusSelection friendsRemoteIdGtEq(long value) {
+        addGreaterThanOrEquals(FriendStatusColumns.FRIENDS_REMOTE_ID, value);
+        return this;
+    }
+
+    public FriendStatusSelection friendsRemoteIdLt(long value) {
+        addLessThan(FriendStatusColumns.FRIENDS_REMOTE_ID, value);
+        return this;
+    }
+
+    public FriendStatusSelection friendsRemoteIdLtEq(long value) {
+        addLessThanOrEquals(FriendStatusColumns.FRIENDS_REMOTE_ID, value);
+        return this;
+    }
+
     public FriendStatusSelection fromUserId(String... value) {
         addEquals(FriendStatusColumns.FROM_USER_ID, value);
         return this;

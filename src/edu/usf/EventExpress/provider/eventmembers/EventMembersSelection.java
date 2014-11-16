@@ -53,6 +53,36 @@ public class EventMembersSelection extends AbstractSelection<EventMembersSelecti
     }
 
 
+    public EventMembersSelection attendeesRemoteId(Long... value) {
+        addEquals(EventMembersColumns.ATTENDEES_REMOTE_ID, value);
+        return this;
+    }
+
+    public EventMembersSelection attendeesRemoteIdNot(Long... value) {
+        addNotEquals(EventMembersColumns.ATTENDEES_REMOTE_ID, value);
+        return this;
+    }
+
+    public EventMembersSelection attendeesRemoteIdGt(long value) {
+        addGreaterThan(EventMembersColumns.ATTENDEES_REMOTE_ID, value);
+        return this;
+    }
+
+    public EventMembersSelection attendeesRemoteIdGtEq(long value) {
+        addGreaterThanOrEquals(EventMembersColumns.ATTENDEES_REMOTE_ID, value);
+        return this;
+    }
+
+    public EventMembersSelection attendeesRemoteIdLt(long value) {
+        addLessThan(EventMembersColumns.ATTENDEES_REMOTE_ID, value);
+        return this;
+    }
+
+    public EventMembersSelection attendeesRemoteIdLtEq(long value) {
+        addLessThanOrEquals(EventMembersColumns.ATTENDEES_REMOTE_ID, value);
+        return this;
+    }
+
     public EventMembersSelection eventId(long... value) {
         addEquals(EventMembersColumns.EVENT_ID, toObjectArray(value));
         return this;

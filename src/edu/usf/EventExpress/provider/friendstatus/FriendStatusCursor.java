@@ -15,6 +15,14 @@ public class FriendStatusCursor extends AbstractCursor {
     }
 
     /**
+     * Get the {@code friends_remote_id} value.
+     * Can be {@code null}.
+     */
+    public Long getFriendsRemoteId() {
+        return getLongOrNull(FriendStatusColumns.FRIENDS_REMOTE_ID);
+    }
+
+    /**
      * Get the {@code from_user_id} value.
      * Cannot be {@code null}.
      */
