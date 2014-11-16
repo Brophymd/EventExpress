@@ -42,7 +42,8 @@ public class Event_Map extends Activity {
         setContentView(R.layout.event_map);
         myBundle = getIntent().getExtras();
         InitilizeMap();
-        if(myBundle != null && myBundle.getBoolean("fromEventDetail",false)){
+        if(myBundle != null && myBundle.getBoolean("fromEventDetailHost",false)){
+            //Toast.makeText(getApplicationContext(),"HERE",Toast.LENGTH_SHORT).show();
             ShowGeoLocation();
         }
 
@@ -57,12 +58,22 @@ public class Event_Map extends Activity {
         if (locationManager == null){
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         }
-        // NEED TO SET FOR IF  THESE RETURN NULL
         if (myLocation == null){
             myLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider( new Criteria(), true));
         }
+        if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
+               !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            Toast.makeText(getApplicationContext(), "Network Provider Not Found",Toast.LENGTH_SHORT).show();
+            return;
+        }
         googleMap.setMyLocationEnabled(true);
-        mylatlng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+        try {
+            mylatlng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+        }
+        catch (Exception e){
+            //Toast.makeText(getApplicationContext(), "Network Provider Not Found",Toast.LENGTH_SHORT).show();
+            return;
+        }
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(mylatlng));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(18));
 
