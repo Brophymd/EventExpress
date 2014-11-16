@@ -83,63 +83,33 @@ public class FriendStatusSelection extends AbstractSelection<FriendStatusSelecti
         return this;
     }
 
-    public FriendStatusSelection fromUserId(long... value) {
-        addEquals(FriendStatusColumns.FROM_USER_ID, toObjectArray(value));
+    public FriendStatusSelection fromUserId(String... value) {
+        addEquals(FriendStatusColumns.FROM_USER_ID, value);
         return this;
     }
 
-    public FriendStatusSelection fromUserIdNot(long... value) {
-        addNotEquals(FriendStatusColumns.FROM_USER_ID, toObjectArray(value));
+    public FriendStatusSelection fromUserIdNot(String... value) {
+        addNotEquals(FriendStatusColumns.FROM_USER_ID, value);
         return this;
     }
 
-    public FriendStatusSelection fromUserIdGt(long value) {
-        addGreaterThan(FriendStatusColumns.FROM_USER_ID, value);
+    public FriendStatusSelection fromUserIdLike(String... value) {
+        addLike(FriendStatusColumns.FROM_USER_ID, value);
         return this;
     }
 
-    public FriendStatusSelection fromUserIdGtEq(long value) {
-        addGreaterThanOrEquals(FriendStatusColumns.FROM_USER_ID, value);
+    public FriendStatusSelection toUserId(String... value) {
+        addEquals(FriendStatusColumns.TO_USER_ID, value);
         return this;
     }
 
-    public FriendStatusSelection fromUserIdLt(long value) {
-        addLessThan(FriendStatusColumns.FROM_USER_ID, value);
+    public FriendStatusSelection toUserIdNot(String... value) {
+        addNotEquals(FriendStatusColumns.TO_USER_ID, value);
         return this;
     }
 
-    public FriendStatusSelection fromUserIdLtEq(long value) {
-        addLessThanOrEquals(FriendStatusColumns.FROM_USER_ID, value);
-        return this;
-    }
-
-    public FriendStatusSelection toUserId(long... value) {
-        addEquals(FriendStatusColumns.TO_USER_ID, toObjectArray(value));
-        return this;
-    }
-
-    public FriendStatusSelection toUserIdNot(long... value) {
-        addNotEquals(FriendStatusColumns.TO_USER_ID, toObjectArray(value));
-        return this;
-    }
-
-    public FriendStatusSelection toUserIdGt(long value) {
-        addGreaterThan(FriendStatusColumns.TO_USER_ID, value);
-        return this;
-    }
-
-    public FriendStatusSelection toUserIdGtEq(long value) {
-        addGreaterThanOrEquals(FriendStatusColumns.TO_USER_ID, value);
-        return this;
-    }
-
-    public FriendStatusSelection toUserIdLt(long value) {
-        addLessThan(FriendStatusColumns.TO_USER_ID, value);
-        return this;
-    }
-
-    public FriendStatusSelection toUserIdLtEq(long value) {
-        addLessThanOrEquals(FriendStatusColumns.TO_USER_ID, value);
+    public FriendStatusSelection toUserIdLike(String... value) {
+        addLike(FriendStatusColumns.TO_USER_ID, value);
         return this;
     }
 

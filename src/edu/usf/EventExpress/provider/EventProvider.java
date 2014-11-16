@@ -259,12 +259,6 @@ public class EventProvider extends ContentProvider {
             case URI_TYPE_FRIEND_STATUS_ID:
                 res.table = FriendStatusColumns.TABLE_NAME;
                 res.tablesWithJoins = FriendStatusColumns.TABLE_NAME;
-                if (UserColumns.hasColumns(projection)) {
-                    res.tablesWithJoins += " LEFT OUTER JOIN " + UserColumns.TABLE_NAME + " ON " + FriendStatusColumns.TABLE_NAME + "." + FriendStatusColumns.FROM_USER_ID + "=" + UserColumns.TABLE_NAME + "." + UserColumns._ID;
-                }
-                if (UserColumns.hasColumns(projection)) {
-                    res.tablesWithJoins += " LEFT OUTER JOIN " + UserColumns.TABLE_NAME + " ON " + FriendStatusColumns.TABLE_NAME + "." + FriendStatusColumns.TO_USER_ID + "=" + UserColumns.TABLE_NAME + "." + UserColumns._ID;
-                }
                 res.orderBy = FriendStatusColumns.DEFAULT_ORDER;
                 break;
 
