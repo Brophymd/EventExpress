@@ -1,13 +1,19 @@
 {
     "fields": [
         {
-            "name": "from_user_id",
+            "name": "friends_remote_id",
             "type": "Long",
+        },
+        {
+            "name": "from_user_id",
+            "type": "String",
+            "index": true,
             "nullable": false,
         },
         {
             "name": "to_user_id",
-            "type": "Long",
+            "type": "String",
+            "index": true,
             "nullable": false,
         },
         {
@@ -15,9 +21,9 @@
             "type": "enum",
             "enumName": "FriendStatusType",
             "enumValues": [
-                "Requested",
-                "Accepted",
-                "Rejected",
+                "REQUESTED",
+                "ACCEPTED",
+                "REJECTED",
             ],
             "nullable": false,
         },

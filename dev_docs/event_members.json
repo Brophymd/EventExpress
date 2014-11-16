@@ -1,6 +1,10 @@
 {
     "fields": [
         {
+            "name": "attendees_remote_id",
+            "type": "Long"
+        },
+        {
             "name": "event_id",
             "type": "Long",
             "nullable": false,

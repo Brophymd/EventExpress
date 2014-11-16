@@ -7,6 +7,11 @@
             "nullable": false,
         },
         {
+            "name": "user_email",
+            "type": "String",
+            "nullable": false,
+        },
+        {
             "name": "user_name",
             "type": "String",
             "nullable": false,
