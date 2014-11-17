@@ -25,6 +25,7 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.PersonBuffer;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusContentValues;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusType;
+import edu.usf.EventExpress.sync.SyncHelper;
 
 /**
  * Created by Varik on 10/12/2014.
@@ -117,7 +118,10 @@ public class Friendslist extends Activity {
                 String friend_request_id = input.getText().toString();
                 FriendStatusContentValues FSCV = new FriendStatusContentValues();
                 FSCV.putToUserEmail(friend_request_id.trim())
-                        .putFromUserId(userID).putStatus(FriendStatusType.REQUESTED);
+                        .putFromUserId(userID).putStatus(FriendStatusType.REQUESTED)
+                        .putFromUserEmail(new SessionManager(getApplicationContext()).getEmail())
+                        .insert(getContentResolver());
+                SyncHelper.manualSync(getApplicationContext());
 
 
             }
