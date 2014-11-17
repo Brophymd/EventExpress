@@ -396,7 +396,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             KEY_LASTSYNC, null);
             final EventServer.FriendStatusItems friends;
             try {
-                Log.i(TAG, "Downloading event members");
+                Log.i(TAG, "Downloading friends");
                 if (lastSync != null && !lastSync.isEmpty()) {
                     friends = server.getFriends(token, lastSync);
                 } else {

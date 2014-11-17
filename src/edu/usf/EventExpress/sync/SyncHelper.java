@@ -2,8 +2,10 @@ package edu.usf.EventExpress.sync;
 
 import java.io.IOException;
 
+import android.content.pm.PackageInstaller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import edu.usf.EventExpress.SessionManager;
 import edu.usf.EventExpress.provider.EventProvider;
 import retrofit.RestAdapter;
 import android.accounts.Account;
@@ -26,6 +28,7 @@ public class SyncHelper {
     public static final String KEY_ACCOUNT = "key_account";
     public static final String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.email";
     static final String TAG = SyncHelper.class.getSimpleName();
+    private static final String KEY_EMAIL = "Email";
 
     public static EventServer getRESTAdapter() {
         // Help Gson parse our date format
@@ -91,7 +94,8 @@ public class SyncHelper {
     }
 
     public static void manualSync(final Context context) {
-        final String email = getSavedAccountName(context);
+        Log.d(TAG, "Requesting sync");
+        final String email = new SessionManager(context.getApplicationContext()).getEmail();
 
         if (email != null) {
             // Set it syncable
@@ -102,7 +106,7 @@ public class SyncHelper {
                 // This will force a sync regardless of what the setting is
                 // in accounts manager. Only use it here where the user has
                 // manually desired a sync to happen NOW.
-                // options.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+                options.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
                 ContentResolver.requestSync(account, EventProvider.AUTHORITY,
                         options);
             }
