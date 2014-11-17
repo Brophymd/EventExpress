@@ -66,6 +66,7 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + FriendStatusColumns.FRIENDS_REMOTE_ID + " INTEGER, "
             + FriendStatusColumns.FROM_USER_ID + " TEXT NOT NULL, "
             + FriendStatusColumns.TO_USER_ID + " TEXT, "
+            + FriendStatusColumns.FROM_USER_EMAIL + " TEXT NOT NULL, "
             + FriendStatusColumns.TO_USER_EMAIL + " TEXT NOT NULL, "
             + FriendStatusColumns.STATUS + " INTEGER NOT NULL, "
             + FriendStatusColumns.SENT_TIME + " INTEGER DEFAULT 'CURRENT_TIMESTAMP', "
