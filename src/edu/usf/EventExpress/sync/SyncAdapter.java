@@ -243,7 +243,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         EventMembersContentValues eventMembersContentValues = new EventMembersContentValues();
         while (eventMembersCursor.moveToNext()) {
             try {
-                Log.i(TAG, "Uploading event member " + eventMembersCursor.getUserEmail()
+                Log.i(TAG, "Uploading event member " + eventMembersCursor.getUserId()
                         + " for event " + eventMembersCursor.getEventTitle());
                 server.addAttendee(token, new EventServer.EventMembersItem(eventMembersCursor));
                 syncResult.stats.numInserts++;
@@ -264,7 +264,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                     case 401: // Unauthorizedt
                         // attendee may already exist, so try patching:
                         try {
-                            Log.i(TAG, "Modifying event member " + eventMembersCursor.getUserEmail()
+                            Log.i(TAG, "Modifying event member " + eventMembersCursor.getUserId()
                                     + " for event " + eventMembersCursor.getEventTitle());
                             server.updateAttendee(token,
                                     eventMembersCursor.getAttendeesRemoteId(),
@@ -308,7 +308,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                         Log.d(TAG, "Adding local attendee " + msg.user_id + " to event " + msg.event_id);
                         UserSelection find_user = userSelection.googleId(msg.user_id);
                         UserCursor userCursor1 = find_user.query(getContext().getContentResolver());
-                        Long user_id  = userCursor1.getId();
+                        String user_id  = userCursor1.getGoogleId();
                         EventMembersSelection to_modify = eventMembersSelection.eventId(msg.event_id)
                                 .and().userId(user_id);
                         if (to_modify != null) {

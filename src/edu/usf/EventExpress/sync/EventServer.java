@@ -80,7 +80,7 @@ public interface EventServer {
             // should rename the remote ids to be table specific
             // e.g., getRemoteId here would be better named getEventRemoteId
             this.event_id = cursor.getAttendeesRemoteId();
-            this.user_id = cursor.getGoogleId();
+            this.user_id = cursor.getUserId();
             this.rsvp_status = cursor.getRsvpStatus();
             this.timestamp = cursor.getEventMembersTimestamp();
             this.deleted = cursor.getEventMembersDeleted();
