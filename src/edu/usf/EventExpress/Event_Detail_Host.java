@@ -91,14 +91,14 @@ public class Event_Detail_Host extends Activity {
         View.OnClickListener showOnMap = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mylatlng != null) {
+//                if(mylatlng != null) {
                     Intent myIntent = new Intent(v.getContext(), Event_Map.class);
                     Bundle myBundle = new Bundle();
                     myBundle.putString("LOCATION", location.getText().toString());
                     myBundle.putBoolean("fromEventDetailHost", true);
                     myIntent.putExtras(myBundle);
                     startActivity(myIntent);
-                }else Toast.makeText(getApplicationContext(), "Location cannot be mapped", Toast.LENGTH_SHORT).show();
+//                }else Toast.makeText(getApplicationContext(), "Location cannot be mapped", Toast.LENGTH_SHORT).show();
 
             }
         };
@@ -118,6 +118,7 @@ public class Event_Detail_Host extends Activity {
                 Bundle b = new Bundle();
                 b.putLong("EVENT_ID",event_id);
                 myIntent.putExtras(b);
+                startActivity(myIntent);
             }
         });
 
@@ -205,8 +206,8 @@ public class Event_Detail_Host extends Activity {
         title.setText(event.getEventTitle());
         description.setText(event.getEventDescription());
         location.setText(event.getEventAddress());
-        if(event.getEventLatitude() != null && event.getEventLongitude()!= null)
-            mylatlng = new LatLng(event.getEventLatitude(),event.getEventLongitude());
+//        if(event.getEventLatitude() != null && event.getEventLongitude()!= null)
+//            mylatlng = new LatLng(event.getEventLatitude(),event.getEventLongitude());
 
         if(event.getEventDate() != null) {
             date.setText(DF.format(event.getEventDate()));

@@ -36,6 +36,7 @@ public class Friend_Invite extends Activity {
     String userID;
     Context context;
     Long event_id;
+    private static final String TAG = "FriendInvite";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +70,7 @@ public class Friend_Invite extends Activity {
             Long friend_id;
             String friend_email;
             UserCursor mFriendUserCursor;
-            if(mFriendsAcceptedCursor.getFromUserId() == userID){
+            if(mFriendsAcceptedCursor.getFromUserId().equals(userID)){
                 mFriendUserCursor = getFriendUserCursor(mFriendsAcceptedCursor.getToUserId());
                 friend_id = mFriendUserCursor.getId();
                 friend_email = mFriendUserCursor.getUserEmail();
@@ -168,11 +169,15 @@ public class Friend_Invite extends Activity {
 
     private FriendStatusCursor getFriendsAcceptedCursor(){
         FriendStatusSelection where = new FriendStatusSelection();
-        where.status(FriendStatusType.ACCEPTED);
+        if(where == null)
+        Log.d(TAG, "where is null");
 
-        Cursor cursor = context.getContentResolver().query(FriendStatusColumns.CONTENT_URI, null,
-                where.sel(), where.args(), null);
-        return new FriendStatusCursor(cursor);
+        if(context == null) Log.d(TAG, "context is null");
+        return where.status(FriendStatusType.ACCEPTED).query(context.getContentResolver());
+
+//        Cursor cursor = context.getContentResolver().query(FriendStatusColumns.CONTENT_URI, null,
+//                where.sel(), where.args(), null);
+        //return new FriendStatusCursor(cursor);
     }
 
     private UserCursor getFriendUserCursor(String friend_id){

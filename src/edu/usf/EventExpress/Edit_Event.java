@@ -149,14 +149,14 @@ public class Edit_Event extends Activity {
                 cal.set(Calendar.HOUR_OF_DAY, selHour);
                 cal.set(Calendar.MINUTE,selMinute);
                 DateandTime = cal.getTime();
-                LatLng mylatlng;
-                GeoLocation geo = new GeoLocation(getApplicationContext());
-                mylatlng = geo.getLatLngfromAddress(et_location.getText().toString());
+//                LatLng mylatlng;
+//                GeoLocation geo = new GeoLocation(getApplicationContext());
+//                mylatlng = geo.getLatLngfromAddress(et_location.getText().toString());
                 //Toast.makeText(getApplicationContext(), addr,Toast.LENGTH_SHORT).show();
                 Context context = getApplicationContext();
                 if(fromCreate) {
                     EventContentValues values = new EventContentValues();
-                    setValues(values, mylatlng);
+                    setValues(values);
                     context.getContentResolver().insert(EventColumns.CONTENT_URI, values.values());
                 }
                 else{
@@ -165,7 +165,7 @@ public class Edit_Event extends Activity {
                     EventCursor event = where.query(getContentResolver());
                     event.moveToNext();
                     EventContentValues values = new EventContentValues();
-                    setValues(values, mylatlng);
+                    setValues(values);
                     values.update(context.getContentResolver(), x);
                 }
 
@@ -185,15 +185,15 @@ public class Edit_Event extends Activity {
 
     }
 
-    private void setValues(EventContentValues values, LatLng mylatlng ){
+    private void setValues(EventContentValues values){
         values.putEventOwner(userID).putEventType(EventType.OPEN)
                 .putEventTitle(et_title.getText().toString())
                 .putEventDescription(et_description.getText().toString())
                 .putEventAddress(et_location.getText().toString());
         if(DateandTime != null)
             values.putEventDate(DateandTime);
-        if(mylatlng != null)
-            values.putEventLatitude((float) mylatlng.latitude)
-                    .putEventLongitude((float)mylatlng.longitude);
+//        if(mylatlng != null)
+//            values.putEventLatitude((float) mylatlng.latitude)
+//                    .putEventLongitude((float)mylatlng.longitude);
     }
 }
