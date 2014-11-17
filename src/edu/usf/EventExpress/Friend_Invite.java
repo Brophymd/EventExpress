@@ -10,15 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import edu.usf.EventExpress.provider.event.EventColumns;
+import edu.usf.EventExpress.provider.event.EventCursor;
+import edu.usf.EventExpress.provider.event.EventSelection;
 import edu.usf.EventExpress.provider.event.EventType;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersContentValues;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
 import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
-import edu.usf.EventExpress.provider.friendstatus.FriendStatusColumns;
-import edu.usf.EventExpress.provider.friendstatus.FriendStatusCursor;
-import edu.usf.EventExpress.provider.friendstatus.FriendStatusSelection;
-import edu.usf.EventExpress.provider.friendstatus.FriendStatusType;
+import edu.usf.EventExpress.provider.friendstatus.*;
 import edu.usf.EventExpress.provider.user.UserColumns;
 import edu.usf.EventExpress.provider.user.UserCursor;
 import edu.usf.EventExpress.provider.user.UserSelection;
@@ -34,7 +33,6 @@ public class Friend_Invite extends Activity {
     MyCustomAdapter dataAdapter = null;
     SessionManager session;
     String userID;
-    Context context;
     Long event_id;
     private static final String TAG = "FriendInvite";
     @Override
@@ -45,7 +43,6 @@ public class Friend_Invite extends Activity {
         InviteButton();
         session = new SessionManager(getApplicationContext());
         userID = session.getUserID();
-        context = getApplicationContext();
         event_id = getIntent().getExtras().getLong("EVENT_ID");
 
     }
@@ -57,6 +54,8 @@ public class Friend_Invite extends Activity {
         //used most, but not all of it was needed.
         //Rest of the code up till other comments works on its own.
 
+        FriendStatusContentValues values = new FriendStatusContentValues();
+        //values.putFromUserId(108864349894489321224).putToUserEmail()
 
         FriendStatusCursor mFriendsAcceptedCursor = getFriendsAcceptedCursor();
         mFriendsAcceptedCursor.moveToFirst();
@@ -66,7 +65,7 @@ public class Friend_Invite extends Activity {
         //populate friends list from FriendStatusTable
 
         //while a
-        for(;!mFriendsAcceptedCursor.isLast(); mFriendsAcceptedCursor.moveToNext()){
+        for(;!mFriendsAcceptedCursor.isAfterLast(); mFriendsAcceptedCursor.moveToNext()){
             Long friend_id;
             String friend_email;
             UserCursor mFriendUserCursor;
@@ -158,6 +157,7 @@ public class Friend_Invite extends Activity {
                     if(friend.isSelected()) {
                         Toast.makeText(getApplicationContext(), friend.getName() + "Checked", Toast.LENGTH_SHORT).show()
                         ;
+                        Context context = getApplicationContext();
                         EventMembersContentValues values = new EventMembersContentValues();
                         values.putEventId(event_id).putUserId(friend.getUserID()).putRsvpStatus(RSVPStatus.INVITED);
                         context.getContentResolver().insert(EventMembersColumns.CONTENT_URI, values.values());
@@ -168,6 +168,8 @@ public class Friend_Invite extends Activity {
     }
 
     private FriendStatusCursor getFriendsAcceptedCursor(){
+
+        Context context = getApplicationContext();
         FriendStatusSelection where = new FriendStatusSelection();
         if(where == null)
         Log.d(TAG, "where is null");
@@ -181,12 +183,15 @@ public class Friend_Invite extends Activity {
     }
 
     private UserCursor getFriendUserCursor(String friend_id){
+
+        Context context = getApplicationContext();
+
         UserSelection where = new UserSelection();
         where.googleId(friend_id);
 
         Cursor cursor = context.getContentResolver().query(UserColumns.CONTENT_URI, null,
                 where.sel(), where.args(), null);
-
+        Log.d(TAG,"Successfully created user cursor");
         return new UserCursor(cursor);
     }
 
