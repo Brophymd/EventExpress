@@ -162,10 +162,10 @@ public class Friend_Invite extends Activity {
                     if(friend.isSelected()) {
                         Toast.makeText(getApplicationContext(), friend.getName() + "Checked", Toast.LENGTH_SHORT).show()
                         ;
-//                        Context context = getApplicationContext();
-//                        EventMembersContentValues values = new EventMembersContentValues();
-//                        values.putEventId(event_id).putUserId(friend.getUserID()).putRsvpStatus(RSVPStatus.INVITED);
-//                        context.getContentResolver().insert(EventMembersColumns.CONTENT_URI, values.values());
+                        Context context = getApplicationContext();
+                        EventMembersContentValues values = new EventMembersContentValues();
+                        values.putEventId(event_id).putUserId(friend.getUserID()).putRsvpStatus(RSVPStatus.INVITED);
+                        context.getContentResolver().insert(EventMembersColumns.CONTENT_URI, values.values());
                     }
                 }
             }

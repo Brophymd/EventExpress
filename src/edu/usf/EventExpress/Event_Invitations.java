@@ -61,7 +61,7 @@ public class Event_Invitations extends Activity {
             databaseID = ucur.getId();
         }
         EventMembersSelection emSel = new EventMembersSelection();
-        emSel.userId(databaseID).and().rsvpStatus(RSVPStatus.INVITED);
+        emSel.userId(userID).and().rsvpStatus(RSVPStatus.INVITED);
         EventMembersCursor emcursor = emSel.query(getContentResolver());
 
         while(emcursor.moveToNext()){
