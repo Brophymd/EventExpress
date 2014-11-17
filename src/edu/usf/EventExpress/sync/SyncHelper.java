@@ -2,7 +2,6 @@ package edu.usf.EventExpress.sync;
 
 import java.io.IOException;
 
-import android.content.pm.PackageInstaller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import edu.usf.EventExpress.SessionManager;
