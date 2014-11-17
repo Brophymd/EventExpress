@@ -44,7 +44,8 @@ public class EventMembersContentValues extends AbstractContentValues {
 
 
 
-    public EventMembersContentValues putUserId(long value) {
+    public EventMembersContentValues putUserId(String value) {
+        if (value == null) throw new IllegalArgumentException("value for userId must not be null");
         mContentValues.put(EventMembersColumns.USER_ID, value);
         return this;
     }

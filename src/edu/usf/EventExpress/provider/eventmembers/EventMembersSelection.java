@@ -113,33 +113,18 @@ public class EventMembersSelection extends AbstractSelection<EventMembersSelecti
         return this;
     }
 
-    public EventMembersSelection userId(long... value) {
-        addEquals(EventMembersColumns.USER_ID, toObjectArray(value));
+    public EventMembersSelection userId(String... value) {
+        addEquals(EventMembersColumns.USER_ID, value);
         return this;
     }
 
-    public EventMembersSelection userIdNot(long... value) {
-        addNotEquals(EventMembersColumns.USER_ID, toObjectArray(value));
+    public EventMembersSelection userIdNot(String... value) {
+        addNotEquals(EventMembersColumns.USER_ID, value);
         return this;
     }
 
-    public EventMembersSelection userIdGt(long value) {
-        addGreaterThan(EventMembersColumns.USER_ID, value);
-        return this;
-    }
-
-    public EventMembersSelection userIdGtEq(long value) {
-        addGreaterThanOrEquals(EventMembersColumns.USER_ID, value);
-        return this;
-    }
-
-    public EventMembersSelection userIdLt(long value) {
-        addLessThan(EventMembersColumns.USER_ID, value);
-        return this;
-    }
-
-    public EventMembersSelection userIdLtEq(long value) {
-        addLessThanOrEquals(EventMembersColumns.USER_ID, value);
+    public EventMembersSelection userIdLike(String... value) {
+        addLike(EventMembersColumns.USER_ID, value);
         return this;
     }
 

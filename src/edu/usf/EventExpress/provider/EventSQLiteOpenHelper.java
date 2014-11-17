@@ -51,14 +51,16 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventMembersColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + EventMembersColumns.ATTENDEES_REMOTE_ID + " INTEGER, "
             + EventMembersColumns.EVENT_ID + " INTEGER NOT NULL, "
-            + EventMembersColumns.USER_ID + " INTEGER NOT NULL, "
+            + EventMembersColumns.USER_ID + " TEXT NOT NULL, "
             + EventMembersColumns.RSVP_STATUS + " INTEGER DEFAULT 'INVITED', "
             + EventMembersColumns.EVENT_MEMBERS_TIMESTAMP + " INTEGER NOT NULL DEFAULT 'CURRENT_TIMESTAMP', "
             + EventMembersColumns.EVENT_MEMBERS_DELETED + " INTEGER NOT NULL DEFAULT '0', "
             + EventMembersColumns.EVENT_MEMBERS_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
             + ", CONSTRAINT fk_event_id FOREIGN KEY (event_id) REFERENCES event (_id) ON DELETE CASCADE"
-            + ", CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user (_id) ON DELETE CASCADE"
             + " );";
+
+    private static final String SQL_CREATE_INDEX_EVENT_MEMBERS_USER_ID = "CREATE INDEX IDX_EVENT_MEMBERS_USER_ID "
+            + " ON " + EventMembersColumns.TABLE_NAME + " ( " + EventMembersColumns.USER_ID + " );";
 
     private static final String SQL_CREATE_TABLE_FRIEND_STATUS = "CREATE TABLE IF NOT EXISTS "
             + FriendStatusColumns.TABLE_NAME + " ( "
@@ -156,6 +158,7 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_TABLE_EVENT);
         db.execSQL(SQL_CREATE_INDEX_EVENT_EVENT_OWNER);
         db.execSQL(SQL_CREATE_TABLE_EVENT_MEMBERS);
+        db.execSQL(SQL_CREATE_INDEX_EVENT_MEMBERS_USER_ID);
         db.execSQL(SQL_CREATE_TABLE_FRIEND_STATUS);
         db.execSQL(SQL_CREATE_INDEX_FRIEND_STATUS_FROM_USER_ID);
         db.execSQL(SQL_CREATE_INDEX_FRIEND_STATUS_TO_USER_ID);

@@ -6,7 +6,6 @@ import android.database.Cursor;
 
 import edu.usf.EventExpress.provider.base.AbstractCursor;
 import edu.usf.EventExpress.provider.event.*;
-import edu.usf.EventExpress.provider.user.*;
 
 /**
  * Cursor wrapper for the {@code event_members} table.
@@ -33,9 +32,11 @@ public class EventMembersCursor extends AbstractCursor {
 
     /**
      * Get the {@code user_id} value.
+     * Cannot be {@code null}.
      */
-    public long getUserId() {
-        return getLongOrNull(EventMembersColumns.USER_ID);
+    public String getUserId() {
+        Integer index = getCachedColumnIndexOrThrow(EventMembersColumns.USER_ID);
+        return getString(index);
     }
 
     /**
@@ -168,54 +169,5 @@ public class EventMembersCursor extends AbstractCursor {
      */
     public int getEventSynced() {
         return getIntegerOrNull(EventColumns.EVENT_SYNCED);
-    }
-
-    /**
-     * Get the {@code google_id} value.
-     * Cannot be {@code null}.
-     */
-    public String getGoogleId() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.GOOGLE_ID);
-        return getString(index);
-    }
-
-    /**
-     * Get the {@code user_email} value.
-     * Cannot be {@code null}.
-     */
-    public String getUserEmail() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.USER_EMAIL);
-        return getString(index);
-    }
-
-    /**
-     * Get the {@code user_name} value.
-     * Cannot be {@code null}.
-     */
-    public String getUserName() {
-        Integer index = getCachedColumnIndexOrThrow(UserColumns.USER_NAME);
-        return getString(index);
-    }
-
-    /**
-     * Get the {@code user_timestamp} value.
-     * Cannot be {@code null}.
-     */
-    public Date getUserTimestamp() {
-        return getDate(UserColumns.USER_TIMESTAMP);
-    }
-
-    /**
-     * Get the {@code user_deleted} value.
-     */
-    public int getUserDeleted() {
-        return getIntegerOrNull(UserColumns.USER_DELETED);
-    }
-
-    /**
-     * Get the {@code user_synced} value.
-     */
-    public int getUserSynced() {
-        return getIntegerOrNull(UserColumns.USER_SYNCED);
     }
 }

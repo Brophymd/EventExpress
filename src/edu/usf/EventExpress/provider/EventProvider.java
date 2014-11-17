@@ -249,9 +249,6 @@ public class EventProvider extends ContentProvider {
                 if (EventColumns.hasColumns(projection)) {
                     res.tablesWithJoins += " LEFT OUTER JOIN " + EventColumns.TABLE_NAME + " ON " + EventMembersColumns.TABLE_NAME + "." + EventMembersColumns.EVENT_ID + "=" + EventColumns.TABLE_NAME + "." + EventColumns._ID;
                 }
-                if (UserColumns.hasColumns(projection)) {
-                    res.tablesWithJoins += " LEFT OUTER JOIN " + UserColumns.TABLE_NAME + " ON " + EventMembersColumns.TABLE_NAME + "." + EventMembersColumns.USER_ID + "=" + UserColumns.TABLE_NAME + "." + UserColumns._ID;
-                }
                 res.orderBy = EventMembersColumns.DEFAULT_ORDER;
                 break;
 
