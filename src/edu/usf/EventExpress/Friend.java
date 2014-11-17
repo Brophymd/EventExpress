@@ -5,17 +5,17 @@ package edu.usf.EventExpress;
  */
 public class Friend {
     String name = null;
-    Long userID = null;
+    String userID = null;
     boolean selected = false;
 
-    public Friend(Long userID, String name, boolean selected){
+    public Friend(String userID, String name, boolean selected){
         super();
         this.userID = userID;
         this.name = name;
         this.selected = selected;
     }
 
-    public Long getUserID(){
+    public String getUserID(){
         return userID;
     }
 
