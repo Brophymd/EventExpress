@@ -23,27 +23,36 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.plus.People;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.PersonBuffer;
+import edu.usf.EventExpress.provider.friendstatus.FriendStatusContentValues;
+import edu.usf.EventExpress.provider.friendstatus.FriendStatusType;
 
 /**
  * Created by Varik on 10/12/2014.
  */
-public class Friendslist extends Activity implements GoogleApiClient.ConnectionCallbacks,ResultCallback<People.LoadPeopleResult> {
+public class Friendslist extends Activity {
     String userID;
-    ArrayList<String> myStringArray = new ArrayList<String>();
-    ArrayAdapter listAdapter;
-    ListView mainListView;
-    GoogleApiClient mGoogleApiClient;
+    ArrayList<String> myStringArray;
+
+
     private static final String TAG = "FriendListActivity";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friendslist);
         userID = new SessionManager(getApplicationContext()).getUserID();
-        mainListView = (ListView) findViewById( R.id.mainList );
+        DisplayList();
+
+
+
+    }
+
+    private void DisplayList(){
+        ListView mainListView = (ListView) findViewById( R.id.mainList );
+        myStringArray = new ArrayList<String>();
         myStringArray.add("Mark");
         myStringArray.add("James");
         myStringArray.add("Brent");
-        listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
+        ArrayAdapter listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
         mainListView.setAdapter(listAdapter);
         mainListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int pos, long arg3) {
@@ -61,65 +70,7 @@ public class Friendslist extends Activity implements GoogleApiClient.ConnectionC
             }
         });
 
-        // Initializing google plus api client
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addApi(Plus.API)
-                .addScope(Plus.SCOPE_PLUS_LOGIN)
-                .build();
-
     }
-//    @Override
-//    public void onConnected() {
-//        Plus.PeopleApi.loadVisible(mGoogleApiClient, null)
-//                .setResultCallback(this);
-//    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        mGoogleApiClient.connect();
-        if(!mGoogleApiClient.isConnecting())
-            Toast.makeText(getApplicationContext(), "Client did not connect!", Toast.LENGTH_SHORT).show();
-
-
-    }
-
-    @Override
-    public void onConnected(Bundle arg0){
-
-        Log.d(TAG,"Successful Connection!");
-//        Plus.PeopleApi.loadVisible(mGoogleApiClient, null)
-//                .setResultCallback(this);
-        List<String> userIds = new ArrayList<String>();
-        userIds.add(userID);
-        Plus.PeopleApi.load(mGoogleApiClient, userIds).setResultCallback(this);
-    }
-
-   @Override
-   public void onConnectionSuspended(int i){
-       Toast.makeText(getApplicationContext(),"Connection Suspended", Toast.LENGTH_SHORT).show();
-   }
-    @Override
-    public void onResult(People.LoadPeopleResult peopleData) {
-        if (peopleData.getStatus().getStatusCode() == CommonStatusCodes.SUCCESS) {
-            PersonBuffer personBuffer = peopleData.getPersonBuffer();
-            Log.d(TAG, "Status was Success!");
-            try {
-                int count = personBuffer.getCount();
-
-                Log.d(TAG, "personBuffer Count: "+count);
-                for (int i = 0; i < count; i++) {
-                    Log.d(TAG, "Display name: " + personBuffer.get(i).getDisplayName());
-                }
-            } finally {
-                personBuffer.close();
-            }
-        } else {
-            Log.e(TAG, "Error requesting visible circles: " + peopleData.getStatus());
-        }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu m){
@@ -164,6 +115,10 @@ public class Friendslist extends Activity implements GoogleApiClient.ConnectionC
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String friend_request_id = input.getText().toString();
+                FriendStatusContentValues FSCV = new FriendStatusContentValues();
+                FSCV.putToUserEmail(friend_request_id.trim())
+                        .putFromUserId(userID).putStatus(FriendStatusType.REQUESTED);
+
 
             }
         });
