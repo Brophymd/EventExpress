@@ -317,7 +317,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                                     .update(getContext().getContentResolver(), to_modify);
                         }
                         else {
-                            eventMembersContentValues.putEventId(msg.event_id)
+                            eventMembersContentValues.putAttendeesRemoteId(msg.event_id)
                                     .putUserId(user_id)
                                     .putRsvpStatus(msg.rsvp_status)
                                     .putEventMembersSynced(1)
@@ -410,6 +410,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                                 .and().toUserId(msg.to_user_id);
                         if (to_modify != null) {
                             friendStatusContentValues.putStatus(msg.status)
+                                    .putToUserId(msg.to_user_id)
                                     .putResponseTime(msg.response_time)
                                     .putFriendStatusSynced(1)
                                     .update(getContext().getContentResolver(), to_modify);
@@ -418,6 +419,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             friendStatusContentValues.putFriendsRemoteId(msg.remote_id)
                                     .putFromUserId(msg.from_user_id)
                                     .putToUserId(msg.to_user_id)
+                                    .putFromUserEmail(msg.from_user_email)
+                                    .putToUserEmail(msg.to_user_email)
                                     .putStatus(msg.status)
                                     .putSentTime(msg.sent_time)
                                     .putResponseTime(msg.response_time)

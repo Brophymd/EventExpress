@@ -92,6 +92,8 @@ public interface EventServer {
         long remote_id;
         String from_user_id;
         String to_user_id;
+        String from_user_email;
+        String to_user_email;
         FriendStatusType status;
         Date sent_time;
         Date response_time;
@@ -102,6 +104,8 @@ public interface EventServer {
             this.remote_id = cursor.getFriendsRemoteId();
             this.from_user_id = cursor.getFromUserId();
             this.to_user_id = cursor.getToUserId();
+            this.from_user_email = cursor.getFromUserEmail();
+            this.to_user_email = cursor.getToUserEmail();
             this.status = cursor.getStatus();
             this.sent_time = cursor.getSentTime();
             this.response_time = cursor.getResponseTime();
