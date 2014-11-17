@@ -83,7 +83,9 @@ public class Event_Map extends Activity {
     private void ShowGeoLocation(){
         LatLng mylatlng;
         String addr = myBundle.getString("LOCATION");
-
+        if(addr.trim().length()==0){
+            return;
+        }
         GeoLocation x = new GeoLocation(getApplicationContext());
         mylatlng = x.getLatLngfromAddress(addr);
         if(mylatlng == null){
