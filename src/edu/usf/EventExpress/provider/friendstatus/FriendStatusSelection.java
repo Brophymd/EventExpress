@@ -113,6 +113,21 @@ public class FriendStatusSelection extends AbstractSelection<FriendStatusSelecti
         return this;
     }
 
+    public FriendStatusSelection toUserEmail(String... value) {
+        addEquals(FriendStatusColumns.TO_USER_EMAIL, value);
+        return this;
+    }
+
+    public FriendStatusSelection toUserEmailNot(String... value) {
+        addNotEquals(FriendStatusColumns.TO_USER_EMAIL, value);
+        return this;
+    }
+
+    public FriendStatusSelection toUserEmailLike(String... value) {
+        addLike(FriendStatusColumns.TO_USER_EMAIL, value);
+        return this;
+    }
+
     public FriendStatusSelection status(FriendStatusType... value) {
         addEquals(FriendStatusColumns.STATUS, value);
         return this;
