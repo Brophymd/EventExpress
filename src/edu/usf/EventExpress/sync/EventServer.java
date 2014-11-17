@@ -3,6 +3,7 @@ package edu.usf.EventExpress.sync;
 import java.util.Date;
 import java.util.List;
 
+import android.util.Log;
 import edu.usf.EventExpress.provider.event.EventCursor;
 import edu.usf.EventExpress.provider.event.EventType;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersCursor;
