@@ -41,6 +41,15 @@ public class FriendStatusCursor extends AbstractCursor {
     }
 
     /**
+     * Get the {@code from_user_email} value.
+     * Cannot be {@code null}.
+     */
+    public String getFromUserEmail() {
+        Integer index = getCachedColumnIndexOrThrow(FriendStatusColumns.FROM_USER_EMAIL);
+        return getString(index);
+    }
+
+    /**
      * Get the {@code to_user_email} value.
      * Cannot be {@code null}.
      */

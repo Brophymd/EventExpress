@@ -19,6 +19,7 @@ import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusContentValues;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusCursor;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusSelection;
+import edu.usf.EventExpress.provider.friendstatus.FriendStatusType;
 import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
 import edu.usf.EventExpress.provider.user.UserSelection;
@@ -455,7 +456,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             case 401: // Unauthorized
                 syncResult.stats.numAuthExceptions++;
                 break;
-            case 404: // No such item, should never happen, programming error
+            case 404: // only used if friend not found
+                if (e.getResponse().getReason().equals("Friend not found")) {
+                    // TODO: raise notification
+                }
             case 415: // Not proper body, programming error
             case 400: // Didn't specify url, programming error
                 syncResult.databaseError = true;
