@@ -200,7 +200,7 @@ public interface EventServer {
     EventResponse addEvent(@Header("Authorization") String token,
                            @Body EventItem item);
 
-    @PATCH("/events/{remote_id}")
+    @PUT("/events/{remote_id}")
     EventResponse updateEvent(@Header("Authorization") String token,
                               @Path("remote_id") Long remote_id,
                               @Body EventItem item);
@@ -221,7 +221,7 @@ public interface EventServer {
     EventMembersResponse addAttendee(@Header("Authorization") String token,
                                      @Body EventMembersItem item);
 
-    @PATCH("/attendees/{remote_id}")
+    @PUT("/attendees/{remote_id}")
     EventMembersResponse updateAttendee(@Header("Authorization") String token,
                                         @Path("remote_id") Long remote_id,
                                         @Body EventMembersItem item);
@@ -238,7 +238,7 @@ public interface EventServer {
     FriendStatusResponse addFriend(@Header("Authorization") String token,
                                  @Body FriendStatusItem item);
 
-    @PATCH("/friends/{remote_id}")
+    @PUT("/friends/{remote_id}")
     FriendStatusResponse updateFriend(@Header("Authorization") String token,
                                     @Path("remote_id") Long remote_id,
                                     @Body FriendStatusItem item);

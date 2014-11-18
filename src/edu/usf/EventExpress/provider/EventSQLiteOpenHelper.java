@@ -76,6 +76,7 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + FriendStatusColumns.FRIEND_STATUS_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
             + FriendStatusColumns.FRIEND_STATUS_DELETED + " INTEGER DEFAULT '0', "
             + FriendStatusColumns.FRIEND_STATUS_SYNCED + " INTEGER DEFAULT '0' "
+            + ", CONSTRAINT fromto unique (from_user_email, to_user_email) on conflict replace"
             + " );";
 
     private static final String SQL_CREATE_INDEX_FRIEND_STATUS_FROM_USER_ID = "CREATE INDEX IDX_FRIEND_STATUS_FROM_USER_ID "

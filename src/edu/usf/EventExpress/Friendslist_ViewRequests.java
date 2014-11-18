@@ -41,9 +41,7 @@ public class Friendslist_ViewRequests extends Activity {
 
         while(FSC.moveToNext()){
             String email = FSC.getFromUserEmail();
-            Log.d(TAG, "From email is: ");
             if(!email.equals(new SessionManager(getApplicationContext()).getEmail())) {
-                Log.d(TAG, "Adding email to view: ");
                 friendRequestEmail.add(email);
             }
         }
@@ -81,9 +79,9 @@ public class Friendslist_ViewRequests extends Activity {
         friendStatusContentValues.putStatus(FriendStatusType.accepted)
                 .putFriendStatusSynced(0)
                 .update(getApplicationContext().getContentResolver(), friendStatusSelection
-                        .fromUserEmail(new SessionManager(getApplicationContext()).getEmail())
+                        .fromUserEmail(selected)
                         .and()
-                        .toUserEmail(selected));
+                        .toUserEmail(new SessionManager(getApplicationContext()).getEmail()));
 
         DisplayList();
     }
@@ -94,9 +92,9 @@ public class Friendslist_ViewRequests extends Activity {
         friendStatusContentValues.putStatus(FriendStatusType.rejected)
                 .putFriendStatusSynced(0)
                 .update(getApplicationContext().getContentResolver(), friendStatusSelection
-                        .fromUserEmail(new SessionManager(getApplicationContext()).getEmail())
+                        .fromUserEmail(selected)
                         .and()
-                        .toUserEmail(selected));
+                        .toUserEmail(new SessionManager(getApplicationContext()).getEmail()));
 
         DisplayList();
 
