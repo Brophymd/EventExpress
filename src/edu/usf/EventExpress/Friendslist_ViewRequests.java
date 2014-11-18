@@ -4,15 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusContentValues;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusCursor;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusSelection;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusType;
-import edu.usf.EventExpress.provider.user.UserCursor;
-import edu.usf.EventExpress.provider.user.UserSelection;
 
 import java.util.ArrayList;
 
@@ -20,6 +18,7 @@ import java.util.ArrayList;
  * Created by Varik on 10/12/2014.
  */
 public class Friendslist_ViewRequests extends Activity {
+    private static final String TAG = Friendslist_ViewRequests.class.getSimpleName();
     ArrayList<String> friendRequestEmail;
     ArrayList<Long> friendRequestID;
     String userID;
@@ -37,14 +36,15 @@ public class Friendslist_ViewRequests extends Activity {
         friendRequestEmail = new ArrayList<String>();
         friendRequestID = new ArrayList<Long>();
         FriendStatusSelection FSS = new FriendStatusSelection();
-        FriendStatusCursor FSC = FSS.status(FriendStatusType.REQUESTED).query(getContentResolver());
-        UserSelection US = new UserSelection();
+        FriendStatusCursor FSC = FSS.query(getContentResolver());
+        Log.d(TAG, "Got FriendStatusCursor");
 
         while(FSC.moveToNext()){
-            UserCursor UC = US.googleId(FSC.getToUserId()).query(getContentResolver());
-            String email = UC.getUserEmail();
-            if(email.equals(new SessionManager(getApplicationContext()).getEmail())) {
-                friendRequestEmail.add(UC.getUserEmail());
+            String email = FSC.getFromUserEmail();
+            Log.d(TAG, "From email is: ");
+            if(!email.equals(new SessionManager(getApplicationContext()).getEmail())) {
+                Log.d(TAG, "Adding email to view: ");
+                friendRequestEmail.add(email);
             }
         }
         ArrayAdapter listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, friendRequestEmail);
@@ -77,7 +77,7 @@ public class Friendslist_ViewRequests extends Activity {
     private void AcceptFriendRequest(String selected){
         FriendStatusSelection friendStatusSelection = new FriendStatusSelection();
         FriendStatusContentValues friendStatusContentValues = new FriendStatusContentValues();
-        friendStatusContentValues.putStatus(FriendStatusType.ACCEPTED)
+        friendStatusContentValues.putStatus(FriendStatusType.accepted)
                 .putFriendStatusSynced(0)
                 .update(getApplicationContext().getContentResolver(), friendStatusSelection
                 .fromUserEmail(new SessionManager(getApplicationContext()).getEmail())
@@ -89,7 +89,7 @@ public class Friendslist_ViewRequests extends Activity {
     private void RefuseFriendRequest(String selected){
         FriendStatusSelection friendStatusSelection = new FriendStatusSelection();
         FriendStatusContentValues friendStatusContentValues = new FriendStatusContentValues();
-        friendStatusContentValues.putStatus(FriendStatusType.REJECTED)
+        friendStatusContentValues.putStatus(FriendStatusType.rejected)
                 .putFriendStatusSynced(0)
                 .update(getApplicationContext().getContentResolver(), friendStatusSelection
                         .fromUserEmail(new SessionManager(getApplicationContext()).getEmail())

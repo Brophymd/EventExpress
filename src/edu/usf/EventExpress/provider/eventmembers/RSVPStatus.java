@@ -7,26 +7,26 @@ public enum RSVPStatus {
     /**
      * 
      */
-    INVITED,
+    invited,
 
     /**
      * 
      */
-    UNINVITED,
+    uninvited,
 
     /**
      * 
      */
-    NO,
+    no,
 
     /**
      * 
      */
-    YES,
+    yes,
 
     /**
      * 
      */
-    MAYBE,
+    maybe,
 
 }

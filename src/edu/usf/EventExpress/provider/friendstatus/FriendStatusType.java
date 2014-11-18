@@ -7,16 +7,16 @@ public enum FriendStatusType {
     /**
      * 
      */
-    REQUESTED,
+    requested,
 
     /**
      * 
      */
-    ACCEPTED,
+    accepted,
 
     /**
      * 
      */
-    REJECTED,
+    rejected,
 
 }

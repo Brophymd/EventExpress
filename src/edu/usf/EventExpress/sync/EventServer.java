@@ -43,7 +43,6 @@ public interface EventServer {
     }
 
     public static class EventItem {
-        long remote_id;
         String event_owner;
         EventType event_type;
         String event_title;
@@ -56,7 +55,6 @@ public interface EventServer {
         int deleted;
 
         public EventItem(EventCursor cursor) {
-            this.remote_id = cursor.getEventRemoteId();
             this.event_owner = cursor.getEventOwner();
             this.event_type = cursor.getEventType();
             this.event_title = cursor.getEventTitle();
@@ -70,6 +68,16 @@ public interface EventServer {
         }
     }
 
+    public static class EventResponse extends EventItem {
+        // this is the id of the Event entry in the remote database
+        Long id;
+        public EventResponse(EventCursor cursor) {
+            super(cursor);
+            this.id = cursor.getEventRemoteId();
+
+        }
+    }
+
     public static class EventMembersItem {
         long event_id;
         String user_id;
@@ -78,9 +86,7 @@ public interface EventServer {
         int deleted;
 
         public EventMembersItem(EventMembersCursor cursor) {
-            // should rename the remote ids to be table specific
-            // e.g., getRemoteId here would be better named getEventRemoteId
-            this.event_id = cursor.getAttendeesRemoteId();
+            this.event_id = cursor.getEventRemoteId();
             this.user_id = cursor.getUserId();
             this.rsvp_status = cursor.getRsvpStatus();
             this.timestamp = cursor.getEventMembersTimestamp();
@@ -88,8 +94,16 @@ public interface EventServer {
         }
     }
 
+    public static class EventMembersResponse extends EventMembersItem {
+        // this is the id of the EventMembers entry in the remote database
+        long id;
+        public EventMembersResponse(EventMembersCursor cursor) {
+            super(cursor);
+            this.id = cursor.getAttendeesRemoteId();
+        }
+    }
+
     public static class FriendStatusItem {
-        long remote_id;
         String from_user_id;
         String to_user_id;
         String from_user_email;
@@ -101,7 +115,6 @@ public interface EventServer {
         int deleted;
 
         public FriendStatusItem(FriendStatusCursor cursor) {
-            this.remote_id = cursor.getFriendsRemoteId();
             this.from_user_id = cursor.getFromUserId();
             this.to_user_id = cursor.getToUserId();
             this.from_user_email = cursor.getFromUserEmail();
@@ -114,24 +127,45 @@ public interface EventServer {
         }
     }
 
+    public static class FriendStatusResponse extends FriendStatusItem {
+        // this is the id of the FriendStatus entry in the remote database
+        long id;
+        public FriendStatusResponse(FriendStatusCursor cursor) {
+            super(cursor);
+            this.id = cursor.getFriendsRemoteId();
+        }
+    }
+
     public static class UserItems {
-        String latestTimestamp;
-        List<UserItem> items;
+        int num_results;
+        int total_pages;
+        int page;
+        String latest_timestamp;
+        List<UserItem> objects;
     }
 
     public static class EventItems {
-        String latestTimestamp;
-        List<EventItem> items;
+        int num_results;
+        int total_pages;
+        int page;
+        String latest_timestamp;
+        List<EventResponse> objects;
     }
 
     public static class EventMembersItems {
-        String latestTimestamp;
-        List<EventMembersItem> items;
+        int num_results;
+        int total_pages;
+        int page;
+        String latest_timestamp;
+        List<EventMembersResponse> objects;
     }
 
     public static class FriendStatusItems {
-        String latestTimestamp;
-        List<FriendStatusItem> items;
+        int num_results;
+        int total_pages;
+        int page;
+        String latest_timestamp;
+        List<FriendStatusResponse> objects;
     }
 
     public static class RegId {
@@ -155,40 +189,45 @@ public interface EventServer {
                      @Body UserItem item);
 
     @GET("/events/{remote_id}")
-    EventItem getEvent(@Header("Authorization") String token,
-                       @Path("remote_id") String id);
+    EventResponse getEvent(@Header("Authorization") String token,
+                           @Path("remote_id") String id);
 
     @GET("/events")
     EventItems getEvents(@Header("Authorization") String token,
                          @Query("timestampMin") String timestampMin);
 
     @POST("/events")
-    EventItem addEvent(@Header("Authorization") String token,
-                       @Body EventItem item);
+    EventResponse addEvent(@Header("Authorization") String token,
+                           @Body EventItem item);
+
+    @PATCH("/events/{remote_id}")
+    EventResponse updateEvent(@Header("Authorization") String token,
+                              @Path("remote_id") Long remote_id,
+                              @Body EventItem item);
 
     @DELETE("/events/{remote_id}")
     Dummy deleteEvent(@Header("Authorization") String token,
                       @Path("remote_id") Long remote_id);
 
     @GET("/attendees/{event_id}")
-    EventMembersItem getAttendee(@Header("Authorization") String token,
-                                 @Path("event_id") Long remote_id);
+    EventMembersResponse getAttendee(@Header("Authorization") String token,
+                                     @Path("event_id") Long remote_id);
 
     @GET("/attendees")
     EventMembersItems getAttendees(@Header("Authorization") String token,
                                    @Query("timestampMin") String timestampMin);
 
     @POST("/attendees")
-    EventMembersItem addAttendee(@Header("Authorization") String token,
-                                  @Body EventMembersItem item);
+    EventMembersResponse addAttendee(@Header("Authorization") String token,
+                                     @Body EventMembersItem item);
 
-    @PATCH("/attendees/{event_id}")
-    EventMembersItem updateAttendee(@Header("Authorization") String token,
-                                    @Path("event_id") Long remote_id,
-                                    @Body EventMembersItem item);
+    @PATCH("/attendees/{remote_id}")
+    EventMembersResponse updateAttendee(@Header("Authorization") String token,
+                                        @Path("remote_id") Long remote_id,
+                                        @Body EventMembersItem item);
 
     @GET("/friends/{remote_id}")
-    FriendStatusItem getFriend(@Header("Authorization") String token,
+    FriendStatusResponse getFriend(@Header("Authorization") String token,
                                  @Path("remote_id") Long remote_id);
 
     @GET("/friends")
@@ -196,11 +235,11 @@ public interface EventServer {
                                    @Query("timestampMin") String timestampMin);
 
     @POST("/friends")
-    FriendStatusItem addFriend(@Header("Authorization") String token,
+    FriendStatusResponse addFriend(@Header("Authorization") String token,
                                  @Body FriendStatusItem item);
 
     @PATCH("/friends/{remote_id}")
-    FriendStatusItem updateFriend(@Header("Authorization") String token,
+    FriendStatusResponse updateFriend(@Header("Authorization") String token,
                                     @Path("remote_id") Long remote_id,
                                     @Body FriendStatusItem item);
 

@@ -38,9 +38,9 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventColumns.EVENT_ADDRESS + " TEXT, "
             + EventColumns.EVENT_LATITUDE + " REAL, "
             + EventColumns.EVENT_LONGITUDE + " REAL, "
-            + EventColumns.EVENT_TIMESTAMP + " INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, "
-            + EventColumns.EVENT_DELETED + " INTEGER NOT NULL DEFAULT '0', "
-            + EventColumns.EVENT_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
+            + EventColumns.EVENT_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + EventColumns.EVENT_DELETED + " INTEGER DEFAULT '0', "
+            + EventColumns.EVENT_SYNCED + " INTEGER DEFAULT '0' "
             + " );";
 
     private static final String SQL_CREATE_INDEX_EVENT_EVENT_OWNER = "CREATE INDEX IDX_EVENT_EVENT_OWNER "
@@ -52,10 +52,10 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventMembersColumns.ATTENDEES_REMOTE_ID + " INTEGER DEFAULT '0', "
             + EventMembersColumns.EVENT_ID + " INTEGER NOT NULL, "
             + EventMembersColumns.USER_ID + " TEXT NOT NULL, "
-            + EventMembersColumns.RSVP_STATUS + " INTEGER DEFAULT 'INVITED', "
-            + EventMembersColumns.EVENT_MEMBERS_TIMESTAMP + " INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, "
-            + EventMembersColumns.EVENT_MEMBERS_DELETED + " INTEGER NOT NULL DEFAULT '0', "
-            + EventMembersColumns.EVENT_MEMBERS_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
+            + EventMembersColumns.RSVP_STATUS + " INTEGER DEFAULT 'invited', "
+            + EventMembersColumns.EVENT_MEMBERS_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + EventMembersColumns.EVENT_MEMBERS_DELETED + " INTEGER DEFAULT '0', "
+            + EventMembersColumns.EVENT_MEMBERS_SYNCED + " INTEGER DEFAULT '0' "
             + ", CONSTRAINT fk_event_id FOREIGN KEY (event_id) REFERENCES event (_id) ON DELETE CASCADE"
             + " );";
 
@@ -71,11 +71,11 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + FriendStatusColumns.FROM_USER_EMAIL + " TEXT NOT NULL, "
             + FriendStatusColumns.TO_USER_EMAIL + " TEXT NOT NULL, "
             + FriendStatusColumns.STATUS + " INTEGER NOT NULL, "
-            + FriendStatusColumns.SENT_TIME + " INTEGER DEFAULT CURRENT_TIMESTAMP, "
-            + FriendStatusColumns.RESPONSE_TIME + " INTEGER, "
-            + FriendStatusColumns.FRIEND_STATUS_TIMESTAMP + " INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, "
-            + FriendStatusColumns.FRIEND_STATUS_DELETED + " INTEGER NOT NULL DEFAULT '0', "
-            + FriendStatusColumns.FRIEND_STATUS_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
+            + FriendStatusColumns.SENT_TIME + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + FriendStatusColumns.RESPONSE_TIME + " TIMESTAMP, "
+            + FriendStatusColumns.FRIEND_STATUS_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + FriendStatusColumns.FRIEND_STATUS_DELETED + " INTEGER DEFAULT '0', "
+            + FriendStatusColumns.FRIEND_STATUS_SYNCED + " INTEGER DEFAULT '0' "
             + " );";
 
     private static final String SQL_CREATE_INDEX_FRIEND_STATUS_FROM_USER_ID = "CREATE INDEX IDX_FRIEND_STATUS_FROM_USER_ID "
@@ -90,9 +90,9 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + UserColumns.GOOGLE_ID + " TEXT NOT NULL, "
             + UserColumns.USER_EMAIL + " TEXT NOT NULL, "
             + UserColumns.USER_NAME + " TEXT NOT NULL, "
-            + UserColumns.USER_TIMESTAMP + " INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, "
-            + UserColumns.USER_DELETED + " INTEGER NOT NULL DEFAULT '0', "
-            + UserColumns.USER_SYNCED + " INTEGER NOT NULL DEFAULT '0' "
+            + UserColumns.USER_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+            + UserColumns.USER_DELETED + " INTEGER DEFAULT '0', "
+            + UserColumns.USER_SYNCED + " INTEGER DEFAULT '0' "
             + ", CONSTRAINT unique_name unique (google_id) on conflict replace"
             + " );";
 

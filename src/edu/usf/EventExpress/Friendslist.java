@@ -108,7 +108,7 @@ public class Friendslist extends Activity {
                 String friend_request_id = input.getText().toString();
                 FriendStatusContentValues FSCV = new FriendStatusContentValues();
                 FSCV.putToUserEmail(friend_request_id.trim())
-                        .putFromUserId(userID).putStatus(FriendStatusType.REQUESTED)
+                        .putFromUserId(userID).putStatus(FriendStatusType.requested)
                         .putFromUserEmail(new SessionManager(getApplicationContext()).getEmail())
                         .insert(getContentResolver());
                 SyncHelper.manualSync(getApplicationContext());

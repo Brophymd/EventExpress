@@ -3,7 +3,6 @@ package edu.usf.EventExpress;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Paint;
@@ -11,13 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.plus.Plus;
-import com.google.android.maps.GeoPoint;
 import edu.usf.EventExpress.provider.event.EventColumns;
 import edu.usf.EventExpress.provider.event.EventCursor;
 import edu.usf.EventExpress.provider.event.EventSelection;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
-import edu.usf.EventExpress.provider.eventmembers.EventMembersCursor;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
 import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
 
@@ -220,7 +216,7 @@ public class Event_Detail_Host extends Activity {
 
     private int getEventMemberCount(){
         EventMembersSelection where = new EventMembersSelection();
-        where.eventId(event_id).and().rsvpStatus(RSVPStatus.YES);
+        where.eventId(event_id).and().rsvpStatus(RSVPStatus.yes);
 
         Cursor cursor = context.getContentResolver().query(EventMembersColumns.CONTENT_URI, null,
                 where.sel(), where.args(), null);

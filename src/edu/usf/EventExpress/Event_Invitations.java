@@ -1,18 +1,10 @@
 package edu.usf.EventExpress;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.CharArrayBuffer;
-import android.database.ContentObserver;
-import android.database.Cursor;
-import android.database.DataSetObserver;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-import edu.usf.EventExpress.provider.event.EventCursor;
-import edu.usf.EventExpress.provider.event.EventSelection;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersCursor;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
 import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
@@ -61,7 +53,7 @@ public class Event_Invitations extends Activity {
             databaseID = ucur.getId();
         }
         EventMembersSelection emSel = new EventMembersSelection();
-        emSel.userId(userID).and().rsvpStatus(RSVPStatus.INVITED);
+        emSel.userId(userID).and().rsvpStatus(RSVPStatus.invited);
         EventMembersCursor emcursor = emSel.query(getContentResolver());
 
         while(emcursor.moveToNext()){

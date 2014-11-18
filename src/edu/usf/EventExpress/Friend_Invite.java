@@ -2,26 +2,19 @@ package edu.usf.EventExpress;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import edu.usf.EventExpress.provider.event.EventColumns;
-import edu.usf.EventExpress.provider.event.EventCursor;
-import edu.usf.EventExpress.provider.event.EventSelection;
-import edu.usf.EventExpress.provider.event.EventType;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersContentValues;
-import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
 import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
 import edu.usf.EventExpress.provider.friendstatus.*;
 import edu.usf.EventExpress.provider.user.UserColumns;
 import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
-import edu.usf.EventExpress.provider.user.UserSelection;
 
 import java.util.ArrayList;
 
@@ -164,7 +157,7 @@ public class Friend_Invite extends Activity {
                         ;
                         Context context = getApplicationContext();
                         EventMembersContentValues values = new EventMembersContentValues();
-                        values.putEventId(event_id).putUserId(friend.getUserID()).putRsvpStatus(RSVPStatus.INVITED);
+                        values.putEventId(event_id).putUserId(friend.getUserID()).putRsvpStatus(RSVPStatus.invited);
                         context.getContentResolver().insert(EventMembersColumns.CONTENT_URI, values.values());
                     }
                 }
@@ -180,7 +173,7 @@ public class Friend_Invite extends Activity {
         Log.d(TAG, "where is null");
 
         if(context == null) Log.d(TAG, "context is null");
-        return where.status(FriendStatusType.ACCEPTED).query(context.getContentResolver());
+        return where.status(FriendStatusType.accepted).query(context.getContentResolver());
 
 //        Cursor cursor = context.getContentResolver().query(FriendStatusColumns.CONTENT_URI, null,
 //                where.sel(), where.args(), null);
@@ -207,7 +200,7 @@ public class Friend_Invite extends Activity {
                 .putFromUserEmail("mark.d.brophy@gmail.com" )
                 .putToUserId(userID)
                 .putToUserEmail("tran.k.vi@gmail.com").
-                putStatus(FriendStatusType.ACCEPTED);
+                putStatus(FriendStatusType.accepted);
         context.getContentResolver().insert(FriendStatusColumns.CONTENT_URI, values.values());
 
         values = new FriendStatusContentValues();
@@ -215,7 +208,7 @@ public class Friend_Invite extends Activity {
                 .putFromUserEmail("tran.k.vi@gmail.com")
                 .putToUserId("113338610182666854613")
                 .putToUserEmail("mercyfulfate@gmail.com")
-                .putStatus(FriendStatusType.ACCEPTED);
+                .putStatus(FriendStatusType.accepted);
         context.getContentResolver().insert(FriendStatusColumns.CONTENT_URI, values.values());
     }
 

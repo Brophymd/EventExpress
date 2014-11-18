@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.format.Time;
 import android.view.View;
 import android.widget.*;
-import com.google.android.gms.maps.model.LatLng;
 import edu.usf.EventExpress.provider.event.*;
 
 import java.text.DateFormat;
@@ -186,7 +185,7 @@ public class Edit_Event extends Activity {
     }
 
     private void setValues(EventContentValues values){
-        values.putEventOwner(userID).putEventType(EventType.OPEN)
+        values.putEventOwner(userID).putEventType(EventType.open)
                 .putEventTitle(et_title.getText().toString())
                 .putEventDescription(et_description.getText().toString())
                 .putEventAddress(et_location.getText().toString());

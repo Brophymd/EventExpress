@@ -19,7 +19,6 @@ import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusContentValues;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusCursor;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusSelection;
-import edu.usf.EventExpress.provider.friendstatus.FriendStatusType;
 import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
 import edu.usf.EventExpress.provider.user.UserSelection;
@@ -109,18 +108,13 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         UserCursor userCursor = userNeedSync.query(getContext().getContentResolver());
         UserContentValues userContentValues = new UserContentValues();
         while (userCursor.moveToNext()) {
-            if (userCursor.getUserDeleted() != 0) {
-                // Delete the item
-                // we don't do any deletions in the user table right now
-            } else {
-                try {
-                    Log.i(TAG, "Uploading user " + userCursor.getUserEmail());
-                    server.addUser(token, new EventServer.UserItem(userCursor));
-                    syncResult.stats.numInserts++;
-                    userContentValues.putUserSynced(1).update(getContext().getContentResolver(), userNeedSync);
-                } catch (RetrofitError e) {
-                    handleRetrofitError(e, syncResult);
-                }
+            try {
+                Log.i(TAG, "Uploading user " + userCursor.getUserEmail());
+                server.addUser(token, new EventServer.UserItem(userCursor));
+                syncResult.stats.numInserts++;
+                userContentValues.putUserSynced(1).update(getContext().getContentResolver(), userNeedSync);
+            } catch (RetrofitError e) {
+                handleRetrofitError(e, syncResult);
             }
         }
         // Download user info
@@ -134,28 +128,35 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 Log.i(TAG, "Downloading users");
                 users = server.getUsers(token,
                         getContext().getSharedPreferences("EventExpress", Context.MODE_PRIVATE).getString(KEY_EMAIL, ""));
-                if (users != null && users.items != null) {
-                    for (EventServer.UserItem msg : users.items) {
+                if (users != null && users.objects != null) {
+                    for (EventServer.UserItem msg : users.objects) {
                         Log.d(TAG, "got user: " + msg.user_email + ", name: " + msg.name);
+                        // EITHER DELETE
                         if (msg.deleted != 0) {
                             Log.d(TAG, "Deleting " + msg.user_email);
-                            userSelection.googleId(msg.google_id).delete(getContext().getContentResolver());
+                            new UserSelection().googleId(msg.google_id).delete(getContext().getContentResolver());
                         } else {
                             Log.d(TAG, "Adding user:" + msg.user_email);
-                            userContentValues.putGoogleId(msg.google_id)
+                            UserContentValues todo = userContentValues.putGoogleId(msg.google_id)
                                     .putUserEmail(msg.user_email)
                                     .putUserName(msg.name)
                                     .putUserTimestamp(msg.timestamp)
-                                    .putUserSynced(1)
-                                    .insert(getContext().getContentResolver());
+                                    .putUserSynced(1);
+                            // OR UPDATE
+                            int nRows =  todo.update(getContext().getContentResolver(),
+                                    new UserSelection().googleId(msg.google_id));
+                            // OR INSERT
+                            if (nRows == 0) {
+                                todo.insert(getContext().getContentResolver());
+                            }
                         }
                     }
                 }
                 // Save sync timestamp
                 if (users != null) {
-                    users.latestTimestamp = new Timestamp(new Date().getTime()).toString();
+                    users.latest_timestamp = new Timestamp(new Date().getTime()).toString();
                     PreferenceManager.getDefaultSharedPreferences(getContext())
-                            .edit().putString(KEY_LASTSYNC, users.latestTimestamp)
+                            .edit().putString(KEY_LASTSYNC, users.latest_timestamp)
                             .commit();
                 }
             } catch (RetrofitError e) {
@@ -178,11 +179,41 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             } else {
                 try {
                     Log.i(TAG, "Uploading event " + eventCursor.getEventTitle());
-                    server.addEvent(token, new EventServer.EventItem(eventCursor));
+                    EventServer.EventResponse response = server.addEvent(token, new EventServer.EventItem(eventCursor));
                     syncResult.stats.numInserts++;
-                    eventContentValues.putEventSynced(1).update(getContext().getContentResolver(), eventNeedSync);
+                    eventContentValues.putEventSynced(1)
+                            .putEventRemoteId(response.id)
+                            .update(getContext().getContentResolver(), eventNeedSync);
                 } catch (RetrofitError e) {
-                    handleRetrofitError(e, syncResult);
+                    Log.d(TAG, "" + e);
+                    final int status;
+                    if (e.getResponse() != null) {
+                        Log.e(TAG, "" + e.getResponse().getStatus() + "; "
+                                + e.getResponse().getReason());
+                        status = e.getResponse().getStatus();
+                    } else {
+                        status = 999;
+                    }
+                    // If conflict, try updating; otherwise handleRetrofitError
+                    switch (status) {
+                        case 409: // Conflict
+                            // attendee may already exist, so try patching:
+                            try {
+                                Log.i(TAG, "Modifying event " + eventCursor.getEventTitle());
+                                server.updateEvent(token,
+                                        eventCursor.getEventRemoteId(),
+                                        new EventServer.EventItem(eventCursor));
+                                syncResult.stats.numInserts++;
+                                eventContentValues.putEventSynced(1).update(getContext().getContentResolver(),
+                                        eventNeedSync);
+                            }
+                            // Something else is happening
+                            catch (RetrofitError e2) {
+                                handleRetrofitError(e2, syncResult);
+                            }
+                            break;
+                        default: handleRetrofitError(e, syncResult);
+                    }
                 }
             }
         }
@@ -200,15 +231,15 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 } else {
                     events = server.getEvents(token, null);
                 }
-                if (events != null && events.items != null) {
-                    for (EventServer.EventItem msg : events.items) {
+                if (events != null && events.objects != null) {
+                    for (EventServer.EventResponse msg : events.objects) {
                         Log.d(TAG, "got event: " + msg.event_title);
                         if (msg.deleted != 0) {
                             Log.d(TAG, "Deleting: " + msg.event_title);
-                            eventSelection.eventRemoteId(msg.remote_id).delete(getContext().getContentResolver());
+                            new EventSelection().eventRemoteId(msg.id).delete(getContext().getContentResolver());
                         } else {
                             Log.d(TAG, "Adding event:" + msg.event_title);
-                            eventContentValues.putEventTitle(msg.event_title)
+                            EventContentValues todo = eventContentValues.putEventTitle(msg.event_title)
                                     .putEventAddress(msg.event_address)
                                     .putEventDate(msg.event_date)
                                     .putEventDescription(msg.event_description)
@@ -217,18 +248,22 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                                     .putEventOwner(msg.event_owner)
                                     .putEventTimestamp(msg.timestamp)
                                     .putEventType(msg.event_type)
-                                    .putEventRemoteId(msg.remote_id)
+                                    .putEventRemoteId(msg.id)
                                     .putEventTimestamp(msg.timestamp)
-                                    .putEventSynced(1)
-                                    .insert(getContext().getContentResolver());
+                                    .putEventSynced(1);
+                            int nRows = todo.update(getContext().getContentResolver(),
+                                    new EventSelection().eventRemoteId(msg.id));
+                            if (nRows == 0) {
+                                todo.insert(getContext().getContentResolver());
+                            }
                         }
                     }
                 }
                 // Save sync timestamp
                 if (events != null) {
-                    events.latestTimestamp = new Timestamp(new Date().getTime()).toString();
+                    events.latest_timestamp = new Timestamp(new Date().getTime()).toString();
                     PreferenceManager.getDefaultSharedPreferences(getContext())
-                            .edit().putString(KEY_LASTSYNC, events.latestTimestamp)
+                            .edit().putString(KEY_LASTSYNC, events.latest_timestamp)
                             .commit();
                 }
             } catch (RetrofitError e) {
@@ -245,10 +280,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             try {
                 Log.i(TAG, "Uploading event member " + eventMembersCursor.getUserId()
                         + " for event " + eventMembersCursor.getEventTitle());
-                server.addAttendee(token, new EventServer.EventMembersItem(eventMembersCursor));
+                // Add EventMember and get response
+                EventServer.EventMembersResponse response = server.addAttendee(token,
+                        new EventServer.EventMembersItem(eventMembersCursor));
                 syncResult.stats.numInserts++;
-                eventMembersContentValues.putEventMembersSynced(1).update(getContext().getContentResolver(),
-                        eventMembersNeedSync);
+                // Update local database to reflect synchronization; we now have the remote id, and can put synced
+                eventMembersContentValues.putEventMembersSynced(1)
+                        .putAttendeesRemoteId(response.id)
+                        .update(getContext().getContentResolver(), eventMembersNeedSync);
             } catch (RetrofitError e) {
                 Log.d(TAG, "" + e);
                 final int status;
@@ -259,9 +298,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 } else {
                     status = 999;
                 }
-                // An HTTP error was encountered.
+                // If insert conflict, try update; otherwise call handleRetrofitError
                 switch (status) {
-                    case 401: // Unauthorizedt
+                    case 409: // Conflict
                         // attendee may already exist, so try patching:
                         try {
                             Log.i(TAG, "Modifying event member " + eventMembersCursor.getUserId()
@@ -273,18 +312,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             eventMembersContentValues.putEventMembersSynced(1).update(getContext().getContentResolver(),
                                     eventMembersNeedSync);
                         }
+                        // Something else is happening
                         catch (RetrofitError e2) {
                             handleRetrofitError(e2, syncResult);
                         }
                         break;
-                    case 404: // No such item, should never happen, programming error
-                    case 415: // Not proper body, programming error
-                    case 400: // Didn't specify url, programming error
-                        syncResult.databaseError = true;
-                        break;
-                    default: // Default is to consider it a networking problem
-                        syncResult.stats.numIoExceptions++;
-                        break;
+                    default: handleRetrofitError(e, syncResult);
                 }
             }
         }
@@ -302,34 +335,44 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 } else {
                     eventMembers = server.getAttendees(token, null);
                 }
-                if (eventMembers != null && eventMembers.items != null) {
-                    for (EventServer.EventMembersItem msg : eventMembers.items) {
+                // there are event members to delete/insert/update
+                if (eventMembers != null && eventMembers.objects != null) {
+                    for (EventServer.EventMembersResponse msg : eventMembers.objects) {
                         Log.d(TAG, "got attendee " + msg.user_id + " from event " + msg.event_id);
-                        Log.d(TAG, "Adding local attendee " + msg.user_id + " to event " + msg.event_id);
-                        UserSelection find_user = userSelection.googleId(msg.user_id);
-                        UserCursor userCursor1 = find_user.query(getContext().getContentResolver());
-                        String user_id  = userCursor1.getGoogleId();
-                        EventMembersSelection to_modify = eventMembersSelection.eventId(msg.event_id)
-                                .and().userId(user_id);
-                        if (to_modify != null) {
-                            eventMembersContentValues.putRsvpStatus(msg.rsvp_status)
-                                    .putEventMembersSynced(1)
-                                    .update(getContext().getContentResolver(), to_modify);
+                        // EITHER DELETE
+                        if (msg.deleted != 0) {
+                            Log.d(TAG, "Deleting " + msg.user_id + " from " + msg.event_id);
+                            new EventMembersSelection().attendeesRemoteId(msg.id).delete(getContext().getContentResolver());
                         }
                         else {
-                            eventMembersContentValues.putAttendeesRemoteId(msg.event_id)
-                                    .putUserId(user_id)
+                            // build values to update/insert
+                            EventMembersContentValues todo = eventMembersContentValues
+                                    .putUserId(msg.user_id)
                                     .putRsvpStatus(msg.rsvp_status)
+                                    .putEventMembersTimestamp(msg.timestamp)
                                     .putEventMembersSynced(1)
-                                    .insert(getContext().getContentResolver());
+                                    .putAttendeesRemoteId(msg.id);
+                            // OR UPDATE
+                            int nRows = todo.update(getContext().getContentResolver(),
+                                    new EventMembersSelection().attendeesRemoteId(msg.id));
+                            // OR INSERT
+                            if (nRows == 0) {
+                                // need to find event on phone with given remote event id
+                                eventCursor = new EventSelection().eventRemoteId(msg.event_id)
+                                        .query(getContext().getContentResolver());
+                                while (eventCursor.moveToNext()) {
+                                    // insert
+                                    todo.putEventId(eventCursor.getId()).insert(getContext().getContentResolver());
+                                }
+                            }
                         }
                     }
                 }
                 // Save sync timestamp
                 if (eventMembers != null) {
-                    eventMembers.latestTimestamp = new Timestamp(new Date().getTime()).toString();
+                    eventMembers.latest_timestamp = new Timestamp(new Date().getTime()).toString();
                     PreferenceManager.getDefaultSharedPreferences(getContext())
-                            .edit().putString(KEY_LASTSYNC, eventMembers.latestTimestamp)
+                            .edit().putString(KEY_LASTSYNC, eventMembers.latest_timestamp)
                             .commit();
                 }
             } catch (RetrofitError e) {
@@ -342,13 +385,19 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 .or().friendStatusDeleted(1);
         FriendStatusCursor friendStatusCursor = friendsNeedSync.query(getContext().getContentResolver());
         FriendStatusContentValues friendStatusContentValues = new FriendStatusContentValues();
+        // Iterate over friends which are either dirty (sync = 0) or marked for deletion
         while (friendStatusCursor.moveToNext()) {
+            // First try inserting
             try {
                 Log.i(TAG, friendStatusCursor.getFromUserId() + " is friending " + friendStatusCursor.getToUserId());
-                server.addFriend(token, new EventServer.FriendStatusItem(friendStatusCursor));
+                EventServer.FriendStatusResponse response = server.addFriend(token,
+                        new EventServer.FriendStatusItem(friendStatusCursor));
                 syncResult.stats.numInserts++;
-                friendStatusContentValues.putFriendStatusSynced(1).update(getContext().getContentResolver(),
-                        friendsNeedSync);
+                // update remote id to id given in response, set synced, update
+                friendStatusContentValues.putFriendStatusSynced(1)
+                        .putFriendsRemoteId(response.id)
+                        .update(getContext().getContentResolver(),
+                                friendsNeedSync);
             } catch (RetrofitError e) {
                 Log.d(TAG, "" + e);
                 final int status;
@@ -359,10 +408,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 } else {
                     status = 999;
                 }
-                // An HTTP error was encountered.
+                // If insert conflict, try update; otherwise call handleRetrofitError
                 switch (status) {
-                    case 401: // Unauthorized
-                        // friend may already exist, so try patching:
+                    case 409: // Conflict
+                        // friend status may already exist, so try patching:
                         try {
                             Log.i(TAG, "relationship modified between: "
                                     + friendStatusCursor.getFromUserId() + " and " + friendStatusCursor.getToUserId());
@@ -373,18 +422,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             friendStatusContentValues.putFriendStatusSynced(1).update(getContext().getContentResolver(),
                                     friendsNeedSync);
                         }
+                        // Something else is happening
                         catch (RetrofitError e2) {
                             handleRetrofitError(e2, syncResult);
                         }
                         break;
-                    case 404: // No such item, should never happen, programming error
-                    case 415: // Not proper body, programming error
-                    case 400: // Didn't specify url, programming error
-                        syncResult.databaseError = true;
-                        break;
-                    default: // Default is to consider it a networking problem
-                        syncResult.stats.numIoExceptions++;
-                        break;
+                    default: handleRetrofitError(e, syncResult);
                 }
             }
         }
@@ -402,21 +445,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 } else {
                     friends = server.getFriends(token, null);
                 }
-                if (friends != null && friends.items != null) {
-                    for (EventServer.FriendStatusItem msg : friends.items) {
+                // there are event members to delete/insert/update
+                if (friends != null && friends.objects != null) {
+                    for (EventServer.FriendStatusResponse msg : friends.objects) {
                         Log.d(TAG, "friend status: " + msg.from_user_id + " and " + msg.to_user_id);
-                        Log.d(TAG, "Adding local friend status " + msg.from_user_id + " and " + msg.to_user_id);
-                        FriendStatusSelection to_modify = friendStatusSelection.fromUserId(msg.from_user_id)
-                                .and().toUserId(msg.to_user_id);
-                        if (to_modify != null) {
-                            friendStatusContentValues.putStatus(msg.status)
-                                    .putToUserId(msg.to_user_id)
-                                    .putResponseTime(msg.response_time)
-                                    .putFriendStatusSynced(1)
-                                    .update(getContext().getContentResolver(), to_modify);
-                        }
-                        else {
-                            friendStatusContentValues.putFriendsRemoteId(msg.remote_id)
+                        // EITHER DELETE
+                        if (msg.deleted != 0) {
+                            Log.d(TAG, "Deleting friend status: " + msg.from_user_id + " and " + msg.to_user_id);
+                            new FriendStatusSelection().friendsRemoteId(msg.id).delete(getContext().getContentResolver());
+                        } else {
+                            // build values to update/insert
+                            FriendStatusContentValues todo = friendStatusContentValues
                                     .putFromUserId(msg.from_user_id)
                                     .putToUserId(msg.to_user_id)
                                     .putFromUserEmail(msg.from_user_email)
@@ -424,16 +463,24 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                                     .putStatus(msg.status)
                                     .putSentTime(msg.sent_time)
                                     .putResponseTime(msg.response_time)
-                                    .putFriendStatusSynced(1)
-                                    .insert(getContext().getContentResolver());
+                                    .putFriendsRemoteId(msg.id)
+                                    .putFriendStatusTimestamp(msg.timestamp)
+                                    .putFriendStatusSynced(1);
+                            // OR UPDATE
+                            int nRows = todo.update(getContext().getContentResolver(),
+                                    new FriendStatusSelection().friendsRemoteId(msg.id));
+                            // OR INSERT
+                            if (nRows == 0) {
+                                todo.insert(getContext().getContentResolver());
+                            }
                         }
                     }
                 }
                 // Save sync timestamp
                 if (friends != null) {
-                    friends.latestTimestamp = new Timestamp(new Date().getTime()).toString();
+                    friends.latest_timestamp = new Timestamp(new Date().getTime()).toString();
                     PreferenceManager.getDefaultSharedPreferences(getContext())
-                            .edit().putString(KEY_LASTSYNC, friends.latestTimestamp)
+                            .edit().putString(KEY_LASTSYNC, friends.latest_timestamp)
                             .commit();
                 }
             } catch (RetrofitError e) {
@@ -442,6 +489,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
         userCursor.close();
         eventCursor.close();
+        eventMembersCursor.close();
+        friendStatusCursor.close();
     }
 
     private void handleRetrofitError(RetrofitError e, SyncResult syncResult) {

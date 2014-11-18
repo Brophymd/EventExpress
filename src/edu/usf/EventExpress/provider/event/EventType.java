@@ -7,11 +7,11 @@ public enum EventType {
     /**
      * 
      */
-    OPEN,
+    open,
 
     /**
      * 
      */
-    CLOSED,
+    closed,
 
 }
