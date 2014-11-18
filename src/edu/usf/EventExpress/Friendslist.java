@@ -50,7 +50,6 @@ public class Friendslist extends Activity
         Uri baseUri = CONTENT_URI;
         Log.d(TAG, "In onCreateLoader");
 
-        // need to fix this; it only fetches one user right now
         return new CursorLoader(getApplicationContext(), baseUri,
                 new String[] {UserColumns._ID, UserColumns.USER_NAME}, null, null,
                 UserColumns.USER_NAME);

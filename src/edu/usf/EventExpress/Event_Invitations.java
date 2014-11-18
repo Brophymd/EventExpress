@@ -43,7 +43,6 @@ public class Event_Invitations extends Activity
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Uri baseUri = CONTENT_URI;
 
-        // need to fix this; it only fetches one user right now
         return new CursorLoader(getApplicationContext(), baseUri,
                 new String[] {EventColumns._ID, EventColumns.EVENT_TITLE, EventColumns.EVENT_DATE}, null, null,
                 EventColumns.EVENT_DATE);
