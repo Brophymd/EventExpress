@@ -18,6 +18,7 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import edu.usf.EventExpress.BuildConfig;
+import edu.usf.EventExpress.Friendslist;
 import edu.usf.EventExpress.provider.event.EventColumns;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusColumns;
@@ -49,7 +50,8 @@ public class EventProvider extends ContentProvider {
     private static final int URI_TYPE_USER = 6;
     private static final int URI_TYPE_USER_ID = 7;
 
-
+    private static final int URI_TYPE_ACCEPTEDFRIENDS = 8;
+    private static final int URI_TYPE_ACCEPTEDFRIENDS_ID = 9;
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -62,9 +64,13 @@ public class EventProvider extends ContentProvider {
         URI_MATCHER.addURI(AUTHORITY, FriendStatusColumns.TABLE_NAME + "/#", URI_TYPE_FRIEND_STATUS_ID);
         URI_MATCHER.addURI(AUTHORITY, UserColumns.TABLE_NAME, URI_TYPE_USER);
         URI_MATCHER.addURI(AUTHORITY, UserColumns.TABLE_NAME + "/#", URI_TYPE_USER_ID);
+
+        // add my own view
+        URI_MATCHER.addURI(AUTHORITY, Friendslist.TABLE_NAME, URI_TYPE_ACCEPTEDFRIENDS);
+        URI_MATCHER.addURI(AUTHORITY, Friendslist.TABLE_NAME + "/#", URI_TYPE_ACCEPTEDFRIENDS_ID);
     }
 
-    protected EventSQLiteOpenHelper mEventSQLiteOpenHelper;
+    public EventSQLiteOpenHelper mEventSQLiteOpenHelper;
 
     @Override
     public boolean onCreate() {
@@ -264,6 +270,13 @@ public class EventProvider extends ContentProvider {
                 res.table = UserColumns.TABLE_NAME;
                 res.tablesWithJoins = UserColumns.TABLE_NAME;
                 res.orderBy = UserColumns.DEFAULT_ORDER;
+                break;
+
+            case URI_TYPE_ACCEPTEDFRIENDS:
+            case URI_TYPE_ACCEPTEDFRIENDS_ID:
+                res.table = Friendslist.TABLE_NAME;
+                res.tablesWithJoins = Friendslist.TABLE_NAME;
+                res.orderBy = Friendslist.DEFAULT_ORDER;
                 break;
 
             default:
