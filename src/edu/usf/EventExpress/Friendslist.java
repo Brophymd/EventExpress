@@ -50,22 +50,6 @@ public class Friendslist extends Activity
         Uri baseUri = CONTENT_URI;
         Log.d(TAG, "In onCreateLoader");
 
-//        FriendStatusCursor friendStatusCursor = new FriendStatusSelection().status(FriendStatusType.accepted)
-//                .query(getContentResolver());
-//        String selection;
-//        String[] selectionArgs;
-//        friendStatusCursor.moveToFirst();
-//        Log.d(TAG, "User ID is " + friendStatusCursor.getFromUserId());
-//        UserSelection userSelection;
-//        // if current user was the requester
-//        if (friendStatusCursor.getFromUserId().equals(new SessionManager(getApplicationContext()).getUserID())) {
-//            userSelection = new UserSelection().googleId(friendStatusCursor.getToUserId());
-//        }
-//        // if current user was the requestee
-//        else {
-//            userSelection = new UserSelection().googleId(friendStatusCursor.getFromUserId());
-//        }
-        // need to fix this; it only fetches one user right now
         return new CursorLoader(getApplicationContext(), baseUri,
                 new String[] {UserColumns._ID, UserColumns.USER_NAME}, null, null,
                 UserColumns.USER_NAME);
@@ -97,7 +81,7 @@ public class Friendslist extends Activity
         db.execSQL(SQL_CREATE_VIEW_ACCEPTEDFRIENDS);
         // display stuff
         DisplayList();
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     private void DisplayList(){
@@ -118,7 +102,7 @@ public class Friendslist extends Activity
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String temp = (String) ((TextView) view).getText();
-                temp = "Long press on "+ temp;
+                temp = "Long press on " + temp;
                 Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
                 return true;
             }

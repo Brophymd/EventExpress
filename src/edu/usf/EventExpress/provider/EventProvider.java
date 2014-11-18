@@ -18,6 +18,7 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import edu.usf.EventExpress.BuildConfig;
+import edu.usf.EventExpress.Event_Invitations;
 import edu.usf.EventExpress.Friendslist;
 import edu.usf.EventExpress.provider.event.EventColumns;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
@@ -50,8 +51,12 @@ public class EventProvider extends ContentProvider {
     private static final int URI_TYPE_USER = 6;
     private static final int URI_TYPE_USER_ID = 7;
 
+    // stuff for views
     private static final int URI_TYPE_ACCEPTEDFRIENDS = 8;
     private static final int URI_TYPE_ACCEPTEDFRIENDS_ID = 9;
+
+    private static final int URI_TYPE_INVITEDEVENTS = 10;
+    private static final int URI_TYPE_INVITEDEVENTS_ID = 11;
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -68,6 +73,8 @@ public class EventProvider extends ContentProvider {
         // add my own view
         URI_MATCHER.addURI(AUTHORITY, Friendslist.TABLE_NAME, URI_TYPE_ACCEPTEDFRIENDS);
         URI_MATCHER.addURI(AUTHORITY, Friendslist.TABLE_NAME + "/#", URI_TYPE_ACCEPTEDFRIENDS_ID);
+        URI_MATCHER.addURI(AUTHORITY, Event_Invitations.TABLE_NAME, URI_TYPE_INVITEDEVENTS);
+        URI_MATCHER.addURI(AUTHORITY, Event_Invitations.TABLE_NAME + "/#", URI_TYPE_INVITEDEVENTS_ID);
     }
 
     public EventSQLiteOpenHelper mEventSQLiteOpenHelper;
@@ -119,6 +126,15 @@ public class EventProvider extends ContentProvider {
             case URI_TYPE_USER_ID:
                 return TYPE_CURSOR_ITEM + UserColumns.TABLE_NAME;
 
+            case URI_TYPE_ACCEPTEDFRIENDS:
+                return TYPE_CURSOR_DIR + Friendslist.TABLE_NAME;
+            case URI_TYPE_ACCEPTEDFRIENDS_ID:
+                return TYPE_CURSOR_ITEM + Friendslist.TABLE_NAME;
+
+            case URI_TYPE_INVITEDEVENTS:
+                return TYPE_CURSOR_DIR + Event_Invitations.TABLE_NAME;
+            case URI_TYPE_INVITEDEVENTS_ID:
+                return TYPE_CURSOR_ITEM + Event_Invitations.TABLE_NAME;
         }
         return null;
     }
@@ -277,6 +293,13 @@ public class EventProvider extends ContentProvider {
                 res.table = Friendslist.TABLE_NAME;
                 res.tablesWithJoins = Friendslist.TABLE_NAME;
                 res.orderBy = Friendslist.DEFAULT_ORDER;
+                break;
+
+            case URI_TYPE_INVITEDEVENTS:
+            case URI_TYPE_INVITEDEVENTS_ID:
+                res.table = Event_Invitations.TABLE_NAME;
+                res.tablesWithJoins = Event_Invitations.TABLE_NAME;
+                res.orderBy = Event_Invitations.DEFAULT_ORDER;
                 break;
 
             default:
