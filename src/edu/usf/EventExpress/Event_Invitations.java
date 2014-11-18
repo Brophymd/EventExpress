@@ -76,11 +76,11 @@ public class Event_Invitations extends Activity
 
     private void DisplayList(){
         ListView mainListView = (ListView) findViewById( R.id.listView_invitations);
-        mCursorAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.two_line_list_item,
+        mCursorAdapter = new MemberCursorAdapter(this,
+                R.layout.two_line_list_item,
                 null,
-                new String[] {EventColumns.EVENT_TITLE, EventColumns.EVENT_DATE},
-                new int[] {android.R.id.text1, android.R.id.text2}, 0);
+                new String[] {EventColumns._ID, EventColumns.EVENT_TITLE, EventColumns.EVENT_DATE},
+                new int[] {R.id.text_ID_row, R.id.text_Title_row, R.id.text_Date_row}, 0);
         mainListView.setAdapter(mCursorAdapter);
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int pos, long arg3) {
