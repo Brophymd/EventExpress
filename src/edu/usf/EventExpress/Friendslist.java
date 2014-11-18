@@ -14,7 +14,11 @@ import java.util.ArrayList;
 import android.widget.AdapterView.OnItemClickListener;
 import android.view.View;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusContentValues;
+import edu.usf.EventExpress.provider.friendstatus.FriendStatusCursor;
+import edu.usf.EventExpress.provider.friendstatus.FriendStatusSelection;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusType;
+import edu.usf.EventExpress.provider.user.UserCursor;
+import edu.usf.EventExpress.provider.user.UserSelection;
 import edu.usf.EventExpress.sync.SyncHelper;
 
 /**
@@ -22,7 +26,7 @@ import edu.usf.EventExpress.sync.SyncHelper;
  */
 public class Friendslist extends Activity {
     String userID;
-    ArrayList<String> myStringArray;
+    ArrayList<String> friendNames;
 
 
     private static final String TAG = "FriendListActivity";
@@ -39,11 +43,30 @@ public class Friendslist extends Activity {
 
     private void DisplayList(){
         ListView mainListView = (ListView) findViewById( R.id.mainList );
-        myStringArray = new ArrayList<String>();
-        myStringArray.add("Mark");
-        myStringArray.add("James");
-        myStringArray.add("Brent");
-        ArrayAdapter listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, myStringArray);
+        friendNames = new ArrayList<String>();
+        FriendStatusSelection friendStatusSelection = new FriendStatusSelection();
+        FriendStatusCursor friendStatusCursor = friendStatusSelection.status(FriendStatusType.accepted)
+                .query(getContentResolver());
+
+        while (friendStatusCursor.moveToNext()) {
+            String name;
+            // if current user was the requester
+            if (friendStatusCursor.getFromUserId().equals(new SessionManager(getApplicationContext()).getUserID())) {
+                UserCursor userCursor = new UserSelection().googleId(friendStatusCursor.getToUserId())
+                        .query(getContentResolver());
+                userCursor.moveToFirst();
+                name = userCursor.getUserName();
+            }
+            // if current user was the requestee
+            else {
+                UserCursor userCursor = new UserSelection().googleId(friendStatusCursor.getFromUserId())
+                        .query(getContentResolver());
+                userCursor.moveToFirst();
+                name = userCursor.getUserName();
+            }
+            friendNames.add(name);
+        }
+        ArrayAdapter listAdapter = new ArrayAdapter<String>(this, R.layout.textrow, friendNames);
         mainListView.setAdapter(listAdapter);
         mainListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int pos, long arg3) {
