@@ -75,13 +75,15 @@ public class Friendslist_ViewRequests extends Activity {
     }
 
     private void AcceptFriendRequest(String selected){
+        Log.d(TAG, "In AcceptFriendRequest, selected = " + selected);
         FriendStatusSelection friendStatusSelection = new FriendStatusSelection();
         FriendStatusContentValues friendStatusContentValues = new FriendStatusContentValues();
         friendStatusContentValues.putStatus(FriendStatusType.accepted)
                 .putFriendStatusSynced(0)
                 .update(getApplicationContext().getContentResolver(), friendStatusSelection
-                .fromUserEmail(new SessionManager(getApplicationContext()).getEmail())
-                .toUserEmail(selected));
+                        .fromUserEmail(new SessionManager(getApplicationContext()).getEmail())
+                        .and()
+                        .toUserEmail(selected));
 
         DisplayList();
     }
@@ -93,6 +95,7 @@ public class Friendslist_ViewRequests extends Activity {
                 .putFriendStatusSynced(0)
                 .update(getApplicationContext().getContentResolver(), friendStatusSelection
                         .fromUserEmail(new SessionManager(getApplicationContext()).getEmail())
+                        .and()
                         .toUserEmail(selected));
 
         DisplayList();
