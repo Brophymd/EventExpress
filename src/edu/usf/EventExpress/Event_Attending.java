@@ -34,7 +34,7 @@ public class Event_Attending extends Activity {
     }
 
     private void DisplayList(){
-        ListView mainListView = (ListView) findViewById( R.id.listView_attendedEvents);
+        ListView mainListView = (ListView) findViewById(R.id.listView_attendedEvents);
         mCursorAdapter = new MemberCursorAdapter(this,
                 R.layout.two_line_list_item,
                 null,
