@@ -26,9 +26,11 @@ public class EventRsvpStatusFilter
     protected int mRsvpStatus;
     protected SimpleCursorAdapter mCursorAdapter;
     protected Uri mContentUri;
+    protected String TABLE_NAME;
 
-    public EventRsvpStatusFilter(Context context, Uri contentUri, SimpleCursorAdapter cursorAdapter, RSVPStatus rsvpStatus) {
+    public EventRsvpStatusFilter(Context context, String TABLE_NAME, Uri contentUri, SimpleCursorAdapter cursorAdapter, RSVPStatus rsvpStatus) {
         this.mApplicationContext = context;
+        this.TABLE_NAME = TABLE_NAME;
         this.mContentUri = contentUri;
         this.mCursorAdapter = cursorAdapter;
         switch (rsvpStatus) {
@@ -50,7 +52,8 @@ public class EventRsvpStatusFilter
         }
         // create a view for invited events
         SQLiteDatabase db = EventSQLiteOpenHelper.getInstance(this.mApplicationContext).getWritableDatabase();
-        String SQL_CREATE_VIEW_INVITEDEVENTS = "CREATE VIEW IF NOT EXISTS invitedEvents AS " +
+        String SQL_CREATE_VIEW_INVITEDEVENTS = "CREATE VIEW IF NOT EXISTS " + this.TABLE_NAME +
+                " AS " +
                 "SELECT event._id, event.event_title, event.event_date " +
                 "FROM event JOIN event_members " +
                 "ON event_members.event_id = event._id " +

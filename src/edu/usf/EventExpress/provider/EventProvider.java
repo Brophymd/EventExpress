@@ -17,10 +17,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import edu.usf.EventExpress.BuildConfig;
-import edu.usf.EventExpress.Event_Detail_Host;
-import edu.usf.EventExpress.Event_Invitations;
-import edu.usf.EventExpress.Friendslist;
+import edu.usf.EventExpress.*;
 import edu.usf.EventExpress.provider.event.EventColumns;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusColumns;
@@ -62,6 +59,9 @@ public class EventProvider extends ContentProvider {
     private static final int URI_TYPE_ATTENDINGEVENT = 12;
     private static final int URI_TYPE_ATTENDINGEVENT_ID = 13;
 
+    private static final int URI_TYPE_ATTENDEDEVENTS = 14;
+    private static final int URI_TYPE_ATTENDEDEVENTS_ID = 15;
+
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
@@ -81,6 +81,8 @@ public class EventProvider extends ContentProvider {
         URI_MATCHER.addURI(AUTHORITY, Event_Invitations.TABLE_NAME + "/#", URI_TYPE_INVITEDEVENTS_ID);
         URI_MATCHER.addURI(AUTHORITY, Event_Detail_Host.TABLE_NAME, URI_TYPE_ATTENDINGEVENT);
         URI_MATCHER.addURI(AUTHORITY, Event_Detail_Host.TABLE_NAME + "/#", URI_TYPE_ATTENDINGEVENT_ID);
+        URI_MATCHER.addURI(AUTHORITY, Event_Attending.TABLE_NAME, URI_TYPE_ATTENDEDEVENTS);
+        URI_MATCHER.addURI(AUTHORITY, Event_Attending.TABLE_NAME + "/#", URI_TYPE_ATTENDEDEVENTS_ID);
     }
 
     public EventSQLiteOpenHelper mEventSQLiteOpenHelper;
@@ -146,6 +148,11 @@ public class EventProvider extends ContentProvider {
                 return TYPE_CURSOR_DIR + Event_Detail_Host.TABLE_NAME;
             case URI_TYPE_ATTENDINGEVENT_ID:
                 return TYPE_CURSOR_ITEM + Event_Detail_Host.TABLE_NAME;
+
+            case URI_TYPE_ATTENDEDEVENTS:
+                return TYPE_CURSOR_DIR + Event_Attending.TABLE_NAME;
+            case URI_TYPE_ATTENDEDEVENTS_ID:
+                return TYPE_CURSOR_ITEM + Event_Attending.TABLE_NAME;
         }
         return null;
     }
@@ -318,6 +325,13 @@ public class EventProvider extends ContentProvider {
                 res.table = Event_Detail_Host.TABLE_NAME;
                 res.tablesWithJoins = Event_Detail_Host.TABLE_NAME;
                 res.orderBy = Event_Detail_Host.DEFAULT_ORDER;
+                break;
+
+            case URI_TYPE_ATTENDEDEVENTS:
+            case URI_TYPE_ATTENDEDEVENTS_ID:
+                res.table = Event_Attending.TABLE_NAME;
+                res.tablesWithJoins = Event_Attending.TABLE_NAME;
+                res.orderBy = Event_Attending.DEFAULT_ORDER;
                 break;
 
             default:

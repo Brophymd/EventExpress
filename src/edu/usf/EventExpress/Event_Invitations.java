@@ -36,7 +36,7 @@ public class Event_Invitations extends Activity {
         DisplayList();
         getLoaderManager().initLoader(LOADER_ID,
                 null,
-                new EventRsvpStatusFilter(getApplicationContext(), CONTENT_URI, mCursorAdapter, RSVPStatus.invited));
+                new EventRsvpStatusFilter(getApplicationContext(), TABLE_NAME, CONTENT_URI, mCursorAdapter, RSVPStatus.invited));
     }
 
     private void DisplayList(){
