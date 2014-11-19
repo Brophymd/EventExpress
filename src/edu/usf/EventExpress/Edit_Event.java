@@ -167,7 +167,6 @@ public class Edit_Event extends Activity {
                     new EventMembersContentValues().putEventId(eventID)
                             .putUserId(userID)
                             .putRsvpStatus(RSVPStatus.yes)
-                            .putEventMembersTimestamp(new Date().getTime())
                             .insert(getContentResolver());
                 }
                 else{
@@ -177,7 +176,8 @@ public class Edit_Event extends Activity {
                     event.moveToNext();
                     EventContentValues values = new EventContentValues();
                     setValues(values);
-                    values.putEventSynced(0).update(context.getContentResolver(), x);
+                    values.putEventSynced(0)
+                            .update(context.getContentResolver(), x);
                 }
 
 
