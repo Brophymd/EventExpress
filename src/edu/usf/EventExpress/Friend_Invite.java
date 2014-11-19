@@ -43,6 +43,7 @@ public class Friend_Invite extends Activity {
 
 
 
+
     }
 
     private void showList(){
@@ -51,9 +52,6 @@ public class Friend_Invite extends Activity {
         // Link to where I got this code: http://www.mysamplecode.com/2012/07/android-listview-checkbox-example.html
         //used most, but not all of it was needed.
         //Rest of the code up till other comments works on its own.
-
-//        addFakeFriends();
-//        addFakeUsers();
 
         FriendStatusCursor mFriendsAcceptedCursor = getFriendsAcceptedCursor();
         mFriendsAcceptedCursor.moveToFirst();
@@ -64,20 +62,20 @@ public class Friend_Invite extends Activity {
 
         //while a
         for(;!mFriendsAcceptedCursor.isAfterLast(); mFriendsAcceptedCursor.moveToNext()){
-            String friend_id;
-            String friend_email;
-            UserCursor mFriendUserCursor;
-            if(mFriendsAcceptedCursor.getFromUserId().equals(userID)){
-                //mFriendUserCursor = getFriendUserCursor(mFriendsAcceptedCursor.getToUserId());
-                friend_id = mFriendsAcceptedCursor.getToUserId();
-                friend_email = mFriendsAcceptedCursor.getToUserEmail();
-            }else {
-                //mFriendUserCursor = getFriendUserCursor(mFriendsAcceptedCursor.getFromUserId());
-                friend_id =mFriendsAcceptedCursor.getFromUserId();
-                friend_email = mFriendsAcceptedCursor.getFromUserEmail();
-            }
+//            String friend_id;
+//            String friend_email;
+////            UserCursor mFriendUserCursor;
+//            if(mFriendsAcceptedCursor.getFromUserId().equals(userID)){
+//                //mFriendUserCursor = getFriendUserCursor(mFriendsAcceptedCursor.getToUserId());
+//                friend_id = mFriendsAcceptedCursor.getToUserId();
+//                friend_email = mFriendsAcceptedCursor.getToUserEmail();
+//            }else {
+//                //mFriendUserCursor = getFriendUserCursor(mFriendsAcceptedCursor.getFromUserId());
+//                friend_id =mFriendsAcceptedCursor.getFromUserId();
+//                friend_email = mFriendsAcceptedCursor.getFromUserEmail();
+//            }
 
-            Friend friend = new Friend(friend_id, friend_email, false);
+            Friend friend = new Friend(mFriendsAcceptedCursor.getToUserId(), mFriendsAcceptedCursor.getToUserEmail(), false);
             friendList.add(friend);
 
             //mFriendUserCursor.close();
@@ -157,8 +155,7 @@ public class Friend_Invite extends Activity {
                         ;
                         Context context = getApplicationContext();
                         EventMembersContentValues values = new EventMembersContentValues();
-                        values.putEventId(event_id).putUserId(friend.getUserID()).putRsvpStatus(RSVPStatus.invited);
-                        context.getContentResolver().insert(EventMembersColumns.CONTENT_URI, values.values());
+                        values.putEventId(event_id).putUserId(friend.getUserID()).putRsvpStatus(RSVPStatus.invited).insert(getContentResolver());
                     }
                 }
             }
@@ -173,57 +170,14 @@ public class Friend_Invite extends Activity {
         Log.d(TAG, "where is null");
 
         if(context == null) Log.d(TAG, "context is null");
-        return where.status(FriendStatusType.accepted).query(context.getContentResolver());
+        return where.fromUserId(userID).status(FriendStatusType.accepted).query(context.getContentResolver());
 
 //        Cursor cursor = context.getContentResolver().query(FriendStatusColumns.CONTENT_URI, null,
 //                where.sel(), where.args(), null);
         //return new FriendStatusCursor(cursor);
     }
 
-//    private UserCursor getFriendUserCursor(String friend_id){
-//
-//        Context context = getApplicationContext();
-//
-//        UserSelection where = new UserSelection();
-//        where.googleId(friend_id);
-//
-//        Cursor cursor = context.getContentResolver().query(UserColumns.CONTENT_URI, null,
-//                where.sel(), where.args(), null);
-//        Log.d(TAG,"Successfully created user cursor");
-//        return new UserCursor(cursor);
-//    }
 
-    private void addFakeFriends(){
-        Context context = getApplicationContext();
-        FriendStatusContentValues values = new FriendStatusContentValues();
-        values.putFromUserId("108864349894489321224")
-                .putFromUserEmail("mark.d.brophy@gmail.com" )
-                .putToUserId(userID)
-                .putToUserEmail("tran.k.vi@gmail.com").
-                putStatus(FriendStatusType.accepted);
-        context.getContentResolver().insert(FriendStatusColumns.CONTENT_URI, values.values());
 
-        values = new FriendStatusContentValues();
-        values.putFromUserId(userID)
-                .putFromUserEmail("tran.k.vi@gmail.com")
-                .putToUserId("113338610182666854613")
-                .putToUserEmail("mercyfulfate@gmail.com")
-                .putStatus(FriendStatusType.accepted);
-        context.getContentResolver().insert(FriendStatusColumns.CONTENT_URI, values.values());
-    }
-
-    private void addFakeUsers(){
-        Context context = getApplicationContext();
-        UserContentValues values = new UserContentValues();
-        values.putGoogleId("108864349894489321224")
-                .putUserEmail("mark.d.brophy@gmail.com")
-                .putUserName("Mark");
-        context.getContentResolver().insert(UserColumns.CONTENT_URI, values.values());
-
-        values.putGoogleId("113338610182666854613")
-                .putUserEmail("mercyfulfate@gmail.com")
-                .putUserName("Mark");
-        context.getContentResolver().insert(UserColumns.CONTENT_URI, values.values());
-    }
 
 }
