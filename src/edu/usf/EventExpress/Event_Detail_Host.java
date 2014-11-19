@@ -281,7 +281,7 @@ public class Event_Detail_Host extends Activity implements LoaderManager.LoaderC
     protected void onStop() {
         super.onStop();
         SQLiteDatabase db = EventSQLiteOpenHelper.getInstance(getApplicationContext()).getWritableDatabase();
-        db.execSQL("drop view " + TABLE_NAME + ";");
+        db.execSQL("drop view if exists " + TABLE_NAME + ";");
         db.close();
     }
 }
