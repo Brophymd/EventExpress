@@ -16,6 +16,7 @@ import edu.usf.EventExpress.provider.event.*;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersContentValues;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
 import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
+import edu.usf.EventExpress.sync.SyncHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -169,6 +170,7 @@ public class Edit_Event extends Activity {
                             .putRsvpStatus(RSVPStatus.yes)
                             .putEventMembersTimestamp(new Date().getTime())
                             .insert(getContentResolver());
+                    SyncHelper.manualSync(getApplicationContext());
                 }
                 else{
                     EventSelection where = new EventSelection();
@@ -179,6 +181,7 @@ public class Edit_Event extends Activity {
                     setValues(values);
                     values.putEventSynced(0)
                             .update(context.getContentResolver(), x);
+                    SyncHelper.manualSync(getApplicationContext());
                 }
 
 
