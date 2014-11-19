@@ -454,7 +454,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             Log.d(TAG, "Deleting friend status: " + msg.from_user_id + " and " + msg.to_user_id);
                             new FriendStatusSelection().friendsRemoteId(msg.id).delete(getContext().getContentResolver());
                         } else {
-                            // build values to update/insert for original and 'swapped' version
+                            // build values to update/insert
                             FriendStatusContentValues todo = friendStatusContentValues
                                     .putFromUserId(msg.from_user_id)
                                     .putToUserId(msg.to_user_id)
@@ -466,27 +466,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                                     .putFriendsRemoteId(msg.id)
                                     .putFriendStatusTimestamp(msg.timestamp)
                                     .putFriendStatusSynced(1);
-                            FriendStatusContentValues todo2 = friendStatusContentValues
-                                    .putFromUserId(msg.to_user_id)
-                                    .putToUserId(msg.from_user_id)
-                                    .putFromUserEmail(msg.to_user_email)
-                                    .putToUserEmail(msg.from_user_email)
-                                    .putStatus(msg.status)
-                                    .putSentTime(msg.sent_time)
-                                    .putResponseTime(msg.response_time)
-                                    .putFriendStatusTimestamp(msg.timestamp)
-                                    .putFriendStatusSynced(0);
                             // OR UPDATE
                             int nRows = todo.update(getContext().getContentResolver(),
                                     new FriendStatusSelection().friendsRemoteId(msg.id));
-                            int nRows2 = todo.update(getContext().getContentResolver(),
-                                    new FriendStatusSelection().fromUserId(msg.to_user_id)
-                                            .and()
-                                            .toUserId(msg.from_user_id));
                             // OR INSERT
                             if (nRows == 0) {
                                 todo.insert(getContext().getContentResolver());
-                                todo2.insert(getContext().getContentResolver());
                             }
                         }
                     }
