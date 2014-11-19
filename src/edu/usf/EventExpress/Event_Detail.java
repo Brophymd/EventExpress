@@ -23,9 +23,7 @@ import edu.usf.EventExpress.provider.event.EventColumns;
 import edu.usf.EventExpress.provider.event.EventContentValues;
 import edu.usf.EventExpress.provider.event.EventCursor;
 import edu.usf.EventExpress.provider.event.EventSelection;
-import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
-import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
-import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
+import edu.usf.EventExpress.provider.eventmembers.*;
 import edu.usf.EventExpress.provider.user.UserColumns;
 
 import java.text.DateFormat;
@@ -137,6 +135,25 @@ public class Event_Detail extends Activity {
             }
         });
 
+        bt_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                decline();
+            }
+        });
+        bt_decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                decline();
+            }
+        });
+        bt_accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                accept();
+            }
+        });
+
     }
 
     @Override
@@ -159,13 +176,25 @@ public class Event_Detail extends Activity {
         }
     }
 
-    private void deleteEvent(){
-        EventSelection where = new EventSelection();
-        EventSelection x = where.id(event_id);
-        EventCursor event = where.query(getContentResolver());
+    private void accept(){
+        EventMembersSelection where = new EventMembersSelection();
+        EventMembersSelection x = where.eventId(event_id);
+        EventMembersCursor event = where.query(getContentResolver());
         event.moveToNext();
-        EventContentValues values = new EventContentValues();
-        values.putEventDeleted(1).putEventSynced(0).update(context.getContentResolver(), x);
+        EventMembersContentValues values = new EventMembersContentValues();
+        values.putEventMembersSynced(0).putRsvpStatus(RSVPStatus.yes).update(context.getContentResolver(), x);
+        Intent returnIntent = new Intent();
+        setResult(RESULT_OK,returnIntent);
+        finish();
+    }
+
+    private void decline(){
+        EventMembersSelection where = new EventMembersSelection();
+        EventMembersSelection x = where.eventId(event_id);
+        EventMembersCursor event = where.query(getContentResolver());
+        event.moveToNext();
+        EventMembersContentValues values = new EventMembersContentValues();
+        values.putEventMembersSynced(0).putRsvpStatus(RSVPStatus.no).update(context.getContentResolver(), x);
         Intent returnIntent = new Intent();
         setResult(RESULT_OK,returnIntent);
         finish();
