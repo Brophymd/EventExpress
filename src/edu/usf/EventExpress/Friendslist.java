@@ -170,6 +170,7 @@ public class Friendslist extends Activity
                         .putFromUserId(userID).putStatus(FriendStatusType.requested)
                         .putFromUserEmail(new SessionManager(getApplicationContext()).getEmail())
                         .putFriendStatusTimestamp(new Date().getTime())
+                        .putSentTime(new Date().getTime())
                         .insert(getContentResolver());
                 SyncHelper.manualSync(getApplicationContext());
 

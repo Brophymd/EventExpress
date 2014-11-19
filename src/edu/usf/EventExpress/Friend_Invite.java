@@ -15,6 +15,7 @@ import edu.usf.EventExpress.provider.friendstatus.*;
 import edu.usf.EventExpress.provider.user.UserColumns;
 import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
+import edu.usf.EventExpress.sync.SyncHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -153,6 +154,7 @@ public class Friend_Invite extends Activity {
                                 .putRsvpStatus(RSVPStatus.invited)
                                 .putEventMembersTimestamp(new Date().getTime())
                                 .insert(getContentResolver());
+                        SyncHelper.manualSync(getApplicationContext());
                     }
                     Toast.makeText(getApplicationContext(), "Selected friends were invited", Toast.LENGTH_SHORT).show()
                     ;

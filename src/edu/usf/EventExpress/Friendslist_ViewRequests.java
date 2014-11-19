@@ -11,6 +11,7 @@ import edu.usf.EventExpress.provider.friendstatus.FriendStatusContentValues;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusCursor;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusSelection;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusType;
+import edu.usf.EventExpress.sync.SyncHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,6 +86,7 @@ public class Friendslist_ViewRequests extends Activity {
                         .fromUserEmail(selected)
                         .and()
                         .toUserEmail(new SessionManager(getApplicationContext()).getEmail()));
+        SyncHelper.manualSync(getApplicationContext());
 
         DisplayList();
     }
@@ -99,6 +101,7 @@ public class Friendslist_ViewRequests extends Activity {
                         .fromUserEmail(selected)
                         .and()
                         .toUserEmail(new SessionManager(getApplicationContext()).getEmail()));
+        SyncHelper.manualSync(getApplicationContext());
 
         DisplayList();
 

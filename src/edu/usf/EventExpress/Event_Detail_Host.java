@@ -24,6 +24,7 @@ import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
 import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
 import edu.usf.EventExpress.provider.user.UserColumns;
+import edu.usf.EventExpress.sync.SyncHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -150,13 +151,6 @@ public class Event_Detail_Host extends Activity {
                 getLoaderManager().initLoader(LOADER_ID, null, new UserAttendingEventFilter(getApplicationContext(),
                         CONTENT_URI, mCursorAdapter, event_id));
 
-//                EventMembersSelection where = new EventMembersSelection();
-//                where.eventId(event_id);
-//                Cursor cursor = context.getContentResolver().query(EventMembersColumns.CONTENT_URI, null,
-//                        where.sel(), where.args(), null);
-//                PeopleAttendingCursorAdapter mCursorAdapter = new PeopleAttendingCursorAdapter(context, cursor,0);
-
-//                SimpleCursorAdapter myAdapter = new SimpleCursorAdapter(getApplicationContext(),R.layout.single_list_item, )
                 builderSingle.setNegativeButton("Done",
                         new DialogInterface.OnClickListener() {
 
@@ -180,19 +174,6 @@ public class Event_Detail_Host extends Activity {
 
     }
 
-//    @Override
-//    public void onRestart(){
-//        EventSelection where = new EventSelection();
-//        where.id(event_id);
-//        Context context = getApplicationContext();
-//        Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
-//                where.sel(), where.args(), null);
-//
-//        EventCursor event = new EventCursor(cursor);
-//        event.moveToFirst();
-//        if(event.getEventLatitude() != null && event.getEventLongitude() != null)
-//             mylatlng = new LatLng(event.getEventLatitude(),event.getEventLongitude());
-//    }
     protected void onActivityResult(int request_code, int result_code, Intent data){
         if(result_code == RESULT_OK){
             onRestart();
@@ -211,6 +192,7 @@ public class Event_Detail_Host extends Activity {
                 .putEventSynced(0)
                 .putEventTimestamp(new Date().getTime())
                 .update(context.getContentResolver(), x);
+        SyncHelper.manualSync(getApplicationContext());
         Intent returnIntent = new Intent();
         setResult(RESULT_OK,returnIntent);
         finish();

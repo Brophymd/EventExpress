@@ -25,6 +25,7 @@ import edu.usf.EventExpress.provider.event.EventCursor;
 import edu.usf.EventExpress.provider.event.EventSelection;
 import edu.usf.EventExpress.provider.eventmembers.*;
 import edu.usf.EventExpress.provider.user.UserColumns;
+import edu.usf.EventExpress.sync.SyncHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -189,6 +190,7 @@ public class Event_Detail extends Activity {
                 .putRsvpStatus(RSVPStatus.yes)
                 .putEventMembersTimestamp(new Date().getTime())
                 .update(context.getContentResolver(), x);
+        SyncHelper.manualSync(getApplicationContext());
         Intent returnIntent = new Intent();
         setResult(RESULT_OK,returnIntent);
         finish();
@@ -204,6 +206,7 @@ public class Event_Detail extends Activity {
                 .putRsvpStatus(RSVPStatus.no)
                 .putEventMembersTimestamp(new Date().getTime())
                 .update(context.getContentResolver(), x);
+        SyncHelper.manualSync(getApplicationContext());
         Intent returnIntent = new Intent();
         setResult(RESULT_OK,returnIntent);
         finish();
