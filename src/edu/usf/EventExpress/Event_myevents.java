@@ -74,7 +74,7 @@ public class Event_myevents extends Activity {
         userID = session.getUserID();
 
         EventSelection where = new EventSelection();
-        where.eventOwner(userID);
+        where.eventOwner(userID).and().eventDeleted(0);
         Cursor cursor = context.getContentResolver().query(EventColumns.CONTENT_URI, null,
                 where.sel(), where.args(), null);
         myEventCursorAdaptor = new EventCursorAdapter(context,cursor, 0);

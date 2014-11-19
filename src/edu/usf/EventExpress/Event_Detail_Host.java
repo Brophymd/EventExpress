@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng;
 import edu.usf.EventExpress.provider.EventProvider;
 import edu.usf.EventExpress.provider.EventSQLiteOpenHelper;
 import edu.usf.EventExpress.provider.event.EventColumns;
+import edu.usf.EventExpress.provider.event.EventContentValues;
 import edu.usf.EventExpress.provider.event.EventCursor;
 import edu.usf.EventExpress.provider.event.EventSelection;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
@@ -227,12 +228,12 @@ public class Event_Detail_Host extends Activity implements LoaderManager.LoaderC
 
     private void deleteEvent(){
         EventSelection where = new EventSelection();
-        where.id(event_id);
-        where.delete(getContentResolver());
-        //Intent intent = new Intent(getApplicationContext(), Event_myevents.class);
-        //startActivity(intent);
+        EventSelection x = where.id(event_id);
+        EventCursor event = where.query(getContentResolver());
+        event.moveToNext();
+        EventContentValues values = new EventContentValues();
+        values.putEventDeleted(1).putEventSynced(0).update(context.getContentResolver(), x);
         Intent returnIntent = new Intent();
-        ////returnIntent.putExtra("result",result);
         setResult(RESULT_OK,returnIntent);
         finish();
     }
