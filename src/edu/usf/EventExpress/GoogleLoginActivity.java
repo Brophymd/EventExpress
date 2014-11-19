@@ -37,6 +37,7 @@ import edu.usf.EventExpress.sync.SyncHelper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -299,9 +300,11 @@ public class GoogleLoginActivity extends Activity implements
 
                 // add user to database
                 UserContentValues values = new UserContentValues();
-                values.putGoogleId(googleId).putUserEmail(email).putUserName(personName);
-                Context context = getApplicationContext();
-                context.getContentResolver().insert(UserColumns.CONTENT_URI, values.values());
+                values.putGoogleId(googleId)
+                        .putUserEmail(email)
+                        .putUserName(personName)
+                        .putUserTimestamp(new Date().getTime())
+                        .insert(getContentResolver());
 
                 // request sync
                 SyncHelper.manualSync(getApplicationContext());

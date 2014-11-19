@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.widget.AdapterView.OnItemClickListener;
 import android.view.View;
@@ -168,6 +169,7 @@ public class Friendslist extends Activity
                 FSCV.putToUserEmail(friend_request_id.trim())
                         .putFromUserId(userID).putStatus(FriendStatusType.requested)
                         .putFromUserEmail(new SessionManager(getApplicationContext()).getEmail())
+                        .putFriendStatusTimestamp(new Date().getTime())
                         .insert(getContentResolver());
                 SyncHelper.manualSync(getApplicationContext());
 

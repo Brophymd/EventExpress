@@ -167,6 +167,7 @@ public class Edit_Event extends Activity {
                     new EventMembersContentValues().putEventId(eventID)
                             .putUserId(userID)
                             .putRsvpStatus(RSVPStatus.yes)
+                            .putEventMembersTimestamp(new Date().getTime())
                             .insert(getContentResolver());
                 }
                 else{
@@ -200,7 +201,8 @@ public class Edit_Event extends Activity {
         values.putEventOwner(userID).putEventType(EventType.open)
                 .putEventTitle(et_title.getText().toString())
                 .putEventDescription(et_description.getText().toString())
-                .putEventAddress(et_location.getText().toString());
+                .putEventAddress(et_location.getText().toString())
+                .putEventTimestamp(new Date().getTime());
         if(DateandTime != null) {
             values.putEventDate(DateandTime);
         }

@@ -27,6 +27,7 @@ import edu.usf.EventExpress.provider.user.UserColumns;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -206,7 +207,10 @@ public class Event_Detail_Host extends Activity {
         EventCursor event = where.query(getContentResolver());
         event.moveToNext();
         EventContentValues values = new EventContentValues();
-        values.putEventDeleted(1).putEventSynced(0).update(context.getContentResolver(), x);
+        values.putEventDeleted(1)
+                .putEventSynced(0)
+                .putEventTimestamp(new Date().getTime())
+                .update(context.getContentResolver(), x);
         Intent returnIntent = new Intent();
         setResult(RESULT_OK,returnIntent);
         finish();

@@ -13,6 +13,7 @@ import edu.usf.EventExpress.provider.friendstatus.FriendStatusSelection;
 import edu.usf.EventExpress.provider.friendstatus.FriendStatusType;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Varik on 10/12/2014.
@@ -78,6 +79,7 @@ public class Friendslist_ViewRequests extends Activity {
         FriendStatusSelection friendStatusSelection = new FriendStatusSelection();
         FriendStatusContentValues friendStatusContentValues = new FriendStatusContentValues();
         friendStatusContentValues.putStatus(FriendStatusType.accepted)
+                .putFriendStatusTimestamp(new Date().getTime())
                 .putFriendStatusSynced(0)
                 .update(getApplicationContext().getContentResolver(), friendStatusSelection
                         .fromUserEmail(selected)
@@ -92,6 +94,7 @@ public class Friendslist_ViewRequests extends Activity {
         FriendStatusContentValues friendStatusContentValues = new FriendStatusContentValues();
         friendStatusContentValues.putStatus(FriendStatusType.rejected)
                 .putFriendStatusSynced(0)
+                .putFriendStatusTimestamp(new Date().getTime())
                 .update(getApplicationContext().getContentResolver(), friendStatusSelection
                         .fromUserEmail(selected)
                         .and()

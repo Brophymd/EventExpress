@@ -28,6 +28,7 @@ import edu.usf.EventExpress.provider.user.UserColumns;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Vi Tran on 10/19/2014.
@@ -184,7 +185,10 @@ public class Event_Detail extends Activity {
         EventMembersCursor event = where.query(getContentResolver());
         event.moveToNext();
         EventMembersContentValues values = new EventMembersContentValues();
-        values.putEventMembersSynced(0).putRsvpStatus(RSVPStatus.yes).update(context.getContentResolver(), x);
+        values.putEventMembersSynced(0)
+                .putRsvpStatus(RSVPStatus.yes)
+                .putEventMembersTimestamp(new Date().getTime())
+                .update(context.getContentResolver(), x);
         Intent returnIntent = new Intent();
         setResult(RESULT_OK,returnIntent);
         finish();
@@ -196,7 +200,10 @@ public class Event_Detail extends Activity {
         EventMembersCursor event = where.query(getContentResolver());
         event.moveToNext();
         EventMembersContentValues values = new EventMembersContentValues();
-        values.putEventMembersSynced(0).putRsvpStatus(RSVPStatus.no).update(context.getContentResolver(), x);
+        values.putEventMembersSynced(0)
+                .putRsvpStatus(RSVPStatus.no)
+                .putEventMembersTimestamp(new Date().getTime())
+                .update(context.getContentResolver(), x);
         Intent returnIntent = new Intent();
         setResult(RESULT_OK,returnIntent);
         finish();

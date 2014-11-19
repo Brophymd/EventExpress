@@ -17,6 +17,7 @@ import edu.usf.EventExpress.provider.user.UserContentValues;
 import edu.usf.EventExpress.provider.user.UserCursor;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Varik on 11/11/2014.
@@ -155,7 +156,11 @@ public class Friend_Invite extends Activity {
                         ;
                         Context context = getApplicationContext();
                         EventMembersContentValues values = new EventMembersContentValues();
-                        values.putEventId(event_id).putUserId(friend.getUserID()).putRsvpStatus(RSVPStatus.invited).insert(getContentResolver());
+                        values.putEventId(event_id)
+                                .putUserId(friend.getUserID())
+                                .putRsvpStatus(RSVPStatus.invited)
+                                .putEventMembersTimestamp(new Date().getTime())
+                                .insert(getContentResolver());
                     }
                 }
             }
