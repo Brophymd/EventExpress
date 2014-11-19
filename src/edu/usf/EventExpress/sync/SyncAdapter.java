@@ -433,6 +433,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                     default:
                         Log.i(TAG, "Error occurred; deleting local friend status entry");
                         new FriendStatusSelection().fromUserEmail(friendStatusCursor.getFromUserEmail())
+                                .and()
                                 .toUserEmail(friendStatusCursor.getToUserEmail())
                                 .delete(getContext().getContentResolver());
                         handleRetrofitError(e, syncResult);
