@@ -86,7 +86,7 @@ public class Friendslist extends Activity
     @Override
     public void onResume(){
         super.onResume();
-        DisplayList();
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
 
