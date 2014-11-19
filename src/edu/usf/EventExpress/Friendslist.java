@@ -110,6 +110,12 @@ public class Friendslist extends Activity
     }
 
     @Override
+    protected void onResume(){
+        super.onResume();
+        DisplayList();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu m){
         super.onCreateOptionsMenu(m);
         CreateMenu(m);
