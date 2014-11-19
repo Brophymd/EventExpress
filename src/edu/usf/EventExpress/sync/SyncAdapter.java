@@ -421,13 +421,21 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             syncResult.stats.numInserts++;
                             friendStatusContentValues.putFriendStatusSynced(1).update(getContext().getContentResolver(),
                                     friendsNeedSync);
+                            break;
                         }
                         // Something else is happening
                         catch (RetrofitError e2) {
                             handleRetrofitError(e2, syncResult);
                         }
                         break;
-                    default: handleRetrofitError(e, syncResult);
+                    case 404: // Friend not found -- FALL THROUGH TO DEFAULT FOR CLEANUP :(
+                        // TODO: raise notification
+                    default:
+                        Log.i(TAG, "Error occurred; deleting local friend status entry");
+                        new FriendStatusSelection().fromUserEmail(friendStatusCursor.getFromUserEmail())
+                                .toUserEmail(friendStatusCursor.getToUserEmail())
+                                .delete(getContext().getContentResolver());
+                        handleRetrofitError(e, syncResult);
                 }
             }
         }
@@ -508,10 +516,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             case 401: // Unauthorized
                 syncResult.stats.numAuthExceptions++;
                 break;
-            case 404: // only used if friend not found
-                if (e.getResponse().getReason().equals("Friend not found")) {
-                    // TODO: raise notification
-                }
+            case 404: // something not found
             case 415: // Not proper body, programming error
             case 400: // Didn't specify url, programming error
                 syncResult.databaseError = true;
