@@ -75,7 +75,9 @@ public class Friendslist extends Activity
                 "SELECT user._id, user.user_name " +
                 "FROM user JOIN friend_status " +
                 "ON friend_status.to_user_id = user.google_id " +
-                "WHERE friend_status.status = 'accepted' " + ";";
+                "JOIN friend_status " +
+                "ON friend_status.from_user_id = user.google_id " +
+                "WHERE friend_status.status = 'accepted';";
         db.execSQL(SQL_CREATE_VIEW_ACCEPTEDFRIENDS);
         // display stuff
         DisplayList();
