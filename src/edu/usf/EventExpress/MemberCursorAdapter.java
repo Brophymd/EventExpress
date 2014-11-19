@@ -17,7 +17,6 @@ public class MemberCursorAdapter extends SimpleCursorAdapter {
     }
 
     @Override
-
     public void setViewText(TextView v, String text){
         if(v.getId() == R.id.text_Date_row){
             try{
@@ -28,5 +27,6 @@ public class MemberCursorAdapter extends SimpleCursorAdapter {
                 text = "";
             }
         }
+        v.setText(text);
     }
 }
