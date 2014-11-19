@@ -35,7 +35,6 @@ public class SyncHelper {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(EventServer.API_URL)
                 .setConverter(new GsonConverter(gson))
                 .build();

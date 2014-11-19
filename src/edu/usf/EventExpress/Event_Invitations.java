@@ -61,14 +61,14 @@ public class Event_Invitations extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_invitations);
         userID = new SessionManager(getApplicationContext()).getUserID();
-        loadList();
+//        loadList();
         // create a view for invited events
         SQLiteDatabase db = EventSQLiteOpenHelper.getInstance(getApplicationContext()).getWritableDatabase();
         String SQL_CREATE_VIEW_INVITEDEVENTS = "CREATE VIEW IF NOT EXISTS invitedEvents AS " +
                 "SELECT event._id, event.event_title, event.event_date " +
                 "FROM event JOIN event_members " +
                 "ON event_members.event_id = event._id " +
-                "WHERE event_members.rsvp_status = 'invited';";
+                "AND event_members.rsvp_status = '0';";
         db.execSQL(SQL_CREATE_VIEW_INVITEDEVENTS);
         DisplayList();
         getLoaderManager().initLoader(LOADER_ID, null, this);
