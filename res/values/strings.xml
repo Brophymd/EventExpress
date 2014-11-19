@@ -35,6 +35,8 @@
     <string name="btn_Decline">Decline</string>
     <string name="btn_cancel">Cancel Event</string>
     <string name="btn_edit">Edit</string>
+    <string name="btn_Delete">Delete Event From List</string>
+
 
     <string name ="lbl_Edit_Event">Edit Event</string>
     <string name = "btn_save">Save</string>

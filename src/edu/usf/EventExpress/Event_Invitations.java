@@ -25,6 +25,7 @@ public class Event_Invitations extends Activity {
     private static final Uri CONTENT_URI = Uri.parse(EventProvider.CONTENT_URI_BASE + "/" + TABLE_NAME);
     public static final String DEFAULT_ORDER = TABLE_NAME + "._id";
     private static final int LOADER_ID = 1;
+    public static final int EVENT_INVITATIONS_ACTIVITY_ID = 0;
     String userID;
     SimpleCursorAdapter mCursorAdapter;
 
@@ -49,8 +50,17 @@ public class Event_Invitations extends Activity {
         mainListView.setAdapter(mCursorAdapter);
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int pos, long arg3) {
-                String temp = (String) ((TextView) view).getText();
-                Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
+                Bundle b = new Bundle();
+                TextView id = (TextView) view.findViewById(R.id.text_ID_row);
+                String id_string = id.getText().toString();
+                Long event_id = Long.parseLong(id_string);
+
+                b.putLong("_ID", event_id.longValue());
+                b.putInt("ACTIVITY_FROM_ID", EVENT_INVITATIONS_ACTIVITY_ID ); //Tell event_detail that event comes from invited events
+
+                Intent intent = new Intent(view.getContext(), Event_Detail.class);
+                intent.putExtras(b);
+                startActivityForResult(intent,0);
             }
         });
         mainListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
