@@ -173,6 +173,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 try {
                     Log.i(TAG, "Deleting event " + eventCursor.getEventTitle());
                     server.deleteEvent(token, eventCursor.getEventRemoteId());
+                    new EventSelection().eventRemoteId(eventCursor.getEventRemoteId())
+                            .delete(getContext().getContentResolver());
                 } catch (RetrofitError e) {
                     handleRetrofitError(e, syncResult);
                 }
