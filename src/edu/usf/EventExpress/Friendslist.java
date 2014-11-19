@@ -73,11 +73,10 @@ public class Friendslist extends Activity
         SQLiteDatabase db = EventSQLiteOpenHelper.getInstance(getApplicationContext()).getWritableDatabase();
         String SQL_CREATE_VIEW_ACCEPTEDFRIENDS = "CREATE VIEW IF NOT EXISTS acceptedFriends AS " +
                 "SELECT user._id, user.user_name " +
-                "FROM user JOIN friend_status " +
-                "ON friend_status.from_user_email = user.user_email " +
-                "OR friend_status.to_user_email = user.user_email " +
+                "FROM user JOIN friend_status ON " +
+                "(user.user_email != '" + new SessionManager(getApplicationContext()).getEmail() + "' " +
                 "AND friend_status.status = '1' " +
-                "AND user.user_email != '" + new SessionManager(getApplicationContext()).getEmail() + "';";
+                "AND (friend_status.from_user_email = user.user_email OR friend_status.to_user_email = user.user_email));";
         db.execSQL(SQL_CREATE_VIEW_ACCEPTEDFRIENDS);
         // display stuff
         DisplayList();

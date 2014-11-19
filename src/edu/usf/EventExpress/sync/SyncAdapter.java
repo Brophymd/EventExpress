@@ -410,9 +410,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 }
                 // If insert conflict, try update; otherwise call handleRetrofitError
                 switch (status) {
-                    case 404: // Friend not found
-                        // TODO: raise notification
-                        break;
                     case 409: // Conflict
                         // friend status may already exist, so try patching:
                         try {
@@ -431,6 +428,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             handleRetrofitError(e2, syncResult);
                         }
                         break;
+                    case 404: // Friend not found -- FALL THROUGH TO DEFAULT FOR CLEANUP :(
+                        // TODO: raise notification
                     default:
                         Log.i(TAG, "Error occurred; deleting local friend status entry");
                         new FriendStatusSelection().fromUserEmail(friendStatusCursor.getFromUserEmail())
