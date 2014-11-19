@@ -36,8 +36,6 @@ public class Event_Detail_Host extends Activity implements LoaderManager.LoaderC
     Button edit, cancel, inviteFriends;
     ImageButton map;
     TextView title, description, location, date, time, attending;
-    LatLng mylatlng;
-    String memberCount;
     Context context;
     static DateFormat DF = new SimpleDateFormat("MM/dd/yyyy");
     static DateFormat TF = new SimpleDateFormat("h:mm a");
@@ -242,8 +240,6 @@ public class Event_Detail_Host extends Activity implements LoaderManager.LoaderC
         title.setText(event.getEventTitle());
         description.setText(event.getEventDescription());
         location.setText(event.getEventAddress());
-//        if(event.getEventLatitude() != null && event.getEventLongitude()!= null)
-//            mylatlng = new LatLng(event.getEventLatitude(),event.getEventLongitude());
 
         if(event.getEventDate() != null) {
             date.setText(DF.format(event.getEventDate()));
