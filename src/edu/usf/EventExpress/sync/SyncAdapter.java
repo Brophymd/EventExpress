@@ -169,53 +169,42 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         EventCursor eventCursor = eventNeedSync.query(getContext().getContentResolver());
         EventContentValues eventContentValues = new EventContentValues();
         while (eventCursor.moveToNext()) {
-            if (eventCursor.getEventDeleted() != 0) {
-                try {
-                    Log.i(TAG, "Deleting event " + eventCursor.getEventTitle());
-                    server.deleteEvent(token, eventCursor.getEventRemoteId());
-                    new EventSelection().eventRemoteId(eventCursor.getEventRemoteId())
-                            .delete(getContext().getContentResolver());
-                } catch (RetrofitError e) {
-                    handleRetrofitError(e, syncResult);
+            try {
+                Log.i(TAG, "Uploading event " + eventCursor.getEventTitle());
+                EventServer.EventResponse response = server.addEvent(token, new EventServer.EventItem(eventCursor));
+                syncResult.stats.numInserts++;
+                eventContentValues.putEventSynced(1)
+                        .putEventRemoteId(response.id)
+                        .update(getContext().getContentResolver(), eventNeedSync);
+            } catch (RetrofitError e) {
+                Log.d(TAG, "" + e);
+                final int status;
+                if (e.getResponse() != null) {
+                    Log.e(TAG, "" + e.getResponse().getStatus() + "; "
+                            + e.getResponse().getReason());
+                    status = e.getResponse().getStatus();
+                } else {
+                    status = 999;
                 }
-            } else {
-                try {
-                    Log.i(TAG, "Uploading event " + eventCursor.getEventTitle());
-                    EventServer.EventResponse response = server.addEvent(token, new EventServer.EventItem(eventCursor));
-                    syncResult.stats.numInserts++;
-                    eventContentValues.putEventSynced(1)
-                            .putEventRemoteId(response.id)
-                            .update(getContext().getContentResolver(), eventNeedSync);
-                } catch (RetrofitError e) {
-                    Log.d(TAG, "" + e);
-                    final int status;
-                    if (e.getResponse() != null) {
-                        Log.e(TAG, "" + e.getResponse().getStatus() + "; "
-                                + e.getResponse().getReason());
-                        status = e.getResponse().getStatus();
-                    } else {
-                        status = 999;
-                    }
-                    // If conflict, try updating; otherwise handleRetrofitError
-                    switch (status) {
-                        case 409: // Conflict
-                            // attendee may already exist, so try patching:
-                            try {
-                                Log.i(TAG, "Modifying event " + eventCursor.getEventTitle());
-                                server.updateEvent(token,
-                                        eventCursor.getEventRemoteId(),
-                                        new EventServer.EventItem(eventCursor));
-                                syncResult.stats.numInserts++;
-                                eventContentValues.putEventSynced(1).update(getContext().getContentResolver(),
-                                        eventNeedSync);
-                            }
-                            // Something else is happening
-                            catch (RetrofitError e2) {
-                                handleRetrofitError(e2, syncResult);
-                            }
-                            break;
-                        default: handleRetrofitError(e, syncResult);
-                    }
+                // If conflict, try updating; otherwise handleRetrofitError
+                switch (status) {
+                    case 409: // Conflict
+                        // attendee may already exist, so try patching:
+                        try {
+                            Log.i(TAG, "Modifying event " + eventCursor.getEventTitle());
+                            server.updateEvent(token,
+                                    eventCursor.getEventRemoteId(),
+                                    new EventServer.EventItem(eventCursor));
+                            syncResult.stats.numInserts++;
+                            eventContentValues.putEventSynced(1).update(getContext().getContentResolver(),
+                                    eventNeedSync);
+                        }
+                        // Something else is happening
+                        catch (RetrofitError e2) {
+                            handleRetrofitError(e2, syncResult);
+                        }
+                        break;
+                    default: handleRetrofitError(e, syncResult);
                 }
             }
         }
