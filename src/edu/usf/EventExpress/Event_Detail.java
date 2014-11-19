@@ -41,6 +41,7 @@ public class Event_Detail extends Activity {
     static DateFormat DF = new SimpleDateFormat("MM/dd/yyyy");
     static DateFormat TF = new SimpleDateFormat("h:mm a");
     long event_id;
+    String userID;
     private static final String TAG = "Event_Detail";
 
     private static final int LOADER_ID = 1;
@@ -56,6 +57,7 @@ public class Event_Detail extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_detail);
         context = getApplicationContext();
+        userID = new SessionManager(getApplicationContext()).getUserID();
 
         //Get event ID from parent activity
         Bundle b = getIntent().getExtras();
@@ -178,7 +180,7 @@ public class Event_Detail extends Activity {
 
     private void accept(){
         EventMembersSelection where = new EventMembersSelection();
-        EventMembersSelection x = where.eventId(event_id);
+        EventMembersSelection x = where.eventId(event_id).and().userId(userID);
         EventMembersCursor event = where.query(getContentResolver());
         event.moveToNext();
         EventMembersContentValues values = new EventMembersContentValues();
@@ -190,7 +192,7 @@ public class Event_Detail extends Activity {
 
     private void decline(){
         EventMembersSelection where = new EventMembersSelection();
-        EventMembersSelection x = where.eventId(event_id);
+        EventMembersSelection x = where.eventId(event_id).and().userId(userID);
         EventMembersCursor event = where.query(getContentResolver());
         event.moveToNext();
         EventMembersContentValues values = new EventMembersContentValues();
