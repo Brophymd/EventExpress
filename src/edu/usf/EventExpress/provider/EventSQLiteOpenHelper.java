@@ -30,7 +30,7 @@ public class EventSQLiteOpenHelper extends SQLiteOpenHelper {
             + EventColumns.TABLE_NAME + " ( "
             + EventColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + EventColumns.EVENT_OWNER + " TEXT NOT NULL, "
-            + EventColumns.EVENT_REMOTE_ID + " INTEGER DEFAULT '0', "
+            + EventColumns.EVENT_REMOTE_ID + " INTEGER DEFAULT '-1', "
             + EventColumns.EVENT_TYPE + " INTEGER NOT NULL, "
             + EventColumns.EVENT_TITLE + " TEXT, "
             + EventColumns.EVENT_DESCRIPTION + " TEXT, "

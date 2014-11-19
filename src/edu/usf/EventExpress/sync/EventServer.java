@@ -43,6 +43,7 @@ public interface EventServer {
     }
 
     public static class EventItem {
+        long remote_id;
         String event_owner;
         EventType event_type;
         String event_title;
@@ -55,6 +56,7 @@ public interface EventServer {
         int deleted;
 
         public EventItem(EventCursor cursor) {
+            this.remote_id = cursor.getEventRemoteId();
             this.event_owner = cursor.getEventOwner();
             this.event_type = cursor.getEventType();
             this.event_title = cursor.getEventTitle();
