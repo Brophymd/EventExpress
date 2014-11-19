@@ -60,15 +60,6 @@ public class Event_Detail_Host extends Activity {
         event_id = b.getLong("_ID");
 
         context = getApplicationContext();
-        // get database and create new view
-        SQLiteDatabase db = EventSQLiteOpenHelper.getInstance(getApplicationContext()).getWritableDatabase();
-        String SQL_CREATE_VIEW_ATTENDINGEVENT = "CREATE VIEW IF NOT EXISTS attending_event AS " +
-                "SELECT user._id, user.user_name " +
-                "FROM user JOIN event_members " +
-                "ON event_members.user_id = user.google_id " +
-                "WHERE event_members.rsvp_status = '3' AND event_members.event_id = '" + event_id + "';";
-        db.execSQL(SQL_CREATE_VIEW_ATTENDINGEVENT);
-        db.close();
         // display stuff
 
 //        EventSelection where = new EventSelection();
