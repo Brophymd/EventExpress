@@ -83,8 +83,9 @@ public class Event_Detail_Host extends Activity implements LoaderManager.LoaderC
                 "SELECT user._id, user.user_name " +
                 "FROM user JOIN event_members " +
                 "ON event_members.user_id = user.google_id " +
-                "WHERE event_member.rsvp_status = 'YES' AND event_members.event_id = '" + event_id + "'";
+                "WHERE event_members.rsvp_status = '3' AND event_members.event_id = '" + event_id + "';";
         db.execSQL(SQL_CREATE_VIEW_ATTENDINGEVENT);
+        db.close();
         // display stuff
 
 //        EventSelection where = new EventSelection();
@@ -275,6 +276,11 @@ public class Event_Detail_Host extends Activity implements LoaderManager.LoaderC
         return event;
     }
 
-
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SQLiteDatabase db = EventSQLiteOpenHelper.getInstance(getApplicationContext()).getWritableDatabase();
+        db.execSQL("drop view " + TABLE_NAME + ";");
+        db.close();
+    }
 }
