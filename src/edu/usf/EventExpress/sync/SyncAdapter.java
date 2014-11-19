@@ -481,6 +481,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                                     new FriendStatusSelection().friendsRemoteId(msg.id));
                             int nRows2 = todo.update(getContext().getContentResolver(),
                                     new FriendStatusSelection().fromUserId(msg.to_user_id)
+                                            .and()
                                             .toUserId(msg.from_user_id));
                             // OR INSERT
                             if (nRows == 0) {
