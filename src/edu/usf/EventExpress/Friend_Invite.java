@@ -62,20 +62,20 @@ public class Friend_Invite extends Activity {
 
         //while a
         for(;!mFriendsAcceptedCursor.isAfterLast(); mFriendsAcceptedCursor.moveToNext()){
-//            String friend_id;
-//            String friend_email;
-////            UserCursor mFriendUserCursor;
-//            if(mFriendsAcceptedCursor.getFromUserId().equals(userID)){
-//                //mFriendUserCursor = getFriendUserCursor(mFriendsAcceptedCursor.getToUserId());
-//                friend_id = mFriendsAcceptedCursor.getToUserId();
-//                friend_email = mFriendsAcceptedCursor.getToUserEmail();
-//            }else {
-//                //mFriendUserCursor = getFriendUserCursor(mFriendsAcceptedCursor.getFromUserId());
-//                friend_id =mFriendsAcceptedCursor.getFromUserId();
-//                friend_email = mFriendsAcceptedCursor.getFromUserEmail();
-//            }
+            String friend_id;
+            String friend_email;
+//            UserCursor mFriendUserCursor;
+            if(mFriendsAcceptedCursor.getFromUserId().equals(userID)){
+                //mFriendUserCursor = getFriendUserCursor(mFriendsAcceptedCursor.getToUserId());
+                friend_id = mFriendsAcceptedCursor.getToUserId();
+                friend_email = mFriendsAcceptedCursor.getToUserEmail();
+            }else {
+                //mFriendUserCursor = getFriendUserCursor(mFriendsAcceptedCursor.getFromUserId());
+                friend_id =mFriendsAcceptedCursor.getFromUserId();
+                friend_email = mFriendsAcceptedCursor.getFromUserEmail();
+            }
 
-            Friend friend = new Friend(mFriendsAcceptedCursor.getToUserId(), mFriendsAcceptedCursor.getToUserEmail(), false);
+            Friend friend = new Friend(friend_id, friend_email, false);
             friendList.add(friend);
 
             //mFriendUserCursor.close();
@@ -170,7 +170,7 @@ public class Friend_Invite extends Activity {
         Log.d(TAG, "where is null");
 
         if(context == null) Log.d(TAG, "context is null");
-        return where.fromUserId(userID).status(FriendStatusType.accepted).query(context.getContentResolver());
+        return where.status(FriendStatusType.accepted).query(context.getContentResolver());
 
 //        Cursor cursor = context.getContentResolver().query(FriendStatusColumns.CONTENT_URI, null,
 //                where.sel(), where.args(), null);
