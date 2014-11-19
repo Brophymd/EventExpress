@@ -36,7 +36,8 @@ public class Friendslist_ViewRequests extends Activity {
         friendRequestEmail = new ArrayList<String>();
         friendRequestID = new ArrayList<Long>();
         FriendStatusSelection FSS = new FriendStatusSelection();
-        FriendStatusCursor FSC = FSS.query(getContentResolver());
+        FriendStatusCursor FSC = FSS.status(FriendStatusType.requested)
+                .query(getContentResolver());
         Log.d(TAG, "Got FriendStatusCursor");
 
         while(FSC.moveToNext()){
