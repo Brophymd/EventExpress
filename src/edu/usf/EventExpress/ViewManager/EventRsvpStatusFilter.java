@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.SimpleCursorAdapter;
 import edu.usf.EventExpress.Event_Invitations;
+import edu.usf.EventExpress.SessionManager;
 import edu.usf.EventExpress.provider.EventProvider;
 import edu.usf.EventExpress.provider.EventSQLiteOpenHelper;
 import edu.usf.EventExpress.provider.event.EventColumns;
@@ -55,9 +56,10 @@ public class EventRsvpStatusFilter
         String SQL_CREATE_VIEW_INVITEDEVENTS = "CREATE VIEW IF NOT EXISTS " + this.TABLE_NAME +
                 " AS " +
                 "SELECT event._id, event.event_title, event.event_date " +
-                "FROM event JOIN event_members " +
-                "ON event_members.event_id = event._id " +
-                "AND event_members.rsvp_status = '" + this.mRsvpStatus + "';";
+                "FROM event JOIN event_members ON " +
+                "(event_members.user_id = '" + new SessionManager(context).getUserID() + "' " +
+                "AND event_members.event_id = event._id " +
+                "AND event_members.rsvp_status = '" + this.mRsvpStatus + "');";
         db.execSQL(SQL_CREATE_VIEW_INVITEDEVENTS);
     }
 

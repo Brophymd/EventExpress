@@ -3,13 +3,19 @@ package edu.usf.EventExpress;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import edu.usf.EventExpress.provider.event.*;
+import edu.usf.EventExpress.provider.eventmembers.EventMembersContentValues;
+import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
+import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,6 +27,7 @@ import java.util.Date;
  */
 public class Edit_Event extends Activity {
 
+    private static final String TAG = Edit_Event.class.getSimpleName();
     EditText et_title, et_description, et_location, et_date, et_time;
     String title, description, location, time, date;
     TextView CreateorEdit;
@@ -156,7 +163,12 @@ public class Edit_Event extends Activity {
                 if(fromCreate) {
                     EventContentValues values = new EventContentValues();
                     setValues(values);
-                    context.getContentResolver().insert(EventColumns.CONTENT_URI, values.values());
+                    eventID = ContentUris.parseId(values.insert(getContentResolver()));
+                    new EventMembersContentValues().putEventId(eventID)
+                            .putUserId(userID)
+                            .putRsvpStatus(RSVPStatus.yes)
+                            .putEventMembersTimestamp(new Date().getTime())
+                            .insert(getContentResolver());
                 }
                 else{
                     EventSelection where = new EventSelection();
@@ -189,8 +201,9 @@ public class Edit_Event extends Activity {
                 .putEventTitle(et_title.getText().toString())
                 .putEventDescription(et_description.getText().toString())
                 .putEventAddress(et_location.getText().toString());
-        if(DateandTime != null)
+        if(DateandTime != null) {
             values.putEventDate(DateandTime);
+        }
 //        if(mylatlng != null)
 //            values.putEventLatitude((float) mylatlng.latitude)
 //                    .putEventLongitude((float)mylatlng.longitude);
