@@ -105,6 +105,7 @@ public class SyncHelper {
                 // This will force a sync regardless of what the setting is
                 // in accounts manager. Only use it here where the user has
                 // manually desired a sync to happen NOW.
+                options.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
                 options.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
                 ContentResolver.requestSync(account, EventProvider.AUTHORITY,
                         options);
