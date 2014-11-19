@@ -77,7 +77,7 @@ public class Friendslist extends Activity
                 "ON friend_status.to_user_id = user.google_id " +
                 "OR friend_status.from_user_id = user.google_id " +
                 "WHERE friend_status.status = '1' " +
-                "AND user.google_id != " + new SessionManager(getApplicationContext()).getUserID();
+                "AND user.google_id != " + new SessionManager(getApplicationContext()).getUserID() + ";";
         db.execSQL(SQL_CREATE_VIEW_ACCEPTEDFRIENDS);
         // display stuff
         DisplayList();
