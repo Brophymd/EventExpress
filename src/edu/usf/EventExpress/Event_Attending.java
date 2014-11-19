@@ -32,6 +32,11 @@ public class Event_Attending extends Activity {
                 null,
                 new EventRsvpStatusFilter(getApplicationContext(), TABLE_NAME, CONTENT_URI, mCursorAdapter, RSVPStatus.yes));
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        getLoaderManager().restartLoader(LOADER_ID, null, new EventRsvpStatusFilter(getApplicationContext(), TABLE_NAME, CONTENT_URI, mCursorAdapter, RSVPStatus.yes));
+    }
 
     private void DisplayList(){
         ListView mainListView = (ListView) findViewById( R.id.listView_attendedEvents);
