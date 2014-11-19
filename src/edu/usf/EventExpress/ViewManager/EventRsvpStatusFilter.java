@@ -59,6 +59,7 @@ public class EventRsvpStatusFilter
                 "FROM event JOIN event_members ON " +
                 "(event_members.user_id = '" + new SessionManager(context).getUserID() + "' " +
                 "AND event_members.event_id = event._id " +
+                "AND event.event_deleted = '0' " +
                 "AND event_members.rsvp_status = '" + this.mRsvpStatus + "');";
         db.execSQL(SQL_CREATE_VIEW_INVITEDEVENTS);
     }

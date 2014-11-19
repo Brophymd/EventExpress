@@ -83,6 +83,13 @@ public class Friendslist extends Activity
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        DisplayList();
+    }
+
+
     private void DisplayList(){
         ListView mainListView = (ListView) findViewById( R.id.mainList );
         mCursorAdapter = new SimpleCursorAdapter(this,

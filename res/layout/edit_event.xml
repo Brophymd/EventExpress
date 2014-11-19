@@ -92,11 +92,5 @@
             android:text="@string/btn_save"
             android:id="@+id/button_save"
             android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/editText_timeEdit"/>
-    <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_invite"
-            android:id="@+id/button_inviteFriends"
-            android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/textView_timeEdit"/>
 </LinearLayout>
 </ScrollView>
