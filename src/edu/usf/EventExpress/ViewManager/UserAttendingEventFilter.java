@@ -28,7 +28,7 @@ public class UserAttendingEventFilter
     protected Uri mContentUri;
     protected int mEventId;
 
-    public UserAttendingEventFilter(Context context, Uri contentUri, SimpleCursorAdapter cursorAdapter, int eventId) {
+    public UserAttendingEventFilter(Context context, Uri contentUri, SimpleCursorAdapter cursorAdapter, long eventId) {
         this.mApplicationContext = context;
         this.mContentUri = contentUri;
         this.mCursorAdapter = cursorAdapter;

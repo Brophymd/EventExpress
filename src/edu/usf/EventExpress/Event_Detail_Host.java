@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.google.android.gms.maps.model.LatLng;
+import edu.usf.EventExpress.ViewManager.UserAttendingEventFilter;
 import edu.usf.EventExpress.provider.EventProvider;
 import edu.usf.EventExpress.provider.EventSQLiteOpenHelper;
 import edu.usf.EventExpress.provider.event.EventColumns;
@@ -31,7 +32,7 @@ import java.text.SimpleDateFormat;
 /**
  * Created by Vi Tran on 10/19/2014.
  */
-public class Event_Detail_Host extends Activity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class Event_Detail_Host extends Activity {
 
     Button edit, cancel, inviteFriends;
     ImageButton map;
@@ -50,23 +51,6 @@ public class Event_Detail_Host extends Activity implements LoaderManager.LoaderC
     public static final Uri CONTENT_URI = Uri.parse(EventProvider.CONTENT_URI_BASE + "/" + TABLE_NAME);
     public static final String DEFAULT_ORDER = TABLE_NAME + "._id";
 
-    // Implement LoaderCallbacks
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Uri baseUri = CONTENT_URI;
-        Log.d(TAG, "In onCreateLoader");
-
-        return new CursorLoader(getApplicationContext(), baseUri,
-                new String[] {UserColumns._ID, UserColumns.USER_NAME}, null, null,
-                UserColumns.USER_NAME);
-    }
-
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mCursorAdapter.swapCursor(data);
-    }
-
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mCursorAdapter.swapCursor(null);
-    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,7 +155,8 @@ public class Event_Detail_Host extends Activity implements LoaderManager.LoaderC
                         null,
                         new String[] {UserColumns.USER_NAME},
                         new int[] {android.R.id.text1}, 0);
-                getLoaderManager().initLoader(LOADER_ID, null, Event_Detail_Host.this);
+                getLoaderManager().initLoader(LOADER_ID, null, new UserAttendingEventFilter(getApplicationContext(),
+                        CONTENT_URI, mCursorAdapter, event_id));
 
 //                EventMembersSelection where = new EventMembersSelection();
 //                where.eventId(event_id);
