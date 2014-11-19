@@ -40,11 +40,6 @@ public class Friend_Invite extends Activity {
         showList();
         InviteButton();
 
-        //Log.d(TAG,"userID: "+userID);
-
-
-
-
     }
 
     private void showList(){
@@ -152,9 +147,6 @@ public class Friend_Invite extends Activity {
                 for(int i=0;i<friendList.size();i++){
                     Friend friend = friendList.get(i);
                     if(friend.isSelected()) {
-                        Toast.makeText(getApplicationContext(), friend.getName() + "Checked", Toast.LENGTH_SHORT).show()
-                        ;
-                        Context context = getApplicationContext();
                         EventMembersContentValues values = new EventMembersContentValues();
                         values.putEventId(event_id)
                                 .putUserId(friend.getUserID())
@@ -162,7 +154,11 @@ public class Friend_Invite extends Activity {
                                 .putEventMembersTimestamp(new Date().getTime())
                                 .insert(getContentResolver());
                     }
+                    Toast.makeText(getApplicationContext(), "Selected friends were invited", Toast.LENGTH_SHORT).show()
+                    ;
+
                 }
+                finish();
             }
         });
     }

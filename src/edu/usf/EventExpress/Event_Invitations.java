@@ -40,6 +40,12 @@ public class Event_Invitations extends Activity {
                 new EventRsvpStatusFilter(getApplicationContext(), TABLE_NAME, CONTENT_URI, mCursorAdapter, RSVPStatus.invited));
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        getLoaderManager().restartLoader(LOADER_ID, null, new EventRsvpStatusFilter(getApplicationContext(), TABLE_NAME, CONTENT_URI, mCursorAdapter, RSVPStatus.invited));
+    }
+
     private void DisplayList(){
         ListView mainListView = (ListView) findViewById( R.id.listView_invitations);
         mCursorAdapter = new MemberCursorAdapter(this,
