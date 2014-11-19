@@ -74,10 +74,10 @@ public class Friendslist extends Activity
         String SQL_CREATE_VIEW_ACCEPTEDFRIENDS = "CREATE VIEW IF NOT EXISTS acceptedFriends AS " +
                 "SELECT user._id, user.user_name " +
                 "FROM user JOIN friend_status " +
-                "ON friend_status.to_user_id = user.google_id " +
-                "OR friend_status.from_user_id = user.google_id " +
-                "WHERE friend_status.status = '1' " +
-                "AND user.google_id != " + new SessionManager(getApplicationContext()).getUserID() + ";";
+                "ON friend_status.from_user_id = user.google_id " +
+                "OR friend_status.to_user_id = user.google_id " +
+                "AND friend_status.status = '1' " +
+                "AND user.google_id != '" + new SessionManager(getApplicationContext()).getUserID() + "';";
         db.execSQL(SQL_CREATE_VIEW_ACCEPTEDFRIENDS);
         // display stuff
         DisplayList();
