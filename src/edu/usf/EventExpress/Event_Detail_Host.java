@@ -2,20 +2,26 @@ package edu.usf.EventExpress;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
+import android.app.LoaderManager;
+import android.content.*;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.google.android.gms.maps.model.LatLng;
+import edu.usf.EventExpress.provider.EventProvider;
+import edu.usf.EventExpress.provider.EventSQLiteOpenHelper;
 import edu.usf.EventExpress.provider.event.EventColumns;
 import edu.usf.EventExpress.provider.event.EventCursor;
 import edu.usf.EventExpress.provider.event.EventSelection;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersColumns;
 import edu.usf.EventExpress.provider.eventmembers.EventMembersSelection;
 import edu.usf.EventExpress.provider.eventmembers.RSVPStatus;
+import edu.usf.EventExpress.provider.user.UserColumns;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,7 +30,7 @@ import java.text.SimpleDateFormat;
 /**
  * Created by Vi Tran on 10/19/2014.
  */
-public class Event_Detail_Host extends Activity {
+public class Event_Detail_Host extends Activity implements LoaderManager.LoaderCallbacks<Cursor>{
 
     Button edit, cancel, inviteFriends;
     ImageButton map;
@@ -35,6 +41,33 @@ public class Event_Detail_Host extends Activity {
     static DateFormat DF = new SimpleDateFormat("MM/dd/yyyy");
     static DateFormat TF = new SimpleDateFormat("h:mm a");
     long event_id;
+    private static final String TAG = "Event_Detail_Host";
+
+
+    private static final int LOADER_ID = 1;
+    private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
+    SimpleCursorAdapter mCursorAdapter;
+    public static final String TABLE_NAME = "attending_event";
+    public static final Uri CONTENT_URI = Uri.parse(EventProvider.CONTENT_URI_BASE + "/" + TABLE_NAME);
+    public static final String DEFAULT_ORDER = TABLE_NAME + "._id";
+
+    // Implement LoaderCallbacks
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Uri baseUri = CONTENT_URI;
+        Log.d(TAG, "In onCreateLoader");
+
+        return new CursorLoader(getApplicationContext(), baseUri,
+                new String[] {UserColumns._ID, UserColumns.USER_NAME}, null, null,
+                UserColumns.USER_NAME);
+    }
+
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mCursorAdapter.swapCursor(data);
+    }
+
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mCursorAdapter.swapCursor(null);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +77,15 @@ public class Event_Detail_Host extends Activity {
         event_id = b.getLong("_ID");
 
         context = getApplicationContext();
+        // get database and create new view
+        SQLiteDatabase db = EventSQLiteOpenHelper.getInstance(getApplicationContext()).getWritableDatabase();
+        String SQL_CREATE_VIEW_ATTENDINGEVENT = "CREATE VIEW IF NOT EXISTS attending_event AS " +
+                "SELECT user._id, user.user_name " +
+                "FROM user JOIN event_members " +
+                "ON event_members.user_id = user.google_id " +
+                "WHERE event_member.rsvp_status = 'YES' AND event_members.event_id = '" + event_id + "'";
+        db.execSQL(SQL_CREATE_VIEW_ATTENDINGEVENT);
+        // display stuff
 
 //        EventSelection where = new EventSelection();
 //        where.id(event_id);
@@ -124,40 +166,36 @@ public class Event_Detail_Host extends Activity {
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(
                         Event_Detail_Host.this);
                 builderSingle.setTitle("Attendees: ");
-//
+                mCursorAdapter = new SimpleCursorAdapter(getApplicationContext(),
+                        android.R.layout.simple_list_item_1,
+                        null,
+                        new String[] {UserColumns.USER_NAME},
+                        new int[] {android.R.id.text1}, 0);
+                getLoaderManager().initLoader(LOADER_ID, null, Event_Detail_Host.this);
+
+//                EventMembersSelection where = new EventMembersSelection();
+//                where.eventId(event_id);
+//                Cursor cursor = context.getContentResolver().query(EventMembersColumns.CONTENT_URI, null,
+//                        where.sel(), where.args(), null);
+//                PeopleAttendingCursorAdapter mCursorAdapter = new PeopleAttendingCursorAdapter(context, cursor,0);
+
 //                SimpleCursorAdapter myAdapter = new SimpleCursorAdapter(getApplicationContext(),R.layout.single_list_item, )
-//                builderSingle.setNegativeButton("Done",
-//                        new DialogInterface.OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//
-//                builderSingle.setAdapter(arrayAdapter,
-//                        new DialogInterface.OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                String strName = arrayAdapter.getItem(which);
-//                                AlertDialog.Builder builderInner = new AlertDialog.Builder(
-//                                        DialogActivity.this);
-//                                builderInner.setMessage(strName);
-//                                builderInner.setTitle("Your Selected Item is");
-//                                builderInner.setPositiveButton("Ok",
-//                                        new DialogInterface.OnClickListener() {
-//
-//                                            @Override
-//                                            public void onClick(
-//                                                    DialogInterface dialog,
-//                                                    int which) {
-//                                                dialog.dismiss();
-//                                            }
-//                                        });
-//                                builderInner.show();
-//                            }
-//                        });
+                builderSingle.setNegativeButton("Done",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                builderSingle.setAdapter(mCursorAdapter,
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
                 builderSingle.show();
             }
         });
@@ -236,5 +274,7 @@ public class Event_Detail_Host extends Activity {
         event.moveToFirst();
         return event;
     }
+
+
 
 }
