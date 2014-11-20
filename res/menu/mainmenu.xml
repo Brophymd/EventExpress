@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/action_refresh"
-          android:orderInCategory="100"
-          android:showAsAction="always"
-          android:icon="@drawable/ic_action_refresh"
-          android:title="@string/refresh_action" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:edu.usf.EventExpress="http://schemas.android.com/apk/res-auto">
+      <item android:id="@+id/action_refresh"
+            edu.usf.EventExpress:showAsAction="ifRoom|withText"
+            android:showAsAction="always"
+            android:icon="@drawable/ic_action_refresh"
+            android:title="@string/refresh_action"/>
 </menu>

@@ -2,11 +2,8 @@ package edu.usf.EventExpress;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
+import android.content.*;
 import android.content.IntentSender.SendIntentException;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -253,28 +250,6 @@ public class GoogleLoginActivity extends ActionBarActivity implements
             Toast.makeText(this, "User has connected!", Toast.LENGTH_LONG).show();
         mSignInClicked = false;
         // Get user's information
-        if (this.initialSync == 0 && Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-            Person currentPerson = Plus.PeopleApi
-                    .getCurrentPerson(mGoogleApiClient);
-            String personName = currentPerson.getDisplayName();
-            String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-            String googleId = currentPerson.getId();
-
-            session = new SessionManager(getApplicationContext());
-            session.createLoginSession(googleId, email);
-
-            // add user to database
-            UserContentValues values = new UserContentValues();
-            values.putGoogleId(googleId)
-                    .putUserEmail(email)
-                    .putUserName(personName)
-                    .putUserTimestamp(new Date().getTime())
-                    .insert(getContentResolver());
-
-            // request sync
-            SyncHelper.manualSync(getApplicationContext());
-            this.initialSync = 1;
-        }
         getProfileInformation();
 
         // Update the UI after signin
@@ -327,6 +302,20 @@ public class GoogleLoginActivity extends ActionBarActivity implements
                 session = new SessionManager(getApplicationContext());
                 session.createLoginSession(googleId, email);
 
+                if (this.initialSync == 0) {
+                    // add user to database
+                    UserContentValues values = new UserContentValues();
+                    values.putGoogleId(googleId)
+                            .putUserEmail(email)
+                            .putUserName(personName)
+                            .putUserTimestamp(new Date().getTime())
+                            .insert(getContentResolver());
+
+                    // request sync
+                    SyncHelper.manualSync(getApplicationContext());
+                    this.initialSync = 1;
+                }
+
                 Log.d(TAG, "Name: " + personName + ", plusProfile: "
                         + personGooglePlusProfile + ", email: " + email
                         + ", Image: " + personPhotoUrl);
@@ -357,13 +346,6 @@ public class GoogleLoginActivity extends ActionBarActivity implements
         mGoogleApiClient.connect();
         updateUI(false);
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }*/
 
      /**
      * Sign-in into google
@@ -579,5 +561,4 @@ public class GoogleLoginActivity extends ActionBarActivity implements
 
         return true;
     }
-
 }
