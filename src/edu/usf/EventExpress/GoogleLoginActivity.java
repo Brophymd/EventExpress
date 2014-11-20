@@ -13,7 +13,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -45,7 +49,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by Vi Tran on 10/17/2014.
  */
-public class GoogleLoginActivity extends Activity implements
+public class GoogleLoginActivity extends ActionBarActivity implements
     ConnectionCallbacks, OnConnectionFailedListener {
 
     /* Request code used to invoke sign in user interactions. */
@@ -555,4 +559,25 @@ public class GoogleLoginActivity extends Activity implements
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.apply();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                SyncHelper.manualSync(getApplicationContext());
+                break;
+            default:
+                break;
+        }
+
+        return true;
+    }
+
 }

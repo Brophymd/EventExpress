@@ -43,7 +43,6 @@ public class GCMHelper {
             return packageInfo.versionCode;
         }
         catch (NameNotFoundException e) {
-            // should never happen
             throw new RuntimeException("Could not get package name: " + e);
         }
     }
@@ -103,14 +102,11 @@ public class GCMHelper {
             final String regid = gcm.register(SENDER_ID);
 
             if (sendRegistrationIdToBackend(context, regid)) {
-                // Persist the regID - no need to register again.
                 storeRegistrationId(context, regid);
             }
         }
         catch (IOException ex) {
-            // If there is an error, don't just keep trying to register.
-            // Require the user to click a button again, or perform
-            // exponential back-off.
+            // do nothing
         }
     }
 

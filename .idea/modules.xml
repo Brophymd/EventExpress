@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EventExpress.iml" filepath="$PROJECT_DIR$/EventExpress.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libs/appcompat/appcompat.iml" filepath="$PROJECT_DIR$/libs/appcompat/appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/libs/google-play-services_lib/google-play-services_lib1.iml" filepath="$PROJECT_DIR$/libs/google-play-services_lib/google-play-services_lib1.iml" />
     </modules>
   </component>
 </project>
-

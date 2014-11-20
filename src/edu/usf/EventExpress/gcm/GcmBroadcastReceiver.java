@@ -8,38 +8,25 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import edu.usf.EventExpress.sync.SyncHelper;
+import edu.usf.EventExpress.sync.SyncService;
 
 /**
  * Created by Micah on 10/31/2014.
  */
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
     // Incoming Intent key for extended data
-    public static final String KEY_SYNC_REQUEST = "edu.usf.EventExpress.KEY_SYNC_REQUEST";
     private static final String TAG = GcmBroadcastReceiver.class.getSimpleName();
+
+    public GcmBroadcastReceiver() {
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-//        ComponentName comp = new ComponentName(context.getPackageName(),
-//                GcmIntentService.class.getName());
-//        startWakefulService(context, (intent.setComponent(comp)));
-//        setResultCode(Activity.RESULT_OK);
-        // Get a GCM object instance
-        GoogleCloudMessaging gcm =
-                GoogleCloudMessaging.getInstance(context);
-        // Get the type of GCM message
-        String messageType = gcm.getMessageType(intent);
-        /*
-         * Test the message type and examine the message contents.
-         * Since GCM is a general-purpose messaging system, you
-         * may receive normal messages that don't require a sync
-         * adapter run.
-         * The following code tests for a a boolean flag indicating
-         * that the message is requesting a transfer from the device.
-         */
-        if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)
-                && intent.getBooleanExtra(KEY_SYNC_REQUEST, false)) {
-            Log.i(TAG, "We've been tickled! Manual sync.");
-            SyncHelper.manualSync(context);
-        }
+        // Explicitly specify that GcmIntentService will handle the intent.
+        ComponentName comp = new ComponentName(context.getPackageName(),
+                GcmIntentService.class.getName());
+        // Start the service, keeping the device awake while it is launching.
+        startWakefulService(context, (intent.setComponent(comp)));
+        setResultCode(Activity.RESULT_OK);
     }
 }

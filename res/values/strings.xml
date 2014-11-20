@@ -63,5 +63,6 @@
 
     <!-- Google Developer's Console -->
     <string name="android_client_id">266877390111-9i036usv19d8q1obfgjvqe6qres6ar3s.apps.googleusercontent.com</string>
+    <string name="refresh_action">Refresh</string>
 
 </resources>
