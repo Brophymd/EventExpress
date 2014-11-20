@@ -71,6 +71,7 @@ public class SyncHelper {
                             + userRecoverableException.getMessage());
         }
         catch (GoogleAuthException fatalException) {
+            Log.d(TAG, "Account name is: " +  accountName);
             Log.e(TAG, "Unrecoverable error " + fatalException.getMessage());
         }
         catch (IOException e) {

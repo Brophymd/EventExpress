@@ -508,7 +508,6 @@ public class GoogleLoginActivity extends ActionBarActivity implements
 
                     // Persist the regID - no need to register again.
                     storeRegistrationId(getApplicationContext(), regid);
-                    GCMHelper.sendRegistrationIdToBackend(getApplicationContext(), regid);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
                     // If there is an error, don't just keep trying to register.
