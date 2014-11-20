@@ -269,6 +269,7 @@ public class GoogleLoginActivity extends Activity implements
 
             // request sync
             SyncHelper.manualSync(getApplicationContext());
+            this.initialSync = 1;
         }
         getProfileInformation();
 
