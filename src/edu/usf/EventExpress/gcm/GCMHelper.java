@@ -114,7 +114,7 @@ public class GCMHelper {
         }
     }
 
-    private static boolean sendRegistrationIdToBackend(final Context context,
+    public static boolean sendRegistrationIdToBackend(final Context context,
                                                        final String regid) {
         // Need to get an access token first
         final String token = SyncHelper.getAuthToken(context,

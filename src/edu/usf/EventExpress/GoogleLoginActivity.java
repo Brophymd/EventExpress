@@ -27,6 +27,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.plus.Account;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import edu.usf.EventExpress.gcm.GCMHelper;
 import edu.usf.EventExpress.provider.EventProvider;
 import edu.usf.EventExpress.provider.user.UserColumns;
 import edu.usf.EventExpress.provider.user.UserContentValues;
@@ -113,6 +114,7 @@ public class GoogleLoginActivity extends Activity implements
             regid = getRegistrationId(getApplicationContext());
 
             if (regid.isEmpty()) {
+                GCMHelper.registerIfNotAlreadyDone(getApplicationContext());
                 registerInBackground();
             }
 
@@ -246,6 +248,27 @@ public class GoogleLoginActivity extends Activity implements
             Toast.makeText(this, "User has connected!", Toast.LENGTH_LONG).show();
         mSignInClicked = false;
         // Get user's information
+        if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+            Person currentPerson = Plus.PeopleApi
+                    .getCurrentPerson(mGoogleApiClient);
+            String personName = currentPerson.getDisplayName();
+            String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+            String googleId = currentPerson.getId();
+
+            session = new SessionManager(getApplicationContext());
+            session.createLoginSession(googleId, email);
+
+            // add user to database
+            UserContentValues values = new UserContentValues();
+            values.putGoogleId(googleId)
+                    .putUserEmail(email)
+                    .putUserName(personName)
+                    .putUserTimestamp(new Date().getTime())
+                    .insert(getContentResolver());
+
+            // request sync
+            SyncHelper.manualSync(getApplicationContext());
+        }
         getProfileInformation();
 
         // Update the UI after signin
@@ -297,17 +320,6 @@ public class GoogleLoginActivity extends Activity implements
 
                 session = new SessionManager(getApplicationContext());
                 session.createLoginSession(googleId, email);
-
-                // add user to database
-                UserContentValues values = new UserContentValues();
-                values.putGoogleId(googleId)
-                        .putUserEmail(email)
-                        .putUserName(personName)
-                        .putUserTimestamp(new Date().getTime())
-                        .insert(getContentResolver());
-
-                // request sync
-                SyncHelper.manualSync(getApplicationContext());
 
                 Log.d(TAG, "Name: " + personName + ", plusProfile: "
                         + personGooglePlusProfile + ", email: " + email
@@ -508,6 +520,7 @@ public class GoogleLoginActivity extends Activity implements
 
                     // Persist the regID - no need to register again.
                     storeRegistrationId(getApplicationContext(), regid);
+                    GCMHelper.sendRegistrationIdToBackend(getApplicationContext(), regid);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
                     // If there is an error, don't just keep trying to register.

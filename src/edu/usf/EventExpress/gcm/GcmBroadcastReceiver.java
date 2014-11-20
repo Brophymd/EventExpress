@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
+import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import edu.usf.EventExpress.sync.SyncHelper;
 
@@ -14,6 +15,7 @@ import edu.usf.EventExpress.sync.SyncHelper;
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
     // Incoming Intent key for extended data
     public static final String KEY_SYNC_REQUEST = "edu.usf.EventExpress.KEY_SYNC_REQUEST";
+    private static final String TAG = GcmBroadcastReceiver.class.getSimpleName();
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,6 +38,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
          */
         if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)
                 && intent.getBooleanExtra(KEY_SYNC_REQUEST, false)) {
+            Log.i(TAG, "We've been tickled! Manual sync.");
             SyncHelper.manualSync(context);
         }
     }
