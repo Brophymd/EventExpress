@@ -60,6 +60,7 @@ public class GoogleLoginActivity extends Activity implements
     private static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final String SENDER_ID = "266877390111";
+    private int initialSync = 0;
 
     /* Create an account for use with SyncAdapter */
     private static final String ACCOUNT_NAME = "EventExpress";
@@ -248,7 +249,7 @@ public class GoogleLoginActivity extends Activity implements
             Toast.makeText(this, "User has connected!", Toast.LENGTH_LONG).show();
         mSignInClicked = false;
         // Get user's information
-        if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+        if (this.initialSync == 0 && Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
             Person currentPerson = Plus.PeopleApi
                     .getCurrentPerson(mGoogleApiClient);
             String personName = currentPerson.getDisplayName();
